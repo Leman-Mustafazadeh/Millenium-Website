@@ -108,11 +108,10 @@ const AdminTeam = () => {
       position: record.position,
       eMail: record.eMail,
     });
-    setImageBase64(record.image); // Set the current image to state
-    setIsModalVisible(true); // Show the modal
+    setImageBase64(record.image); 
+    setIsModalVisible(true); 
   };
 
-  // Handle Delete action
   const handleDelete = (id) => {
     setTeamMembers(teamMembers.filter(member => member.id !== id));
     message.success("Team member deleted successfully!");
@@ -120,20 +119,18 @@ const AdminTeam = () => {
 
   const onFinish = async (values) => {
     const formData = {
-      id: currentMemberId || teamMembers.length + 1, // Use current ID if editing
-      ...values,
-      image: imageBase64, // Append the Base64 string to form data
+      id: currentMemberId || teamMembers.length + 1, 
+      image: imageBase64, 
     };
 
     console.log(formData);
 
     try {
-      // Call to backend to save data (mocked here)
-      const response = await axios.getAll(`${BASE_URL}${endpoints.team}`); // Mock API request
+      const response = await axios.getAll(`${BASE_URL}${endpoints.team}`); 
+console.log(response);
 
       if (response.status === 200 || response.status === 201) {
         if (currentMemberId) {
-          // Editing an existing member
           setTeamMembers((prevMembers) =>
             prevMembers.map((member) =>
               member.id === currentMemberId ? formData : member
@@ -141,12 +138,11 @@ const AdminTeam = () => {
           );
           message.success("Team member updated successfully!");
         } else {
-          // Adding a new member
           setTeamMembers([...teamMembers, formData]);
           message.success("Team member added successfully!");
         }
         setIsModalVisible(false); 
-        form.resetFields(); // Reset form
+        form.resetFields(); 
         setCurrentMemberId(null); 
       } else {
         message.error(`Error: ${response.statusText}`);
