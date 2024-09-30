@@ -1,0 +1,129 @@
+.breadcumb-content {
+    position: relative;
+
+}
+.breadcumb-menu {
+    max-width: 100%;
+    padding: 0;
+    margin: 25px 0 -0.5em 0;
+    list-style-type: none;
+    position: relative;
+
+    li {
+        display: inline-block;
+        margin-right: 3px;
+        padding-right: 3px;
+        list-style: none;
+        position: relative;
+
+        &:after {
+            content: "";
+            background-image: url(../img/icon/arrow-right.svg);
+            background-size: 100% 100%;
+            top: 3px;
+            width: 18px;
+            height: 16px;
+            display: inline-flex;
+            position: relative;
+            margin-left: 6px;
+            font-weight: 700;
+            font-size: 18px;
+            color: inherit;
+            font-family: $icon-font;
+        }
+
+        &:last-child {
+            padding-right: 0;
+            margin-right: 0;
+
+            &:after {
+                display: none;
+            }
+        }
+    }
+
+    li,
+    a,
+    span {
+        white-space: normal;
+        word-break: break-word;
+        font-family: $body-font;
+        font-weight: 400;
+        font-size: 20px;
+        color: $white-color;
+    }
+}
+
+.breadcumb-title {
+    margin: -0.12em 0 -0.18em 0;
+    font-size: 54px;
+    font-family: $title-font;
+    color: $white-color;
+    font-weight: 700;
+    text-transform: capitalize; 
+}
+.th-breadcumb-bg{
+    position: absolute;
+    inset: 0;
+}
+.breadcumb-wrapper {
+    position: relative;
+    background-color: $title-color;
+    background-position: left top;
+    padding: 163px 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+@include lg {
+    .breadcumb-wrapper {
+        padding: 150px 0;
+    }
+
+    .breadcumb-title {
+        margin: -0.18em 0 -0.18em 0;
+    }
+
+    .breadcumb-menu {
+
+        li,
+        a,
+        span {
+            font-size: 16px;
+            line-height: 26px;
+        }
+    }
+}
+
+@include md {
+    .breadcumb-wrapper {
+        padding: 130px 0; 
+    }
+}
+
+
+@include xs {
+    .breadcumb-wrapper {
+        padding: 130px 0;
+    }
+
+    .breadcumb-title {
+        font-size: 44px;
+        line-height: 54px;
+    }
+}
+
+@include vxs {
+    .breadcumb-wrapper {
+        padding: 120px 0;
+    }
+
+    .breadcumb-title {
+        font-size: 34px;
+        line-height: 44px;
+    }
+
+    .breadcumb-menu {
+        margin: 15px 0 -0.5em 0;
+    }
+}

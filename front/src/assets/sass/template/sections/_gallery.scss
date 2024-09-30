@@ -1,0 +1,247 @@
+.gallery-area {
+    .row {
+        --bs-gutter-x: 17px;
+    }
+}
+
+.gallery-card {
+    &:nth-child(2) {
+        margin-top: 17px;
+    }
+
+    .box-img {
+        //min-width: 250px;
+        border-radius: 24px;
+
+        @include md {
+            margin-bottom: 10px;
+        }
+
+        img {
+            border-radius: 24px;
+        }
+
+        .icon-btn {
+            position: absolute;
+            top: calc(50% - 20px);
+            left: calc(50% - 20px);
+            z-index: 3;
+            transform: scale(0);
+            border: none;
+            font-size: 40px;
+            font-weight: 300;
+            color: $white-color;
+
+            &:hover {
+                background-color: transparent;
+            }
+
+        }
+    }
+
+    &:hover {
+        .icon-btn {
+            transform: scale(1);
+        }
+    }
+}
+
+// img.mfp-img {
+//     width: 700px;
+//     object-fit: cover;
+
+//     @include md {
+//         width: 100%;
+//     }
+// }
+.gallery-box-wrapp {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+
+    .gallery-box {
+        &.style2 {
+            &:nth-child(5) {
+                margin-top: 24px;
+            }
+        }
+    }
+}
+
+.gallery-box {
+    position: relative;
+
+    &.style2 {
+        &:nth-child(2) {
+            margin-top: 0;
+        }
+
+        &:nth-child(1) {
+            margin-bottom: 24px;
+        }
+
+        &:hover {
+            .gallery-img {
+                transform: skewY(4deg);
+            }
+
+            .icon-btn {
+                transform: skewY(0deg);
+            }
+        }
+
+        .gallery-img {
+            img {
+                width: 100%;
+            }
+
+            @include md {
+                margin-bottom: 0;
+            }
+        }
+
+
+
+    }
+
+    &.style3 {
+        .gallery-img {
+            border-radius: 8px;
+
+            &:after {
+                border-radius: 8px;
+            }
+
+            img {
+                border-radius: 8px;
+                width: 100%;
+            }
+        }
+    }
+
+    &.style4 {
+        .gallery-img {
+            @include md {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &_wrapp {
+        &:first-child {
+            .gallery-box {
+                margin-top: 99px;
+
+                @include md {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        &:last-child {
+            .gallery-box {
+                margin-top: 348px;
+
+                @include xxl {
+                    margin-top: 24px;
+                }
+
+                @include xl {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    &:nth-child(2) {
+        margin-top: 24px;
+
+        @include xl {
+            margin-bottom: 24px;
+        }
+        @include md {
+            margin-bottom: 0; 
+        }
+    }
+
+    .gallery-img {
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+        border-radius: 16px;
+
+        @include md {
+            margin-bottom: 0;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(13, 13, 12, 0.5), rgba(13, 13, 12, 0.5));
+            border-radius: 16px;
+            opacity: 0;
+            transition: 0.4s ease;
+            transform: scale(0);
+            z-index: 1;
+        }
+
+        .icon-btn {
+            position: absolute;
+            top: calc(50% - 20px);
+            left: calc(50% - 20px);
+            z-index: 3;
+            transform: scale(0);
+            border: none;
+            font-size: 40px;
+            font-weight: 300;
+            color: $white-color;
+
+            &:hover {
+                background-color: transparent;
+            }
+
+        }
+
+        img {
+            border-radius: 16px;
+        }
+    }
+
+    &:hover {
+        .gallery-img {
+            &:after {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .icon-btn {
+            transform: scale(1);
+        }
+    }
+}
+
+/* gallery thumb  */
+.gallery-thumb {
+    &.style2 {
+        position: relative;
+        overflow: hidden;
+        border-radius: 24px;
+        margin: 0 8px;
+
+        img {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+        }
+
+        .gallery-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            color: $white-color;
+            font-size: 24px;
+        }
+    }
+}

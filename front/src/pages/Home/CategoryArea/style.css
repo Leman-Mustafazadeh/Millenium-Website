@@ -1,0 +1,26 @@
+.category-area {
+    position: relative;
+    padding: 60px 0;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .category-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px; /* Yuvarlak köşeler için */
+  }
+  
+  .box-img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .box-img img {
+    width: 100%;
+    height: auto; /* Görüntü oranını korur */
+    border-radius: 10px; /* Yuvarlak köşeler için */
+  }
+  
