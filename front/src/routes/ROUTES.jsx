@@ -16,6 +16,7 @@ import AdminTourm from "../pages/Admin/AdminTourm/AdminTourm";
 import AdminPopular from "../pages/Admin/AdminPopular/AdminPopular";
 import AdminActivies from "../pages/Admin/AdminActivities/AdminActivies";
 import Services from "../pages/Services/Services";
+import Incoming from "../pages/Incoming/Incoming";
 
 export const Routes = [
   {
@@ -49,6 +50,10 @@ export const Routes = [
       {
         path: "servicies",
         element: <Services />,
+      },
+      {
+        path: "incoming",
+        element: <Incoming />,
       },
     ],
   },

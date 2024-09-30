@@ -37,7 +37,7 @@ const Navbar = () => {
             <li class="menu-item-has-children">
               <a href="#">Tours</a>
               <ul class="sub-menu">
-                <li><a href="">Incoming</a></li>
+                <li><a href="/incoming">Incoming</a></li>
                 <li>
                   <a href="destination-details.html">Outgoing Details</a>
                 </li>
@@ -125,7 +125,7 @@ const Navbar = () => {
                       <li className="menu-item-has-children">
                         <a href="#">Tours</a>
                         <ul className="sub-menu">
-                          <li><a href="">Incoming</a></li>
+                          <li><a href="/incoming">Incoming</a></li>
                           <li><a href="destination-details.html">Outgoing</a></li>
                         </ul>
                       </li>
