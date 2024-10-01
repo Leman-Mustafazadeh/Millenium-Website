@@ -86,54 +86,54 @@ const AdminAwards = () => {
     message.success("Award deleted successfully!");
   };
 
-  const onFinish = async (values) => {
-    const formData = {
-      id: currentAwardId || awards.length + 1, // Use current ID if editing
-      ...values,
-      image: imageBase64, // Append the Base64 string to form data
-    };
+  // const onFinish = async (values) => {
+  //   const formData = {
+  //     id: currentAwardId || awards.length + 1, // Use current ID if editing
+  //     ...values,
+  //     image: imageBase64, // Append the Base64 string to form data
+  //   };
 
-    console.log(formData);
+  //   console.log(formData);
 
-    try {
-      // Mock API request to simulate saving
-      const response = await axios.get(`${BASE_URL}${endpoints.team}`); // Adjust this URL as needed
+  //   try {
+  //     // Mock API request to simulate saving
+  //     const response = await axios.get(`${BASE_URL}${endpoints.team}`); // Adjust this URL as needed
 
-      if (response.status === 200 || response.status === 201) {
-        if (currentAwardId) {
-          // Editing an existing award
-          setAwards((prevAwards) =>
-            prevAwards.map((award) =>
-              award.id === currentAwardId ? formData : award
-            )
-          );
-          message.success("Award updated successfully!");
-        } else {
-          // Adding a new award
-          setAwards([...awards, formData]);
-          message.success("Award added successfully!");
-        }
-        setIsModalVisible(false); // Close modal after success
-        form.resetFields(); // Reset form
-        setCurrentAwardId(null); // Reset current award ID
-      } else {
-        message.error(`Error: ${response.statusText}`);
-      }
+  //     if (response.status === 200 || response.status === 201) {
+  //       if (currentAwardId) {
+  //         // Editing an existing award
+  //         setAwards((prevAwards) =>
+  //           prevAwards.map((award) =>
+  //             award.id === currentAwardId ? formData : award
+  //           )
+  //         );
+  //         message.success("Award updated successfully!");
+  //       } else {
+  //         // Adding a new award
+  //         setAwards([...awards, formData]);
+  //         message.success("Award added successfully!");
+  //       }
+  //       setIsModalVisible(false); // Close modal after success
+  //       form.resetFields(); // Reset form
+  //       setCurrentAwardId(null); // Reset current award ID
+  //     } else {
+  //       message.error(`Error: ${response.statusText}`);
+  //     }
 
-      console.log("Response Data:", response.data);
-    } catch (error) {
-      // Handle different types of errors
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
+  //     console.log("Response Data:", response.data);
+  //   } catch (error) {
+  //     // Handle different types of errors
+  //     if (error.response) {
+  //       message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
+  //     } else if (error.request) {
+  //       message.error("No response from the server. Please check your network.");
+  //     } else {
+  //       message.error(`Error: ${error.message}`);
+  //     }
 
-      console.error("Error in Axios POST request:", error);
-    }
-  };
+  //     console.error("Error in Axios POST request:", error);
+  //   }
+  // };
 
   // Show the modal
   const showModal = () => {
