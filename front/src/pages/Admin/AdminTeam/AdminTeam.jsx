@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Upload, message, Modal, Table, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { BASE_URL, endpoints } from "../../../API/constant"; // Ensure these are correct
-import controller from "../../../API";
+import { BASE_URL, endpoints } from "../../../API/constant";
 
-// Function to convert image file to Base64
 const getBase64 = (file, callback) => {
   const reader = new FileReader();
   reader.readAsDataURL(file);
@@ -19,25 +17,9 @@ const AdminTeam = () => {
   const [form] = Form.useForm();
   const [imageBase64, setImageBase64] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [teamMembers, setTeamMembers] = useState([
-    {
-      id: 1,
-      fullName: "John Doe",
-      position: "Developer",
-      eMail: "john.doe@example.com",
-      image: "https://via.placeholder.com/50", // Placeholder image
-    },
-    {
-      id: 2,
-      fullName: "Jane Smith",
-      position: "Designer",
-      eMail: "jane.smith@example.com",
-      image: "https://via.placeholder.com/50", // Placeholder image
-    },
-  ]);
-  const [currentMemberId, setCurrentMemberId] = useState(null); // Track current member for edit
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [currentMemberId, setCurrentMemberId] = useState(null);
 
-  // Define table columns
   const columns = [
     {
       title: "ID",
@@ -45,14 +27,34 @@ const AdminTeam = () => {
       key: "id",
     },
     {
-      title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
+      title: "Full Name (AZ)",
+      dataIndex: "fullName_AZ",
+      key: "fullName_AZ",
     },
     {
-      title: "Position",
-      dataIndex: "position",
-      key: "position",
+      title: "Full Name (EN)",
+      dataIndex: "fullName_EN",
+      key: "fullName_EN",
+    },
+    {
+      title: "Full Name (RU)",
+      dataIndex: "fullName_RU",
+      key: "fullName_RU",
+    },
+    {
+      title: "Position (AZ)",
+      dataIndex: "position_AZ",
+      key: "position_AZ",
+    },
+    {
+      title: "Position (EN)",
+      dataIndex: "position_EN",
+      key: "position_EN",
+    },
+    {
+      title: "Position (RU)",
+      dataIndex: "position_RU",
+      key: "position_RU",
     },
     {
       title: "Email",
@@ -87,7 +89,12 @@ const AdminTeam = () => {
     }
   ];
 
-  // Handle image before upload to convert to Base64
+  useEffect(()=>{
+     axios.get(BASE_URL + endpoints.team).then((res)=>{
+      console.log(res)
+     });
+    // console.log(res);
+  },[])
   const beforeUpload = (file) => {
     const isImage = file.type.startsWith("image/");
     if (!isImage) {
@@ -97,19 +104,22 @@ const AdminTeam = () => {
     getBase64(file, (base64) => {
       setImageBase64(base64);
     });
-    return false; // Prevent default upload behavior
+    return false; 
   };
 
-  // Handle Edit action
   const handleEdit = (record) => {
     setCurrentMemberId(record.id);
     form.setFieldsValue({
-      fullName: record.fullName,
-      position: record.position,
+      fullName_AZ: record.fullName_AZ,
+      fullName_EN: record.fullName_EN,
+      fullName_RU: record.fullName_RU,
+      position_AZ: record.position_AZ,
+      position_EN: record.position_EN,
+      position_RU: record.position_RU,
       eMail: record.eMail,
     });
-    setImageBase64(record.image); 
-    setIsModalVisible(true); 
+    setImageBase64(record.image);
+    setIsModalVisible(true);
   };
 
   const handleDelete = (id) => {
@@ -118,39 +128,27 @@ const AdminTeam = () => {
   };
 
   const onFinish = async (values) => {
+    const base64Image = imageBase64.replace(/^data:image\/[a-z]+;base64,/, ""); // Remove base64 prefix
+
     const formData = {
-      id: currentMemberId || teamMembers.length + 1, 
-      image: imageBase64, 
+      fullName_AZ: values.fullName_AZ,
+      fullName_EN: values.fullName_EN,
+      fullName_RU: values.fullName_RU,
+      position_AZ: values.position_AZ,
+      position_EN: values.position_EN,
+      position_RU: values.position_RU,
+      eMail: values.eMail,
+      image: base64Image,
     };
 
-    console.log(formData);
+
 
     try {
-      const response = await axios.getAll(`${BASE_URL}${endpoints.team}`); 
-console.log(response);
+      const response = await axios.post(`${BASE_URL}${endpoints.addteam}`,formData); 
+      console.log(response);
 
-      if (response.status === 200 || response.status === 201) {
-        if (currentMemberId) {
-          setTeamMembers((prevMembers) =>
-            prevMembers.map((member) =>
-              member.id === currentMemberId ? formData : member
-            )
-          );
-          message.success("Team member updated successfully!");
-        } else {
-          setTeamMembers([...teamMembers, formData]);
-          message.success("Team member added successfully!");
-        }
-        setIsModalVisible(false); 
-        form.resetFields(); 
-        setCurrentMemberId(null); 
-      } else {
-        message.error(`Error: ${response.statusText}`);
-      }
-
-      console.log("Response Data:", response.data);
-    } catch (error) {
-      // Handle different types of errors
+    } 
+    catch (error) {
       if (error.response) {
         message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
       } else if (error.request) {
@@ -159,29 +157,49 @@ console.log(response);
         message.error(`Error: ${error.message}`);
       }
 
+      console.error("Error in Axios request:", error);
+    }
+
+    try {
+      const response = await axios.post(BASE_URL+ endpoints.addteam, formData);
+      console.log(response);
+
+      if (currentMemberId) {
+        setTeamMembers((prevMembers) => 
+          prevMembers.map((member) => (member.id === currentMemberId ? { ...member, ...formData } : member))
+        );
+        message.success("Team member updated successfully!");
+      } else {
+        setTeamMembers([...teamMembers, { ...formData, id: teamMembers.length + 1 }]);
+        message.success("Team member added successfully!");
+      }
+      
+      setIsModalVisible(false);
+      form.resetFields();
+      setCurrentMemberId(null);
+      setImageBase64(null);
+    } catch (error) {
+      message.error(`Error: ${error.message}`);
       console.error("Error in Axios POST request:", error);
     }
   };
 
-  
-  const [myPl, setMyPl] = useState([]);
-  useEffect(() => {
-    controller.getAll(endpoints.gallery).then((res) => {
-      setMyPl(res.data);
-      console.log(res.data);
-      
-    });
-  }, []);
-  // Show the modal
+  // useEffect(() => {
+  //   controller.getAll(endpoints.team).then((res) => {
+  //     setTeamMembers(res.data); 
+  //     console.log(res.data);
+  //   });
+  // }, []);
+
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  // Handle closing the modal
   const handleCancel = () => {
     setIsModalVisible(false);
-    setCurrentMemberId(null); // Reset current member ID
-    form.resetFields(); // Reset form
+    setCurrentMemberId(null);
+    form.resetFields();
+    setImageBase64(null); // Reset image when modal is canceled
   };
 
   return (
@@ -189,33 +207,56 @@ console.log(response);
       <Button type="primary" onClick={showModal} style={{ float: "right", margin: "20px 0" }}>
         Add New Team Member
       </Button>
-      {/* Table to display team members */}
       <Table columns={columns} dataSource={teamMembers} rowKey="id" />
-
-      {/* Modal with form inside */}
       <Modal
         title={currentMemberId ? "Edit Team Member" : "Add New Team Member"}
         visible={isModalVisible}
         onCancel={handleCancel}
-        footer={null} // Hide default footer buttons
+        footer={null}
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
-            name="fullName"
-            label="Full Name"
-            rules={[{ required: true, message: "Please enter your full name" }]}
+            name="fullName_AZ"
+            label="Full Name (AZ)"
+            rules={[{ required: true, message: "Please enter your full name (AZ)" }]}
           >
-            <Input placeholder="Enter full name" />
+            <Input placeholder="Enter full name (AZ)" />
           </Form.Item>
-
           <Form.Item
-            name="position"
-            label="Position"
-            rules={[{ required: true, message: "Please enter your position" }]}
+            name="fullName_EN"
+            label="Full Name (EN)"
+            rules={[{ required: true, message: "Please enter your full name (EN)" }]}
           >
-            <Input placeholder="Enter position" />
+            <Input placeholder="Enter full name (EN)" />
           </Form.Item>
-
+          <Form.Item
+            name="fullName_RU"
+            label="Full Name (RU)"
+            rules={[{ required: true, message: "Please enter your full name (RU)" }]}
+          >
+            <Input placeholder="Enter full name (RU)" />
+          </Form.Item>
+          <Form.Item
+            name="position_AZ"
+            label="Position (AZ)"
+            rules={[{ required: true, message: "Please enter your position (AZ)" }]}
+          >
+            <Input placeholder="Enter position (AZ)" />
+          </Form.Item>
+          <Form.Item
+            name="position_EN"
+            label="Position (EN)"
+            rules={[{ required: true, message: "Please enter your position (EN)" }]}
+          >
+            <Input placeholder="Enter position (EN)" />
+          </Form.Item>
+          <Form.Item
+            name="position_RU"
+            label="Position (RU)"
+            rules={[{ required: true, message: "Please enter your position (RU)" }]}
+          >
+            <Input placeholder="Enter position (RU)" />
+          </Form.Item>
           <Form.Item
             name="eMail"
             label="Email"
@@ -223,18 +264,16 @@ console.log(response);
           >
             <Input placeholder="Enter email" />
           </Form.Item>
-
           <Form.Item label="Upload Image">
             <Upload
               name="image"
               listType="picture"
               maxCount={1}
-              beforeUpload={beforeUpload} // Convert file to Base64 before upload
+              beforeUpload={beforeUpload}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
-
           <Form.Item>
             <Button type="primary" htmlType="submit">
               {currentMemberId ? "Update" : "Submit"}
@@ -243,7 +282,7 @@ console.log(response);
         </Form>
       </Modal>
     </>
-  );
+  ); 
 };
 
 export default AdminTeam;

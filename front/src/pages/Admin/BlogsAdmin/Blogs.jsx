@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Table, Button, Modal, Form, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { BASE_URL, endpoints } from "../../../API/constant"; 
+import { BASE_URL, endpoints } from "../../../API/constant";
 
 const Blogs = () => {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [tourImages, setTourImages] = useState([]);
-  const [imageBase64, setImageBase64] = useState(null); 
-  const [editMode, setEditMode] = useState(false); 
-  const [currentId, setCurrentId] = useState(null)
+  const [imageBase64, setImageBase64] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
 
   const columns = [
     {
@@ -28,22 +28,18 @@ const Blogs = () => {
     },
     {
       title: "Edit",
-      key: "Edit",
+      key: "edit",
       render: (_, record) => (
-        <>
-          <Button type="link" onClick={() => handleEdit(record)}>Edit</Button>
-        </>
+        <Button type="link" onClick={() => handleEdit(record)}>Edit</Button>
       ),
     },
     {
-        title: "Delete",
-        key: "Delete",
-        render: (_, record) => (
-          <>
-            <Button type="link" onClick={() => handleDelete(record.id)}>Delete</Button>
-          </>
-        ),
-      },
+      title: "Delete",
+      key: "delete",
+      render: (_, record) => (
+        <Button type="link" onClick={() => handleDelete(record.id)}>Delete</Button>
+      ),
+    },
   ];
 
   const beforeUpload = (file) => {
@@ -54,9 +50,14 @@ const Blogs = () => {
     }
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setImageBase64(reader.result);
+    reader.onload = () => {
+      setImageBase64(reader.result);
+      form.setFieldsValue({ image: reader.result }); 
+    };
     return false; 
   };
+
+  
 
   const handleDelete = (id) => {
     setTourImages(tourImages.filter(image => image.id !== id));
@@ -66,25 +67,19 @@ const Blogs = () => {
   const handleEdit = (record) => {
     setEditMode(true);
     setCurrentId(record.id);
-    setImageBase64(record.image); 
-    form.setFieldsValue({
-      image: record.image,
-    });
+    setImageBase64(record.image);
+    form.setFieldsValue({ image: record.image });
     setIsModalVisible(true);
   };
 
   const onFinish = async (values) => {
     const formData = {
-      id: editMode ? currentId : tourImages.length + 1, 
-      image: imageBase64, 
+      id: editMode ? currentId : tourImages.length + 1,
+      image: imageBase64,
     };
 
-    console.log(formData);
-    const response = await axios.post(`${BASE_URL}${endpoints.addteam}`,formData); 
-    console.log(response);
-    
     try {
-      const response = await axios.get(`${BASE_URL}${endpoints.team}`); 
+      const response = await axios.post(BASE_URL + endpoints.addGallery, formData);
 
       if (response.status === 200 || response.status === 201) {
         if (editMode) {
@@ -94,11 +89,7 @@ const Blogs = () => {
           setTourImages([...tourImages, formData]);
           message.success("Tour image added successfully!");
         }
-        setIsModalVisible(false); 
-        form.resetFields(); 
-        setImageBase64(null); 
-        setEditMode(false); 
-        setCurrentId(null);
+        handleCancel(); // Reset modal state
       } else {
         message.error(`Error: ${response.statusText}`);
       }
@@ -110,7 +101,6 @@ const Blogs = () => {
       } else {
         message.error(`Error: ${error.message}`);
       }
-
       console.error("Error in Axios request:", error);
     }
   };
@@ -121,10 +111,10 @@ const Blogs = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    form.resetFields(); 
+    form.resetFields();
     setImageBase64(null);
-    setEditMode(false); 
-    setCurrentId(null); 
+    setEditMode(false);
+    setCurrentId(null);
   };
 
   return (
@@ -138,7 +128,7 @@ const Blogs = () => {
         title={editMode ? "Edit Tour Image" : "Add New Tour Image"}
         visible={isModalVisible}
         onCancel={handleCancel}
-        footer={null} 
+        footer={null}
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item label="Upload Image" name="image">
@@ -146,8 +136,8 @@ const Blogs = () => {
               name="image"
               listType="picture"
               maxCount={1}
-              beforeUpload={beforeUpload} 
-              showUploadList={false} 
+              beforeUpload={beforeUpload}
+              showUploadList={false}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>

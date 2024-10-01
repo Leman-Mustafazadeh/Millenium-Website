@@ -1,6 +1,5 @@
 import Activities from "../pages/Activities/Activities";
 import AdminLogin from "../pages/Admin/AdminLogin/AdminLogin";
-import HeroArea from "../pages/Admin/AdminLogin/HeroArea/HeroArea";
 import AdminRouter from "../pages/Admin/AdminRouter";
 import AwarLicenses from "../pages/AwardAndLicenses/AwarLicenses";
 import ContactUs from "../pages/ContactUs/ContactUs";
@@ -17,6 +16,7 @@ import AdminPopular from "../pages/Admin/AdminPopular/AdminPopular";
 import AdminActivies from "../pages/Admin/AdminActivities/AdminActivies";
 import Services from "../pages/Services/Services";
 import Incoming from "../pages/Incoming/Incoming";
+import HeroArea from "../pages/Admin/HeroArea/HeroArea";
 
 export const Routes = [
   {

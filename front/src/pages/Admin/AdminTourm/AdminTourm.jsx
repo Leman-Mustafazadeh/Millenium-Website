@@ -85,17 +85,17 @@ const AdminTourm = () => {
 
     console.log(formData);
 
+    const response = await axios.post(BASE_URL + endpoints.addteam, formData);
+    console.log(response);
+   
     try {
-      // Mock API request to simulate saving
-      const response = await axios.get(`${BASE_URL}${endpoints.team}`); // Adjust this URL as needed
+      const response = await axios.get(`${BASE_URL}${endpoints.team}`); 
 
       if (response.status === 200 || response.status === 201) {
         if (editMode) {
-          // Update existing tour image
           setTourImages(tourImages.map(img => (img.id === currentId ? formData : img)));
           message.success("Tour image updated successfully!");
         } else {
-          // Adding a new tour image
           setTourImages([...tourImages, formData]);
           message.success("Tour image added successfully!");
         }
@@ -103,7 +103,7 @@ const AdminTourm = () => {
         form.resetFields(); // Reset form
         setImageBase64(null); // Clear image
         setEditMode(false); // Reset edit mode
-        setCurrentId(null); // Reset current ID
+        setCurrentId(null); 
       } else {
         message.error(`Error: ${response.statusText}`);
       }
