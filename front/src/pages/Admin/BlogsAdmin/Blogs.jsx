@@ -72,38 +72,38 @@ const Blogs = () => {
     setIsModalVisible(true);
   };
 
-  const onFinish = async (values) => {
-    const formData = {
-      id: editMode ? currentId : tourImages.length + 1,
-      image: imageBase64,
-    };
+  // const onFinish = async (values) => {
+  //   const formData = {
+  //     id: editMode ? currentId : tourImages.length + 1,
+  //     image: imageBase64,
+  //   };
 
-    try {
-      const response = await axios.post(BASE_URL + endpoints.addGallery, formData);
+  //   try {
+  //     const response = await axios.post(BASE_URL + endpoints.addGallery, formData);
 
-      if (response.status === 200 || response.status === 201) {
-        if (editMode) {
-          setTourImages(tourImages.map(img => (img.id === currentId ? formData : img)));
-          message.success("Tour image updated successfully!");
-        } else {
-          setTourImages([...tourImages, formData]);
-          message.success("Tour image added successfully!");
-        }
-        handleCancel(); // Reset modal state
-      } else {
-        message.error(`Error: ${response.statusText}`);
-      }
-    } catch (error) {
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
-      console.error("Error in Axios request:", error);
-    }
-  };
+  //     if (response.status === 200 || response.status === 201) {
+  //       if (editMode) {
+  //         setTourImages(tourImages.map(img => (img.id === currentId ? formData : img)));
+  //         message.success("Tour image updated successfully!");
+  //       } else {
+  //         setTourImages([...tourImages, formData]);
+  //         message.success("Tour image added successfully!");
+  //       }
+  //       handleCancel(); // Reset modal state
+  //     } else {
+  //       message.error(`Error: ${response.statusText}`);
+  //     }
+  //   } catch (error) {
+  //     if (error.response) {
+  //       message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
+  //     } else if (error.request) {
+  //       message.error("No response from the server. Please check your network.");
+  //     } else {
+  //       message.error(`Error: ${error.message}`);
+  //     }
+  //     console.error("Error in Axios request:", error);
+  //   }
+  // };
 
   const showModal = () => {
     setIsModalVisible(true);

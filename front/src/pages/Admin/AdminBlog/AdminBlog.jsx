@@ -86,62 +86,62 @@ const AdminBlog = () => {
     message.success("Blog deleted successfully!");
   };
 
-  const onFinish = async (values) => {
-    const formData = {
-      id: currentBlogId || blogs.length + 1, // Use current ID if editing
-      ...values,
-      image: imageBase64, // Append the Base64 string to form data
-      translations: [
-        {
-          id: 0,
-          name: values.name, // Assume the translation name is the same for simplicity
-          language: "en", // Assuming English for the default language
-          logoId: 0,
-          logo: imageBase64, // If there's a logo, you can use this base64 as logo as well
-        },
-      ],
-    };
+  // const onFinish = async (values) => {
+  //   const formData = {
+  //     id: currentBlogId || blogs.length + 1, // Use current ID if editing
+  //     ...values,
+  //     image: imageBase64, // Append the Base64 string to form data
+  //     translations: [
+  //       {
+  //         id: 0,
+  //         name: values.name, // Assume the translation name is the same for simplicity
+  //         language: "en", // Assuming English for the default language
+  //         logoId: 0,
+  //         logo: imageBase64, // If there's a logo, you can use this base64 as logo as well
+  //       },
+  //     ],
+  //   };
 
-    console.log(formData);
+  //   console.log(formData);
 
-    try {
-      // Mock API request to simulate saving
-      const response = await axios.get(`${BASE_URL}${endpoints.team}`); // Adjust this URL as needed
+  //   try {
+  //     // Mock API request to simulate saving
+  //     const response = await axios.get(`${BASE_URL}${endpoints.team}`); // Adjust this URL as needed
 
-      if (response.status === 200 || response.status === 201) {
-        if (currentBlogId) {
-          // Editing an existing blog
-          setBlogs((prevBlogs) =>
-            prevBlogs.map((blog) =>
-              blog.id === currentBlogId ? formData : blog
-            )
-          );
-          message.success("Blog updated successfully!");
-        } else {
-          // Adding a new blog
-          setBlogs([...blogs, formData]);
-          message.success("Blog added successfully!");
-        }
-        setIsModalVisible(false); // Close modal after success
-        form.resetFields(); // Reset form
-        setCurrentBlogId(null); // Reset current blog ID
-        setImageBase64(null); // Clear image
-      } else {
-        message.error(`Error: ${response.statusText}`);
-      }
-    } catch (error) {
-      // Handle different types of errors
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
+  //     if (response.status === 200 || response.status === 201) {
+  //       if (currentBlogId) {
+  //         // Editing an existing blog
+  //         setBlogs((prevBlogs) =>
+  //           prevBlogs.map((blog) =>
+  //             blog.id === currentBlogId ? formData : blog
+  //           )
+  //         );
+  //         message.success("Blog updated successfully!");
+  //       } else {
+  //         // Adding a new blog
+  //         setBlogs([...blogs, formData]);
+  //         message.success("Blog added successfully!");
+  //       }
+  //       setIsModalVisible(false); // Close modal after success
+  //       form.resetFields(); // Reset form
+  //       setCurrentBlogId(null); // Reset current blog ID
+  //       setImageBase64(null); // Clear image
+  //     } else {
+  //       message.error(`Error: ${response.statusText}`);
+  //     }
+  //   } catch (error) {
+  //     // Handle different types of errors
+  //     if (error.response) {
+  //       message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
+  //     } else if (error.request) {
+  //       message.error("No response from the server. Please check your network.");
+  //     } else {
+  //       message.error(`Error: ${error.message}`);
+  //     }
 
-      console.error("Error in Axios request:", error);
-    }
-  };
+  //     console.error("Error in Axios request:", error);
+  //   }
+  // };
 
   // Show the modal
   const showModal = () => {

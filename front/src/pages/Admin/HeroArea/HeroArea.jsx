@@ -98,45 +98,45 @@ const HeroArea = () => {
     setIsModalVisible(true);
   };
 
-  const onFinish = async (values) => {
-    const base64Image = imageBase64.replace(/^data:image\/[a-z]+;base64,/, ""); // Remove base64 prefix
+//   const onFinish = async (values) => {
+//     const base64Image = imageBase64.replace(/^data:image\/[a-z]+;base64,/, ""); // Remove base64 prefix
 
-    const formData = {
-      id: editMode ? currentId : heroItems.length + 1,
-      ...values,
-      image: base64Image,
-    };
-console.log(formData,"formdata");
+//     const formData = {
+//       id: editMode ? currentId : heroItems.length + 1,
+//       ...values,
+//       image: base64Image,
+//     };
+// console.log(formData,"formdata");
 
-    try {
-      const response = await axios.post(BASE_URL + endpoints.addhero, formData);
-      console.log(response);
+//     try {
+//       const response = await axios.post(BASE_URL + endpoints.addhero, formData);
+//       console.log(response);
 
-      if (editMode) {
-        setHeroItems(
-          heroItems.map((item) => (item.id === currentId ? formData : item))
-        );
-        message.success("Hero item updated successfully!");
-      } else {
-        setHeroItems([...heroItems, formData]);
-        message.success("Hero item added successfully!");
-      }
-      setIsModalVisible(false);
-      form.resetFields();
-      setEditMode(false);
-      setCurrentId(null);
-      setImageBase64(null); 
-    } catch (error) {
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
-      console.error("Error in Axios request:", error);
-    }
-  };
+//       if (editMode) {
+//         setHeroItems(
+//           heroItems.map((item) => (item.id === currentId ? formData : item))
+//         );
+//         message.success("Hero item updated successfully!");
+//       } else {
+//         setHeroItems([...heroItems, formData]);
+//         message.success("Hero item added successfully!");
+//       }
+//       setIsModalVisible(false);
+//       form.resetFields();
+//       setEditMode(false);
+//       setCurrentId(null);
+//       setImageBase64(null); 
+//     } catch (error) {
+//       if (error.response) {
+//         message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
+//       } else if (error.request) {
+//         message.error("No response from the server. Please check your network.");
+//       } else {
+//         message.error(`Error: ${error.message}`);
+//       }
+//       console.error("Error in Axios request:", error);
+//     }
+//   };
 
   const showModal = () => {
     setEditMode(false);

@@ -77,49 +77,49 @@ const AdminTourm = () => {
     setIsModalVisible(true);
   };
 
-  const onFinish = async (values) => {
-    const formData = {
-      id: editMode ? currentId : tourImages.length + 1, // Use current ID if editing, else generate new
-      image: imageBase64, // Append the Base64 string to form data
-    };
+  // const onFinish = async (values) => {
+  //   const formData = {
+  //     id: editMode ? currentId : tourImages.length + 1, // Use current ID if editing, else generate new
+  //     image: imageBase64, // Append the Base64 string to form data
+  //   };
 
-    console.log(formData);
+  //   console.log(formData);
 
-    const response = await axios.post(BASE_URL + endpoints.addteam, formData);
-    console.log(response);
+  //   // const response = await axios.post(BASE_URL + endpoints.addteam, formData);
+  //   // console.log(response);
    
-    try {
-      const response = await axios.get(`${BASE_URL}${endpoints.team}`); 
+  //   try {
+  //     // const response = await axios.get(`${BASE_URL}${endpoints.team}`); 
 
-      if (response.status === 200 || response.status === 201) {
-        if (editMode) {
-          setTourImages(tourImages.map(img => (img.id === currentId ? formData : img)));
-          message.success("Tour image updated successfully!");
-        } else {
-          setTourImages([...tourImages, formData]);
-          message.success("Tour image added successfully!");
-        }
-        setIsModalVisible(false); // Close modal after success
-        form.resetFields(); // Reset form
-        setImageBase64(null); // Clear image
-        setEditMode(false); // Reset edit mode
-        setCurrentId(null); 
-      } else {
-        message.error(`Error: ${response.statusText}`);
-      }
-    } catch (error) {
-      // Handle different types of errors
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
+  //     if (response.status === 200 || response.status === 201) {
+  //       if (editMode) {
+  //         setTourImages(tourImages.map(img => (img.id === currentId ? formData : img)));
+  //         message.success("Tour image updated successfully!");
+  //       } else {
+  //         setTourImages([...tourImages, formData]);
+  //         message.success("Tour image added successfully!");
+  //       }
+  //       setIsModalVisible(false); // Close modal after success
+  //       form.resetFields(); // Reset form
+  //       setImageBase64(null); // Clear image
+  //       setEditMode(false); // Reset edit mode
+  //       setCurrentId(null); 
+  //     } else {
+  //       message.error(`Error: ${response.statusText}`);
+  //     }
+  //   } catch (error) {
+  //     // Handle different types of errors
+  //     if (error.response) {
+  //       message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
+  //     } else if (error.request) {
+  //       message.error("No response from the server. Please check your network.");
+  //     } else {
+  //       message.error(`Error: ${error.message}`);
+  //     }
 
-      console.error("Error in Axios request:", error);
-    }
-  };
+  //     console.error("Error in Axios request:", error);
+  //   }
+  // };
 
   // Show the modal
   const showModal = () => {
