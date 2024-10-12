@@ -1,25 +1,25 @@
-import React from "react";
-import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
-import Swal from "sweetalert2";
-import './style.css';
-import { endpoints } from "../../../API/constant";
-import controller from "../../../API";
-import { login } from "../../../services/redux/user";
-import {useDispatch} from "react-redux"
+import { useFormik } from "formik";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import * as Yup from "yup";
+import controller from "../../../API";
+import { endpoints } from "../../../API/constant";
+// import { login } from "../../../services/redux/user";
+import "./style.css";
 const AdminLogin = () => {
-  const dispatch= useDispatch()
-  const navigate= useNavigate()
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const getUsername = async () => {
     try {
-      const response = await axios.getAll('/Account/get-username');
+      const response = await axios.getAll("/Account/get-username");
       console.log("Username:", response.data.username);
     } catch (error) {
       console.error("Error fetching username:", error);
@@ -27,27 +27,26 @@ const AdminLogin = () => {
   };
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email('Invalid email address')
-        .required('Invalid email address'),
+        .email("Invalid email address")
+        .required("Invalid email address"),
       password: Yup.string()
-        .min(6, 'Password must be at least 6 characters')
-        .required('Password must be at least 6 characters'),
+        .min(6, "Password must be at least 6 characters")
+        .required("Password must be at least 6 characters"),
     }),
 
-
-
     onSubmit: (values) => {
-      axios.post("https://millenniumtour.redmark.az/Account/Login", values).then((res)=>{
-        console.log(res.data.token);
-        dispatch(login(res.data))
-        navigate("/")
-        
-      })
+      axios
+        .post("https://millenniumtour.redmark.az/Account/Login", values)
+        .then((res) => {
+          console.log(res.data.token);
+          // dispatch(login(res.data));
+          // navigate("/");
+        });
     },
   });
 

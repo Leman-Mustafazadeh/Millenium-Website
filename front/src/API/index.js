@@ -1,10 +1,9 @@
-
 import axios from "axios";
 import { BASE_URL } from "./constant";
-import { useSelector } from "react-redux";
-const token = useSelector((state) => state.auth.token);
+
 //get all
- export async function getAll(endpoint) {
+export async function getAll(endpoint) {
+  const token = window !== undefined ? localStorage.getItem("token") : null;
   try {
     const response = await axios.get(BASE_URL + endpoint, {
       headers: {
@@ -37,11 +36,10 @@ export async function post(endpoint, payload) {
   try {
     const response = await axios.post(BASE_URL + endpoint, payload);
     return response.data;
-
   } catch (error) {
-    console.error('Error in Axios POST request:', error);
+    console.error("Error in Axios POST request:", error);
 
-    throw new Error(error.response ? error.response.data : 'Network Error');
+    throw new Error(error.response ? error.response.data : "Network Error");
   }
 }
 // export async function post(endpoint, payload) {
@@ -53,15 +51,14 @@ export async function post(endpoint, payload) {
 //   }
 // }
 
-
 //delete
- export async function deleteOne(endpoint, id, token) {
+export async function deleteOne(endpoint, id, token) {
   try {
     const response = await axios.delete(BASE_URL + endpoint + `/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }); 
+    });
     return response.data;
   } catch (error) {
     return error;
@@ -69,7 +66,7 @@ export async function post(endpoint, payload) {
 }
 
 //put
- export async function put(endpoint, id, payload) {
+export async function put(endpoint, id, payload) {
   try {
     const response = await axios.put(BASE_URL + endpoint + `/${id}`, payload);
     return response.data;
