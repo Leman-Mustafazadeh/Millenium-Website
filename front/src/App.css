@@ -4,3 +4,6 @@
 a{
     text-decoration: none !important;
 }
+.swiper-slide {
+    background:none !important;
+}

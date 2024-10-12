@@ -2,6 +2,7 @@
 
 @use "sass:math";
 
+
 :root {
   --theme-color: #1CA8CB;
   --title-color: #113D48;

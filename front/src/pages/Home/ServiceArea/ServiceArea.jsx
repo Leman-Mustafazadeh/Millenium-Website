@@ -13,6 +13,7 @@ import backgroundImg from '../../../assets/img/bg/tour_bg_1.jpg'; // Arka plan r
 import '../../../assets/css/style.css'; // Kendi stilleriniz
 
 const ServiceArea = () => {
+  
   return (
     <section
       className="position-relative bg-top-center overflow-hidden space"

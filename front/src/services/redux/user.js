@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 if (!JSON.parse(localStorage.getItem('user'))) {
-    localStorage.setItem('user',JSON.stringify({id:null,role:''}))
+    localStorage.setItem('user',JSON.stringify({id:null,token:null}))
 }
 
 const authInitialState = JSON.parse(localStorage.getItem('user'));
@@ -11,21 +11,21 @@ const userSlice = createSlice({
   initialState: authInitialState,
   reducers: {
     login: (state, action) => {
-      state.role = action.payload.role;
-      state.id = action.payload._id;
-      //local storage
+      // state.role = action.payload.role;
+      state.id = action.payload.id;
+      state.token = action.payload.token;
       localStorage.setItem(
         "user",
-        JSON.stringify({ role: action.payload.role, id: action.payload._id })
+        JSON.stringify({ id: action.payload.id,token })
       );
     },
     logout: (state) => {
         state.id = null;
         state.role = '';
-        localStorage.setItem('user',JSON.stringify({id:null,role:''}));
+        localStorage.setItem('user',JSON.stringify({id:null}));
     },
   },
 });
 
 export const { login, logout } = userSlice.actions;
-export default userSlice.reducer;
+// export default userSlice.reducer;

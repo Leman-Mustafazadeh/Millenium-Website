@@ -1,14 +1,15 @@
 
 import axios from "axios";
 import { BASE_URL } from "./constant";
-
+import { useSelector } from "react-redux";
+const token = useSelector((state) => state.auth.token);
 //get all
  export async function getAll(endpoint) {
   try {
     const response = await axios.get(BASE_URL + endpoint, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
   } catch (error) {
@@ -31,12 +32,16 @@ export async function getOne(endpoint, id, token) {
 }
 
 //post
- export async function post(endpoint, payload) {
+
+export async function post(endpoint, payload) {
   try {
     const response = await axios.post(BASE_URL + endpoint, payload);
     return response.data;
+
   } catch (error) {
-    return error;
+    console.error('Error in Axios POST request:', error);
+
+    throw new Error(error.response ? error.response.data : 'Network Error');
   }
 }
 // export async function post(endpoint, payload) {
@@ -56,7 +61,7 @@ export async function getOne(endpoint, id, token) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
+    }); 
     return response.data;
   } catch (error) {
     return error;

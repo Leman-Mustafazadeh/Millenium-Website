@@ -3,24 +3,39 @@
     padding: 60px 0;
     background-size: cover;
     background-position: center;
+    background-image: url("../../../assets//img/back.png");
+    width: 100%;
+    
   }
-  
+
   .category-card {
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    border-radius: 10px; /* Yuvarlak köşeler için */
+    border-radius: 6px;
   }
-  
+
+  .category_container{
+    padding: 100px 0;
+  }
   .box-img {
     width: 100%;
-    height: auto;
+    height: 300px;
   }
-  
+
   .box-img img {
+    height: 100%;
     width: 100%;
-    height: auto; /* Görüntü oranını korur */
-    border-radius: 10px; /* Yuvarlak köşeler için */
+   
+    cursor: pointer;
   }
-  
+  .box-img img:hover{
+    border-radius: 50px; 
+  }
+  .title_area h1{
+    font-size: 2rem;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }

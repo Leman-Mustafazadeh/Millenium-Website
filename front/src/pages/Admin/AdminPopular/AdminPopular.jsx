@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
-import { Table, Button, Modal, Form, Upload, message } from 'antd';
+import { Table, Button, Modal, Form, Upload, message, Checkbox, Input } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { BASE_URL, endpoints } from '../../../API/constant'; // Ensure these are correct
+import { BASE_URL, endpoints } from '../../../API/constant';
+
+
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+          resolve(reader.result); 
+      };
+      reader.onerror = (error) => {
+          console.error("Error reading file: ", error);
+          reject(error);
+      };
+  });
+}; 
 
 const AdminPopular = () => {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [popularItems, setPopularItems] = useState([]); // State for popular items
-  const [editMode, setEditMode] = useState(false); // State to track if editing
-  const [currentId, setCurrentId] = useState(null); // State to track the popular item ID being edited
-  const [imageBase64, setImageBase64] = useState(null); // State for image
+  const [popularItems, setPopularItems] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
+  const [imageBase64, setImageBase64] = useState(null);
 
-  // Define table columns
   const columns = [
     {
       title: 'ID',
@@ -28,9 +42,19 @@ const AdminPopular = () => {
       ),
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: 'Name (AZ)',
+      dataIndex: 'name_AZ',
+      key: 'name_AZ',
+    },
+    {
+      title: 'Name (EN)',
+      dataIndex: 'name_EN',
+      key: 'name_EN',
+    },
+    {
+      title: 'Name (RU)',
+      dataIndex: 'name_RU',
+      key: 'name_RU',
     },
     {
       title: 'Edit',
@@ -42,17 +66,16 @@ const AdminPopular = () => {
       ),
     },
     {
-        title: 'Delete',
-        key: 'Delete',
-        render: (_, record) => (
-          <>
-            <Button type="link" onClick={() => handleDelete(record.id)}>Delete</Button>
-          </>
-        ),
-      },
+      title: 'Delete',
+      key: 'Delete',
+      render: (_, record) => (
+        <>
+          <Button type="link" onClick={() => handleDelete(record.id)}>Delete</Button>
+        </>
+      ),
+    },
   ];
 
-  // Handle image upload to convert to Base64
   const beforeUpload = (file) => {
     const isImage = file.type.startsWith("image/");
     if (!isImage) {
@@ -62,85 +85,86 @@ const AdminPopular = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => setImageBase64(reader.result);
-    return false; // Prevent default upload behavior
+    return false;
   };
 
-  // Handle Delete action
   const handleDelete = (id) => {
     setPopularItems(popularItems.filter(item => item.id !== id));
     message.success("Popular item deleted successfully!");
   };
 
-  // Handle Edit action
   const handleEdit = (record) => {
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({
-      image: record.image,
-      title: record.title,
+      name_AZ: record.name_AZ,
+      name_EN: record.name_EN,
+      name_RU: record.name_RU,
+      isDeleted: record.isDeleted,
     });
-    setImageBase64(record.image); // Set current image for edit
+    setImageBase64(record.image);
     setIsModalVisible(true);
   };
+
+
 
   const onFinish = async (values) => {
-    const formData = {
-      id: editMode ? currentId : popularItems.length + 1, // Use current ID if editing, else generate new
-      image: imageBase64, // Append the Base64 string to form data
-      title: values.title,
+    const image = await getBase64(values.image.file);
+    const object = {
+      name_AZ: values.name_AZ,
+      name_EN: values.name_EN,
+      name_RU: values.name_RU,
+      image: imageBase64,
+      isDeleted: values.isDeleted || false,
     };
 
-    console.log(formData);
-
     try {
-      // Mock API request to simulate saving
-      const response = await axios.get(`${BASE_URL}${endpoints.team}`); // Adjust this URL as needed
+        const response = await axios.post(BASE_URL + endpoints.addtour, object, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-      if (response.status === 200 || response.status === 201) {
-        if (editMode) {
-          // Update existing popular item
-          setPopularItems(popularItems.map(item => (item.id === currentId ? formData : item)));
-          message.success("Popular item updated successfully!");
+        if (response.data) {
+            if (editMode) {
+              setPopularItems(
+                    heroItems.map((item) => (item.id === currentId ? object : item))
+                );
+                message.success("Hero item updated successfully!");
+            } else {
+              setPopularItems([...heroItems, { ...object, id: popularItems.length + 1 }]);
+                message.success("Hero item added successfully!");
+            }
+            setIsModalVisible(false);
+            form.resetFields();
+            setEditMode(false);
+            setCurrentId(null);
         } else {
-          // Adding a new popular item
-          setPopularItems([...popularItems, formData]);
-          message.success("Popular item added successfully!");
+            message.error("Failed to add or update hero item.");
         }
-        setIsModalVisible(false); // Close modal after success
-        form.resetFields(); // Reset form
-        setImageBase64(null); // Clear image
-        setEditMode(false); // Reset edit mode
-        setCurrentId(null); // Reset current ID
-      } else {
-        message.error(`Error: ${response.statusText}`);
-      }
     } catch (error) {
-      // Handle different types of errors
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
-
-      console.error("Error in Axios request:", error);
+        if (error.response) {
+            message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
+        } else if (error.request) {
+            message.error("No response from the server. Please check your network.");
+        } else {
+            message.error(`Error: ${error.message}`);
+        }
+        console.error("Error in Axios request:", error);
     }
-  };
+};
 
-  // Show the modal
   const showModal = () => {
-    setEditMode(false); // Reset edit mode
+    setEditMode(false);
     setIsModalVisible(true);
   };
 
-  // Handle closing the modal
   const handleCancel = () => {
     setIsModalVisible(false);
-    form.resetFields(); // Reset form
-    setImageBase64(null); // Clear image
-    setEditMode(false); // Reset edit mode
-    setCurrentId(null); // Reset current ID
+    form.resetFields();
+    setImageBase64(null);
+    setEditMode(false);
+    setCurrentId(null);
   };
 
   return (
@@ -148,31 +172,46 @@ const AdminPopular = () => {
       <Button type="primary" onClick={showModal} style={{ float: 'right', margin: '20px 0' }}>
         Add New Popular Item
       </Button>
-      {/* Table to display popular items */}
       <Table columns={columns} dataSource={popularItems} rowKey="id" />
 
-      {/* Modal with form inside */}
       <Modal
         title={editMode ? 'Edit Popular Item' : 'Add New Popular Item'}
         visible={isModalVisible}
         onCancel={handleCancel}
-        footer={null} // Hide default footer buttons
+        footer={null}
       >
-        <Form form={form} layout="vertical" onFinish={onFinish}>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={{ isDeleted: false }}
+        >
           <Form.Item label="Upload Image" name="image">
             <Upload
               name="image"
               listType="picture"
               maxCount={1}
-              beforeUpload={beforeUpload} // Convert file to Base64 before upload
-              showUploadList={false} // Hide default upload list
+              beforeUpload={beforeUpload}
+              showUploadList={false}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
 
-          <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Please enter the title!' }]}>
-            <input />
+          <Form.Item label="Name (AZ)" name="name_AZ" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Name (EN)" name="name_EN" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Name (RU)" name="name_RU" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item name="isDeleted" valuePropName="checked">
+            <Checkbox>Mark as deleted</Checkbox>
           </Form.Item>
 
           <Form.Item>

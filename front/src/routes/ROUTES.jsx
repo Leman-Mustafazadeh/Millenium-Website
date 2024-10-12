@@ -10,13 +10,15 @@ import UserRouter from "../pages/UserRouter";
 import Blogs from "../pages/Admin/BlogsAdmin/Blogs";
 import AdminTeam from "../pages/Admin/AdminTeam/AdminTeam";
 import AdminAwards from "../pages/Admin/AdminAwards/AdminAwards";
-import AdminBlog from "../pages/Admin/AdminBlog/AdminBlog";
 import AdminTourm from "../pages/Admin/AdminTourm/AdminTourm";
 import AdminPopular from "../pages/Admin/AdminPopular/AdminPopular";
 import AdminActivies from "../pages/Admin/AdminActivities/AdminActivies";
 import Services from "../pages/Services/Services";
 import Incoming from "../pages/Incoming/Incoming";
 import HeroArea from "../pages/Admin/HeroArea/HeroArea";
+import AddLogo from "../pages/Admin/AddLogo/AddLogo";
+import Outgoing from "../pages/Outgoing/Outgoing";
+import OutgoingDetail from "../pages/OutgoingDetail/OutgoingDetail";
 
 export const Routes = [
   {
@@ -55,6 +57,14 @@ export const Routes = [
         path: "incoming",
         element: <Incoming />,
       },
+      {
+        path: "outgoing",
+        element: <Outgoing />,
+      },
+      {
+        path: "outgoingdetail",
+        element: <OutgoingDetail />,
+      },
     ],
   },
   // {
@@ -87,8 +97,8 @@ export const Routes = [
         element: <AdminAwards />,
       },
       {
-        path: "adminblog",
-        element: <AdminBlog />,
+        path: "addlogo",
+        element: <AddLogo />,
       },
       {
         path: "admintourm",

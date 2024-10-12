@@ -76,7 +76,7 @@ const AdminAppBar = () => {
             },
             {
               key: '5',
-              icon: <Link style={{padding:0}} to="adminblog">AdminBlog</Link> ,
+              icon: <Link style={{padding:0}} to="addlogo">Add Logo</Link> ,
             },
             {
               key: '6',

@@ -72,7 +72,7 @@ const AboutArea = () => {
       <div className="shape-mockup shape3 d-none d-xl-block" data-top="14%" data-left="8%">
         <img src={shape3} alt="shape" />
       </div>
-
+      
       <div className="shape-mockup about-shape movingX d-none d-xxl-block" data-bottom="0%" data-right="8%">
         <img src={aboutSlideImg} alt="shape" />
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import img1 from "../../assets/img/bg/breadcumb-bg.jpg";
 import controller from '../../API';
 import { endpoints } from '../../API/constant';
@@ -12,7 +12,7 @@ controller.getAll(endpoints.team).then((res)=>{
 })
   },[])
   return (
-    <div className="col-md-4">
+    <div className="col-lg-4 col-md-6 col-sm-12 mb-5">
       <div className="tour-box th-ani">
         <div className="tour-box_img global-img">
           <img src={imageUrl} alt={`${name}`} />
@@ -22,9 +22,6 @@ controller.getAll(endpoints.team).then((res)=>{
             <span className="currency">{name}</span>
           </h4>
           <div className="tour-rating">{position}</div>
-          <div className="tour-action">
-            <span><i className="fa-light fa-clock"></i> Int.: 12</span>
-          </div>
           <div className="tour-action">
             <span><i className="fa-light fa-clock"></i> {email}</span>
           </div>
@@ -61,6 +58,12 @@ const OurTeam = () => {
       imageUrl: "https://millenniumtour.az/uploads/images/team/e8b9d52b1bf4be192775956d441cf12f.png"
     },
   ];
+  const[data,setData] = useState([])
+  useEffect(()=>{
+controller.getAll(endpoints.team).then((res)=>{
+  setData(res)
+})
+  },[])
 
   return (
     <div>
@@ -75,13 +78,13 @@ const OurTeam = () => {
       <section className="space">
         <div className="container">
           <div className="row gy-24 gx-24">
-            {teamMembers.map((member, index) => (
+            {data.map((member, index) => (
               <TeamMember 
                 key={index}
-                name={member.name}
-                position={member.position}
+                name={member.fullName_EN}
+                position={member.position_EN}
                 email={member.email}
-                imageUrl={member.imageUrl}
+                imageUrl={member.image}
               />
             ))}
           </div>

@@ -1,0 +1,9 @@
+.brand-box a img{
+    background-size: cover;
+    background-position: center;
+    height: 70px;
+    
+}
+.brand-box{
+    width: 100%;
+}

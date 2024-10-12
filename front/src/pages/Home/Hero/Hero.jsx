@@ -1,31 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "../../../assets/css/style.css";
 import "../../../assets/css/app.min.css";
 import "../../../assets/css/bootstrap.min.css";
 import "../../../assets/css/fontawesome.min.css";
 import "../../../assets/css/magnific-popup.min.css";
-// import "../../assets/css/style.css.map";
 import "../../../assets/css/swiper-bundle.min.css";
-import img1 from "../../../assets/img/hero/hero_bg_1_1.jpg";
-import img2 from "../../../assets/img/hero/hero_bg_1_2.jpg";
-import img3 from "../../../assets/img/hero/hero_bg_1_3.jpg";
 import img4 from "../../../assets/img/icon/right-arrow.svg";
 import img5 from "../../../assets/img/icon/left-arrow.svg";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+import './style.css';
+
+// import required modules
+import { Pagination } from 'swiper/modules';
+import controller from '../../../API';
+import { endpoints } from '../../../API/constant';
 
 const Hero = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    controller.getAll(endpoints.hero).then((res) => {
+      setData(res);
+    });
+  }, []);
+
   return (
     <div className="th-hero-wrapper hero-1" id="hero">
-      <div
-        className="swiper th-slider hero-slider-1"
-        id="heroSlide1"
-        data-slider-options='{"effect":"fade","menu": ["", "", ""],"heroSlide1": {"swiper-container": {"pagination": {"el": ".swiper-pagination", "clickable": true }}}}'
+      <Swiper
+        pagination={{
+          dynamicBullets: true,
+        }}
+        modules={[Pagination]}
+        className="mySwiper"
       >
-        <div className="swiper-wrapper">
-          <div className="swiper-slide">
+        {/* Map through the data array */}
+        {data.map((item, index) => (
+          <SwiperSlide key={index}>
             <div className="hero-inner">
+              {/* Assuming item has a 'backgroundImage' field */}
               <div
                 className="th-hero-bg"
-                style={{ backgroundImage: `url(${img1})` }}
+                style={{ backgroundImage: `url(${item.image})`,backgroundPosition:"center",backgroundSize:"cover" }}
               ></div>
               <div className="container">
                 <div className="hero-style1">
@@ -34,69 +54,18 @@ const Hero = () => {
                     data-ani="slideinup"
                     data-ani-delay="0.4s"
                   >
-                    Travel knows no borders
+                    {item.name_EN} {/* Assuming item has a 'title' field */}
                   </h1>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="hero-inner">
-              <div
-                className="th-hero-bg"
-                style={{ backgroundImage: `url(${img2})` }}
-              ></div>
-              <div className="container">
-                <div className="hero-style1">
-                  <h1
-                    className="hero-title"
-                    data-ani="slideinup"
-                    data-ani-delay="0.4s"
-                  >
-                    Let’s make your best trip with us
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="hero-inner">
-              <div
-                className="th-hero-bg"
-                style={{ backgroundImage: `url(${img3})` }}
-              ></div>
-              <div className="container">
-                <div className="hero-style1">
-                  <h1
-                    className="hero-title"
-                    data-ani="slideinup"
-                    data-ani-delay="0.4s"
-                  >
-                    Explore beauty of the whole world
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="th-swiper-custom">
-          <button
-            data-slider-prev="#heroSlide1"
-            className="slider-arrow slider-prev"
-          >
-            <img src={img5} alt="left arrow" />
-          </button>
-          <div className="slider-pagination"></div>
-          <button
-            data-slider-next="#heroSlide1"
-            className="slider-arrow slider-next"
-          >
-            <img src={img4} alt="right arrow" />
-          </button>
-        </div>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      
     </div>
   );
-}
+};
 
 export default Hero;

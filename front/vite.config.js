@@ -11,5 +11,12 @@ export default defineConfig({
   // },
    build:{
     outDir: "build"
-  }
+  },
+  vite: {
+    server: {
+        watch: {
+            usePolling: true,
+        },
+    },
+},
 });

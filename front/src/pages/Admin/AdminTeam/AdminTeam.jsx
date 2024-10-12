@@ -3,22 +3,29 @@ import { Form, Input, Button, Upload, message, Modal, Table, Space } from "antd"
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
+import controller from "../../../API";
 
-const getBase64 = (file, callback) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => callback(reader.result);
-  reader.onerror = (error) => {
-    console.error("Error reading file: ", error);
-  };
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64 = reader.result.split(",")[1]; 
+      resolve(base64);
+    };
+    reader.onerror = (error) => {
+      console.error("Error reading file: ", error);
+      reject(error);
+    };
+  });
 };
 
 const AdminTeam = () => {
   const [form] = Form.useForm();
-  const [imageBase64, setImageBase64] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [teamMembers, setTeamMembers] = useState([]);
   const [currentMemberId, setCurrentMemberId] = useState(null);
+  const [imageFile, setImageFile] = useState(null); 
 
   const columns = [
     {
@@ -66,7 +73,11 @@ const AdminTeam = () => {
       dataIndex: "image",
       key: "image",
       render: (image) => (
-        <img src={image} alt="Profile" style={{ width: 50, height: 50, objectFit: "cover" }} />
+        <img
+          src={`data:image/jpeg;base64,${image}`} // Ensure the correct MIME type
+          alt="Profile"
+          style={{ width: 50, height: 50, objectFit: "cover" }}
+        />
       ),
     },
     {
@@ -86,25 +97,17 @@ const AdminTeam = () => {
           <a onClick={() => handleDelete(record.id)}>Delete</a>
         </Space>
       ),
-    }
+    },
   ];
 
-  useEffect(()=>{
-     axios.get(BASE_URL + endpoints.team).then((res)=>{
-      console.log(res)
-     });
-    // console.log(res);
-  },[])
   const beforeUpload = (file) => {
     const isImage = file.type.startsWith("image/");
     if (!isImage) {
       message.error("You can only upload image files!");
       return Upload.LIST_IGNORE;
     }
-    getBase64(file, (base64) => {
-      setImageBase64(base64);
-    });
-    return false; 
+    setImageFile(file); // Store the image file for later use
+    return false; // Prevent automatic upload
   };
 
   const handleEdit = (record) => {
@@ -118,93 +121,95 @@ const AdminTeam = () => {
       position_RU: record.position_RU,
       eMail: record.eMail,
     });
-    setImageBase64(record.image);
     setIsModalVisible(true);
   };
 
-  const handleDelete = (id) => {
-    setTeamMembers(teamMembers.filter(member => member.id !== id));
-    message.success("Team member deleted successfully!");
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${BASE_URL}${endpoints.deleteteam}/${id}`);
+      setTeamMembers(teamMembers.filter((member) => member.id !== id));
+      message.success("Team member deleted successfully!");
+    } catch (error) {
+      message.error(`Error deleting team member: ${error.message}`);
+    }
   };
 
   const onFinish = async (values) => {
-    const base64Image = imageBase64.replace(/^data:image\/[a-z]+;base64,/, ""); // Remove base64 prefix
-
-    const formData = {
-      fullName_AZ: values.fullName_AZ,
-      fullName_EN: values.fullName_EN,
-      fullName_RU: values.fullName_RU,
-      position_AZ: values.position_AZ,
-      position_EN: values.position_EN,
-      position_RU: values.position_RU,
-      eMail: values.eMail,
-      image: base64Image,
-    };
-
-
-
     try {
-      const response = await axios.post(`${BASE_URL}${endpoints.addteam}`,formData); 
-      console.log(response);
+      // Convert image to base64 if there's an uploaded file
+      const imageBase64 = imageFile ? await getBase64(imageFile) : null;
 
-    } 
-    catch (error) {
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
-
-      console.error("Error in Axios request:", error);
-    }
-
-    try {
-      const response = await axios.post(BASE_URL+ endpoints.addteam, formData);
-      console.log(response);
+      const object = {
+        fullName_AZ: values.fullName_AZ,
+        fullName_EN: values.fullName_EN,
+        fullName_RU: values.fullName_RU,
+        position_AZ: values.position_AZ,
+        position_EN: values.position_EN,
+        position_RU: values.position_RU,
+        eMail: values.eMail,
+        image: imageBase64 || "", 
+      };
 
       if (currentMemberId) {
-        setTeamMembers((prevMembers) => 
-          prevMembers.map((member) => (member.id === currentMemberId ? { ...member, ...formData } : member))
+        // Update existing team member
+        await axios.post(BASE_URL + endpoints.addGallery, object, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setTeamMembers((prevMembers) =>
+          prevMembers.map((member) =>
+            member.id === currentMemberId ? { ...member, ...object } : member
+          )
         );
         message.success("Team member updated successfully!");
       } else {
-        setTeamMembers([...teamMembers, { ...formData, id: teamMembers.length + 1 }]);
+        // Add new team member
+        const response = await axios.post(BASE_URL + endpoints.addteam, object);
+        setTeamMembers([...teamMembers, { ...object, id: response.data.id }]);
         message.success("Team member added successfully!");
       }
-      
+
       setIsModalVisible(false);
       form.resetFields();
       setCurrentMemberId(null);
-      setImageBase64(null);
+      setImageFile(null); // Reset image file after submission
     } catch (error) {
       message.error(`Error: ${error.message}`);
-      console.error("Error in Axios POST request:", error);
     }
   };
 
-  // useEffect(() => {
-  //   controller.getAll(endpoints.team).then((res) => {
-  //     setTeamMembers(res.data); 
-  //     console.log(res.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const response = await axios.get(BASE_URL + endpoints.team);
+        setTeamMembers(response.data);
+      } catch (error) {
+        message.error("Failed to fetch team members.");
+      }
+    };
+    fetchTeamMembers();
+  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
+    form.resetFields();
+    setCurrentMemberId(null);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
     setCurrentMemberId(null);
     form.resetFields();
-    setImageBase64(null); // Reset image when modal is canceled
   };
 
   return (
     <>
-      <Button type="primary" onClick={showModal} style={{ float: "right", margin: "20px 0" }}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{ float: "right", margin: "20px 0" }}
+      >
         Add New Team Member
       </Button>
       <Table columns={columns} dataSource={teamMembers} rowKey="id" />
@@ -264,25 +269,26 @@ const AdminTeam = () => {
           >
             <Input placeholder="Enter email" />
           </Form.Item>
-          <Form.Item label="Upload Image">
+          <Form.Item label="Upload Image" name="image">
             <Upload
               name="image"
               listType="picture"
               maxCount={1}
               beforeUpload={beforeUpload}
+              showUploadList={false}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              {currentMemberId ? "Update" : "Submit"}
+            <Button type="primary" htmlType="submit" block>
+              {currentMemberId ? "Update" : "Add"}
             </Button>
           </Form.Item>
         </Form>
       </Modal>
     </>
-  ); 
+  );
 };
 
 export default AdminTeam;
