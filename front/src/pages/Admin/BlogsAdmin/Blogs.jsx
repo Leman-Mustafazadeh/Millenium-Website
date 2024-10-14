@@ -3,13 +3,14 @@ import { Table, Button, Modal, Form, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
+import Cookies from 'js-cookie'
 
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const base64 = reader.result.split(",");  // Extract base64 string
+      const base64 = reader.result.split(","); // Extract base64 string
       resolve(base64);
     };
     reader.onerror = (error) => {
@@ -39,7 +40,9 @@ const Blogs = () => {
       key: "image",
       render: (image) => {
         // Prepend "data:image/png;base64," if the image is base64 encoded
-        const imageSrc = image.startsWith("http") ? image : `data:image/png;base64,${image}`;
+        const imageSrc = image.startsWith("http")
+          ? image
+          : `data:image/png;base64,${image}`;
         return (
           <img
             src={imageSrc}
@@ -101,7 +104,14 @@ const Blogs = () => {
       const imageBase64 = imageFile ? await getBase64(imageFile) : null;
       const object = {
         image: imageBase64,
+        isDeleted: false
       };
+      const token = window !== undefined ? Cookies.get("ftoken") : null;
+      if (!token || token === "null") {
+        console.log("Token not found or is null");
+      } else {
+        console.log("Token:", token);
+      }
 
       const response = await axios.post(
         BASE_URL + endpoints.addGallery,
@@ -109,10 +119,13 @@ const Blogs = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
+      console.log(response);
+      
       if (response.status === 200 || response.status === 201) {
         if (editMode) {
           setTourImages(
@@ -122,7 +135,10 @@ const Blogs = () => {
           );
           message.success("Tour image updated successfully!");
         } else {
-          setTourImages([...tourImages, { ...object, id: tourImages.length + 1 }]);
+          setTourImages([
+            ...tourImages,
+            { ...object, id: tourImages.length + 1 },
+          ]);
           message.success("Tour image added successfully!");
         }
         handleCancel();
@@ -166,7 +182,7 @@ const Blogs = () => {
     form.resetFields();
     setEditMode(false);
     setCurrentId(null);
-    setImageFile(null); // Reset image file after submission
+    setImageFile(null);
   };
 
   return (

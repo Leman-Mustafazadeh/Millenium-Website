@@ -5,6 +5,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 import controller from "../../../API";
 import { BASE_URL, endpoints } from "../../../API/constant";
+import Cookies from "js-cookie";
 
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -89,7 +90,7 @@ const HeroArea = () => {
     message.success("Hero item deleted successfully!");
   };
 
-  const { loginData } = useSelector((state) => state.auth); // Access loginData from Redux store
+  const { loginData } = useSelector((state) => state.auth);
 
   // const handleDelete = async (id) => {
   //     try {
@@ -134,8 +135,14 @@ const HeroArea = () => {
     };
 
     try {
-      const token =
-        window !== undefined ? window.localStorage.getItem("token") : null;
+      const token = window !== undefined ? Cookies.get("ftoken") : null;
+      console.log(token);
+
+      if (!token || token === "null") {
+        console.log("Token not found or is null");
+      } else {
+        console.log("Token:", token);
+      }
 
       const response = await axios.post(BASE_URL + endpoints.addhero, object, {
         headers: {
@@ -143,15 +150,19 @@ const HeroArea = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(JSON.parse(response.config.data));
+      
 
-      if (response.data) {
+      // console.log(JSON.stringify(response.data));
+
+      if (response.config.data) {
         if (editMode) {
           setHeroItems(
             heroItems.map((item) => (item.id === currentId ? object : item))
           );
           message.success("Hero item updated successfully!");
         } else {
-          setHeroItems([...heroItems, { ...object, id: heroItems.length + 1 }]);
+          // setHeroItems([...heroItems, { ...object, id: heroItems.length + 1 }]);
           message.success("Hero item added successfully!");
         }
         setIsModalVisible(false);
@@ -177,18 +188,59 @@ const HeroArea = () => {
     }
   };
 
+  // useEffect(() => {
+  //   controller.getAll(endpoints.hero).then((res) => {
+  //     const formattedItems = res.map((item) => {
+  //       const isBase64 = item.image && item.image.startsWith("data:image/");
+  //       return {
+  //         ...item,
+  //         image: isBase64 ? item.image : `data:image/png;base64,${item.image}`,
+  //       };
+  //     });
+  //     setHeroItems(formattedItems);
+  //   });
+  // }, []);
+
   useEffect(() => {
     controller.getAll(endpoints.hero).then((res) => {
-      const formattedItems = res.map((item) => {
-        const isBase64 = item.image && item.image.startsWith("data:image/");
-        return {
-          ...item,
-          image: isBase64 ? item.image : `data:image/png;base64,${item.image}`,
-        };
-      });
-      setHeroItems(formattedItems);
+      console.log(res, "ress");
+      setHeroItems(res)
     });
+
+    // const response = async () => {
+    //  return await axios.get().then((res)=>{
+    //   console.log(res);
+      
+    //  })
+    // };
+    // response()
+   
+
+    // const url =
+    //   'https://2112-82-194-25-132.ngrok-free.app/api/Gallery/get-slides';
+
+    // const res = async () => {
+    //   try {
+    //     const r = await fetch(url, {
+    //       method: 'GET',
+    //       headers: {
+    //         'Accept': 'application/json', 
+    //       },
+    //     });
+
+    //     const res = await r;
+    //     console.log(res);
+    //     return res;
+    //   } catch (error) {
+    //     console.log(error);
+    //     return error;
+    //   }
+    // };
+
+    //  res();
+    
   }, []);
+  console.log(heroItems);
 
   const showModal = () => {
     setEditMode(false);
@@ -220,7 +272,7 @@ const HeroArea = () => {
       >
         Add New Hero Item
       </Button>
-      <Table columns={columns} dataSource={heroItems ?? []} rowKey="id" />
+      <Table columns={columns} dataSource={heroItems} rowKey="id" />
 
       <Modal
         title={editMode ? "Edit Hero Item" : "Add New Hero Item"}

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Upload, message, Checkbox, Input } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { BASE_URL, endpoints } from '../../../API/constant';
+import controller from '../../../API';
+import Cookies from 'js-cookie'
 
 
 const getBase64 = (file) => {
@@ -109,50 +111,67 @@ const AdminPopular = () => {
 
 
   const onFinish = async (values) => {
-    const image = await getBase64(values.image.file);
-    const object = {
-      name_AZ: values.name_AZ,
-      name_EN: values.name_EN,
-      name_RU: values.name_RU,
-      image: imageBase64,
-      isDeleted: values.isDeleted || false,
-    };
-
     try {
-        const response = await axios.post(BASE_URL + endpoints.addtour, object, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        if (response.data) {
-            if (editMode) {
-              setPopularItems(
-                    heroItems.map((item) => (item.id === currentId ? object : item))
-                );
-                message.success("Hero item updated successfully!");
-            } else {
-              setPopularItems([...heroItems, { ...object, id: popularItems.length + 1 }]);
-                message.success("Hero item added successfully!");
-            }
-            setIsModalVisible(false);
-            form.resetFields();
-            setEditMode(false);
-            setCurrentId(null);
+      const image = await getBase64(values.image.file);
+      const object = {
+        name_AZ: values.name_AZ,
+        name_EN: values.name_EN,
+        name_RU: values.name_RU,
+        image: imageBase64,
+        isDeleted: false,
+      };
+  
+      const token = Cookies.get("ftoken");
+      const response = await axios.post(BASE_URL + endpoints.addtour, object, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.config.data) {
+        if (editMode) {
+          setPopularItems(
+            popularItems.map((item) => (item.id === currentId ? object : item))
+          );
+          message.success("Popular item updated successfully!");
         } else {
-            message.error("Failed to add or update hero item.");
+          // Ensure popularItems is an array before adding a new item
+          setPopularItems((prevItems) => [
+            ...prevItems,
+            { ...object, id: prevItems.length + 1 },
+          ]);
+          message.success("Popular item added successfully!");
         }
+  
+        setIsModalVisible(false);
+        form.resetFields();
+        setEditMode(false);
+        setCurrentId(null);
+      } else {
+        message.error("Failed to add or update popular item.");
+      }
     } catch (error) {
-        if (error.response) {
-            message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-        } else if (error.request) {
-            message.error("No response from the server. Please check your network.");
-        } else {
-            message.error(`Error: ${error.message}`);
-        }
-        console.error("Error in Axios request:", error);
+      if (error.response) {
+        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
+      } else if (error.request) {
+        message.error("No response from the server. Please check your network.");
+      } else {
+        message.error(`Error: ${error.message}`);
+      }
+      console.error("Error in Axios request:", error);
     }
-};
+  };
+  
+
+useEffect(()=>{
+  controller.getAll(endpoints.tour).then((res)=>{
+    setPopularItems(res)
+    console.log(res);
+  })
+},[])
+console.log(popularItems);
+
 
   const showModal = () => {
     setEditMode(false);
@@ -210,9 +229,9 @@ const AdminPopular = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item name="isDeleted" valuePropName="checked">
+          {/* <Form.Item name="isDeleted" valuePropName="checked">
             <Checkbox>Mark as deleted</Checkbox>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item>
             <Button type="primary" htmlType="submit">

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loginData } from "./auth";
 
 if (!JSON.parse(localStorage.getItem("user"))) {
   localStorage.setItem("user", JSON.stringify({ id: null, token: null }));
@@ -7,22 +8,25 @@ if (!JSON.parse(localStorage.getItem("user"))) {
 const authInitialState = JSON.parse(localStorage.getItem("user"));
 
 const userSlice = createSlice({
-  name: "user",
-  initialState: authInitialState,
+  name: "auth",
+  initialState: {
+    loginData
+  },
   reducers: {
     login: (state, action) => {
-      // state.role = action.payload.role;
+     Cookies.set("ftoken",action.payload.token)
+     state.loginData=action.payload
       state.id = action.payload.id;
-      state.token = action.payload.token;
       localStorage.setItem(
         "user",
-        JSON.stringify({ id: action.payload.id, token: "sdklgsklg" })
+        JSON.stringify({ id: action.payload.id, token:"" })
       );
     },
     logout: (state) => {
       state.id = null;
       state.role = "";
       localStorage.setItem("user", JSON.stringify({ id: null }));
+      Cookies.remove("token")
     },
   },
 });

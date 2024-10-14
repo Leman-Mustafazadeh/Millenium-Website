@@ -19,6 +19,9 @@ import HeroArea from "../pages/Admin/HeroArea/HeroArea";
 import AddLogo from "../pages/Admin/AddLogo/AddLogo";
 import Outgoing from "../pages/Outgoing/Outgoing";
 import OutgoingDetail from "../pages/OutgoingDetail/OutgoingDetail";
+import AdminIncoming from "../pages/Admin/AdminIncoming/AdminIncoming";
+import AdminOutgoing from "../pages/Admin/AdminOutgoing/AdminOutgoing";
+import AdminServicies from "../pages/Admin/AdminServicies/AdminServicies";
 
 export const Routes = [
   {
@@ -67,18 +70,15 @@ export const Routes = [
       },
     ],
   },
-  // {
-  //   path: "/admin",
-  //   element: <AdminLogin />,
-  // },
+  {
+    path: "/admin/login",
+    element: <AdminLogin />,
+  },
+
   {
     path: "admin",
     element: <AdminRouter />,
     children: [
-      {
-        index: true,
-        element:  <AdminLogin />,
-      },
       {
         path: "hero",
         element: <HeroArea />,
@@ -91,7 +91,7 @@ export const Routes = [
         path: "teamadmin",
         element: <AdminTeam />,
       },
-      
+
       {
         path: "awardsadmin",
         element: <AdminAwards />,
@@ -111,6 +111,18 @@ export const Routes = [
       {
         path: "adminactivities",
         element: <AdminActivies />,
+      },
+      {
+        path: "adminincoming",
+        element: <AdminIncoming />,
+      },
+      {
+        path: "adminoutgoing",
+        element: <AdminOutgoing />,
+      },
+      {
+        path: "adminservicies",
+        element: <AdminServicies />,
       },
     ],
   },

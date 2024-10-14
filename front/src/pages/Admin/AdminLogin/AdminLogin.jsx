@@ -8,23 +8,21 @@ import { useFormik } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import * as Yup from "yup";
-import controller from "../../../API";
-import { endpoints } from "../../../API/constant";
-// import { login } from "../../../services/redux/user";
+import { login } from "../../../services/redux/auth";
 import "./style.css";
+import { message } from "antd";
 const AdminLogin = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  const getUsername = async () => {
-    try {
-      const response = await axios.getAll("/Account/get-username");
-      console.log("Username:", response.data.username);
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
-  };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const getUsername = async () => {
+  //   try {
+  //     const response = await axios.getAll("/Account/get-username");
+  //     console.log("Username:", response.data.username);
+  //   } catch (error) {
+  //     console.error("Error fetching username:", error);
+  //   }
+  // };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -44,9 +42,15 @@ const AdminLogin = () => {
         .post("https://millenniumtour.redmark.az/Account/Login", values)
         .then((res) => {
           console.log(res.data.token);
-          // dispatch(login(res.data));
-          // navigate("/");
+          dispatch(login(res.data));
+          // window.location.href = "/admin/hero";
+          navigate("/admin/hero");
+        }).catch((err)=>{
+          message.error(err.response.data.message|| "loggedin failed")
+          // console.log(err.response.data.message);
+          
         });
+        
     },
   });
 

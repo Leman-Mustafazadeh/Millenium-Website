@@ -1,15 +1,13 @@
 import axios from "axios";
 import { BASE_URL } from "./constant";
-
+import Cookies from 'js-cookie'
 //get all
 export async function getAll(endpoint) {
-  const token = window !== undefined ? localStorage.getItem("token") : null;
+  // const token = window !== undefined ? Cookies.get("ftoken") : null;
+  // console.log(token);
+  
   try {
-    const response = await axios.get(BASE_URL + endpoint, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(BASE_URL + endpoint);
     return response.data;
   } catch (error) {
     return error;

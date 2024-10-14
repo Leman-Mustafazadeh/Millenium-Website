@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
+import controller from "../../../API";
 
 const AdminTourm = () => {
   const [form] = Form.useForm();
@@ -87,15 +88,16 @@ const AdminTourm = () => {
   const onFinish = async (values) => {
     const image = await getBase64(values.image.file);
     const object = {
-      image 
-    };
+      image ,
+      isDeleted:false
+        };
 
     try {
-      // const response = await axios.post(BASE_URL + endpoints.addhero, object, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
+      const response = await axios.post(BASE_URL + endpoints.addtour, object, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       
       if (response.status === 200 || response.status === 201) {
         if (editMode) {
@@ -124,6 +126,11 @@ const AdminTourm = () => {
     }
   };
 
+  useEffect(()=>{
+    controller.getAll(endpoints.tour).then((res)=>{
+      setTourImages(res)
+    })
+  },[])
   const showModal = () => {
     setIsModalVisible(true);
   };

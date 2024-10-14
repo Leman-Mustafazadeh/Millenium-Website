@@ -5,10 +5,10 @@ import axios from 'axios';
 import { BASE_URL, endpoints } from '../../../API/constant';
 import controller from '../../../API';
 
-const AdminActivities = () => {
+const AdminOutgoing = () => {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [activities, setActivities] = useState([]);
+  const [outgoingItems, setOutgoingItems] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const [imageBase64, setImageBase64] = useState(null);
@@ -24,18 +24,13 @@ const AdminActivities = () => {
       dataIndex: 'image',
       key: 'image',
       render: (image) => (
-        <img src={image} alt="Activity" style={{ width: 100, height: 100, objectFit: 'cover' }} />
+        <img src={image} alt="Outgoing" style={{ width: 100, height: 100, objectFit: 'cover' }} />
       ),
     },
     {
-      title: 'Title (AZ)',
-      dataIndex: 'title_AZ',
-      key: 'title_AZ',
-    },
-    {
-      title: 'Description (AZ)',
-      dataIndex: 'text_AZ',
-      key: 'text_AZ',
+      title: 'Name (AZ)',
+      dataIndex: 'name_AZ',
+      key: 'name_AZ',
     },
     {
       title: 'Actions',
@@ -61,22 +56,24 @@ const AdminActivities = () => {
     return false;
   };
 
-  const handleDelete = (id) => {
-    controller.delete(endpoints.delactivity, id).then((res) => {
-      console.log("Deleted activity:", res);
-      setActivities(activities.filter(activity => activity.id !== id));
-      message.success("Activity deleted successfully!");
-    });
+  const handleDelete = async (id) => {
+    try {
+      await controller.delete(endpoints.delOutgoing, id); // API call for deletion
+      setOutgoingItems(outgoingItems.filter(item => item.id !== id));
+      message.success("Item deleted successfully!");
+    } catch (error) {
+      message.error("Error deleting item.");
+      console.error("Delete error:", error);
+    }
   };
 
   const handleEdit = (record) => {
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({
-      image: record.image,
-      title_AZ: record.title_AZ,
-      title_EN: record.title_EN,
-      title_RU: record.title_RU,
+      name_AZ: record.name_AZ,
+      name_EN: record.name_EN,
+      name_RU: record.name_RU,
       text_AZ: record.text_AZ,
       text_EN: record.text_EN,
       text_RU: record.text_RU,
@@ -91,13 +88,11 @@ const AdminActivities = () => {
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: imageBase64, // Use existing image or the new one from the Upload
-      title_AZ: values.title_AZ,
-      title_EN: values.title_EN,
-      title_RU: values.title_RU,
+      image: imageBase64, // Use the uploaded image
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
+      createDate: new Date().toISOString(), // Current date
       isDeleted: false, // Default to false
     };
 
@@ -105,11 +100,10 @@ const AdminActivities = () => {
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token || token === "null") {
         console.log("Token not found or is null");
-      } else {
-        console.log("Token:", token);
+        return;
       }
 
-      const response = await axios.post(BASE_URL + endpoints.addactivity, object, {
+      const response = await axios.post(BASE_URL + endpoints.addoutgoing, object, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -118,39 +112,37 @@ const AdminActivities = () => {
 
       if (response.data) {
         if (editMode) {
-          setActivities(
-            activities.map((item) => (item.id === currentId ? object : item))
+          setOutgoingItems(
+            outgoingItems.map((item) => (item.id === currentId ? object : item))
           );
-          message.success("Activity updated successfully!");
+          message.success("Outgoing item updated successfully!");
         } else {
-          setActivities([...activities, { ...object, id: activities.length + 1 }]);
-          message.success("Activity added successfully!");
+          setOutgoingItems([...outgoingItems, { ...object, id: outgoingItems.length + 1 }]);
+          message.success("Outgoing item added successfully!");
         }
         setIsModalVisible(false);
         form.resetFields();
         setEditMode(false);
         setCurrentId(null);
+        setImageBase64(null); // Reset image
       } else {
-        message.error("Failed to add or update activity.");
+        message.error("Failed to add or update outgoing item.");
       }
     } catch (error) {
-      if (error.response) {
-        message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        message.error("No response from the server. Please check your network.");
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
+      message.error("Error occurred while saving data.");
       console.error("Error in Axios request:", error);
     }
   };
 
   useEffect(() => {
-    controller.getAll(endpoints.activity).then((res) => {
-      setActivities(res);
-    });
+    const fetchOutgoingItems = async () => {
+      const res = await controller.getAll(endpoints.outgoing);
+      setOutgoingItems(res);
+    };
+
+    fetchOutgoingItems();
   }, []);
-  console.log(activities);
+  console.log(outgoingItems);
   
 
   const showModal = () => {
@@ -161,37 +153,25 @@ const AdminActivities = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
-    setImageBase64(null);
+    setImageBase64(null); // Reset image
     setEditMode(false);
     setCurrentId(null);
   };
 
   return (
-    <>
+    <div>
       <Button type="primary" onClick={showModal} style={{ float: 'right', margin: '20px 0' }}>
-        Add New Activity
+        Add New Outgoing Item
       </Button>
-      <Table columns={columns} dataSource={activities} rowKey="id" />
+      <Table columns={columns} dataSource={outgoingItems} rowKey="id" />
 
       <Modal
-        title={editMode ? 'Edit Activity' : 'Add New Activity'}
+        title={editMode ? 'Edit Outgoing Item' : 'Add New Outgoing Item'}
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={null}
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
-          <Form.Item label="Upload Image" name="image">
-            <Upload
-              name="image"
-              listType="picture"
-              maxCount={1}
-              beforeUpload={beforeUpload}
-              showUploadList={false}
-            >
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          </Form.Item>
-
           <Form.Item label="Name (AZ)" name="name_AZ" rules={[{ required: true, message: 'Please enter the name in AZ!' }]}>
             <input />
           </Form.Item>
@@ -204,16 +184,16 @@ const AdminActivities = () => {
             <input />
           </Form.Item>
 
-          <Form.Item label="Title (AZ)" name="title_AZ" rules={[{ required: true, message: 'Please enter the title!' }]}>
-            <input />
-          </Form.Item>
-
-          <Form.Item label="Title (EN)" name="title_EN">
-            <input />
-          </Form.Item>
-
-          <Form.Item label="Title (RU)" name="title_RU">
-            <input />
+          <Form.Item label="Image" name="image">
+            <Upload
+              name="image"
+              listType="picture"
+              maxCount={1}
+              beforeUpload={beforeUpload}
+              showUploadList={false}
+            >
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
           </Form.Item>
 
           <Form.Item label="Description (AZ)" name="text_AZ" rules={[{ required: true, message: 'Please enter the description!' }]}>
@@ -235,8 +215,8 @@ const AdminActivities = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </div>
   );
 };
 
-export default AdminActivities;
+export default AdminOutgoing;

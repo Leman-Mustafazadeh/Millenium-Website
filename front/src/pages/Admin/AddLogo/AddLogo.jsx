@@ -13,6 +13,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
 import controller from "../../../API";
+import Cookies from 'js-cookie';
 
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -69,7 +70,11 @@ const AddLogo = () => {
         />
       ),
     },
-
+    {
+      title: "Link",
+      dataIndex: "link",
+      key: "link",
+    },
     {
       title: "Edit",
       key: "Edit",
@@ -108,7 +113,7 @@ const AddLogo = () => {
       name_RU: record.name_RU,
       link: record.link,
     });
-    setImageFile(null); // Reset imageFile to avoid using previous image
+    setImageFile(null); 
     setIsModalVisible(true);
   };
 
@@ -129,13 +134,22 @@ const AddLogo = () => {
       name_EN: values.name_EN,
       name_RU: values.name_RU,
       link: values.link,
-      image: image, // Use base64 image
+      isDeleted: false, // Set isDeleted to false by default
+      image,
     };
 
     try {
+      const token = window !== undefined ? Cookies.get("ftoken") : null;
+      if (!token || token === "null") {
+        console.log("Token not found or is null");
+      } else {
+        console.log("Token:", token);
+      }
+
       const response = await axios.post(BASE_URL + endpoints.addlogo, object, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -176,12 +190,14 @@ const AddLogo = () => {
     controller.getAll(endpoints.logo).then((res) => {
       console.log(res);
 
-      const formattedBlogs = res.map((blog) => ({
-        ...blog,
-        image: blog.image.startsWith("data:")
-          ? blog.image
-          : `data:image/png;base64,${blog.image}`,
-      }));
+      const formattedBlogs = res
+        .filter((blog) => !blog.isDeleted) // Filter out deleted blogs
+        .map((blog) => ({
+          ...blog,
+          image: blog.image.startsWith("data:")
+            ? blog.image
+            : `data:image/png;base64,${blog.image}`,
+        }));
       setBlogs(formattedBlogs);
     });
   }, []);
@@ -252,6 +268,19 @@ const AddLogo = () => {
             ]}
           >
             <Input placeholder="Enter blog name in Russian" />
+          </Form.Item>
+
+          <Form.Item
+            name="link"
+            label="Link"
+            rules={[
+              {
+                required: true,
+                message: "Please enter the blog link",
+              },
+            ]}
+          >
+            <Input placeholder="Enter blog link" />
           </Form.Item>
 
           <Form.Item label="Upload Image">

@@ -94,6 +94,18 @@ const AdminAppBar = () => {
               key: '9',
               icon: <Link style={{padding:0}} to="adminactivities">Admin Activities</Link> ,
             },
+            {
+              key: '10',
+              icon: <Link style={{padding:0}} to="adminincoming">Admin Incoming</Link> ,
+            },
+            {
+              key: '11',
+              icon: <Link style={{padding:0}} to="adminoutgoing">Admin Outgoing</Link> ,
+            },
+            {
+              key: '12',
+              icon: <Link style={{padding:0}} to="adminservicies">Admin Servicies</Link> ,
+            },
           ]}
         />
       </Sider>

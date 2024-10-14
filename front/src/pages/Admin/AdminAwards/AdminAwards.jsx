@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Upload, message, Modal, Table, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { BASE_URL, endpoints } from "../../../API/constant"; // Ensure these are correct
+import { BASE_URL, endpoints } from "../../../API/constant";
+import controller from "../../../API";
+import Cookies from 'js-cookie';
 
-// Function to convert image file to Base64
-const getBase64 = (file, callback) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => callback(reader.result);
-  reader.onerror = (error) => {
-    console.error("Error reading file: ", error);
-  };
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.error("Error reading file: ", error);
+      reject(error);
+    };
+  });
 };
 
 const AdminAwards = () => {
   const [form] = Form.useForm();
   const [imageBase64, setImageBase64] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [awards, setAwards] = useState([]); // State for awards
-  const [currentAwardId, setCurrentAwardId] = useState(null); // Track current award for edit
+  const [awards, setAwards] = useState([]);
+  const [currentAwardId, setCurrentAwardId] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
-  // Define table columns
   const columns = [
     {
       title: "ID",
@@ -56,73 +62,87 @@ const AdminAwards = () => {
     },
   ];
 
-  // Handle image before upload to convert to Base64
   const beforeUpload = (file) => {
     const isImage = file.type.startsWith("image/");
     if (!isImage) {
       message.error("You can only upload image files!");
       return Upload.LIST_IGNORE;
     }
-    getBase64(file, (base64) => {
+    getBase64(file).then((base64) => {
       setImageBase64(base64);
     });
-    return false; // Prevent default upload behavior
+    return false;
   };
 
-  // Handle Edit action
   const handleEdit = (record) => {
     setCurrentAwardId(record.id);
     form.setFieldsValue({
       title: record.title,
       description: record.description,
     });
-    setImageBase64(record.image); // Set the current image to state
-    setIsModalVisible(true); // Show the modal
+    setImageBase64(record.image);
+    setIsModalVisible(true);
+    setEditMode(true);
   };
 
-  // Handle Delete action
   const handleDelete = (id) => {
-    setAwards(awards.filter(award => award.id !== id));
+    controller.delete(endpoints.delaward, id).then((res) => {
+      console.log("deleted", res);
+    });
+    setAwards(awards.filter((award) => award.id !== id));
     message.success("Award deleted successfully!");
   };
 
   const onFinish = async (values) => {
-    const formData = {
-      id: currentAwardId || awards.length + 1, // Use current ID if editing
+    let image;
+
+    // Only get Base64 if a new image is uploaded
+    if (values.image && values.image.file) {
+      image = await getBase64(values.image.file);
+    } else if (currentAwardId) {
+      // Use the existing image if editing and no new image uploaded
+      image = imageBase64;
+    }
+
+    const object = {
       ...values,
-      image: imageBase64, // Append the Base64 string to form data
+      image,
+      isDeleted: false,
     };
 
-    console.log(formData);
-
     try {
-      // Mock API request to simulate saving
-      const response = await axios.get(`${BASE_URL}${endpoints.team}`); // Adjust this URL as needed
+      const token = window !== undefined ? Cookies.get("ftoken") : null;
+      if (!token || token === "null") {
+        console.log("Token not found or is null");
+      } else {
+        console.log("Token:", token);
+      }
 
-      if (response.status === 200 || response.status === 201) {
-        if (currentAwardId) {
-          // Editing an existing award
-          setAwards((prevAwards) =>
-            prevAwards.map((award) =>
-              award.id === currentAwardId ? formData : award
-            )
+      const response = await axios.post(BASE_URL + endpoints.addaward, object, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data) {
+        if (editMode) {
+          setAwards(
+            awards.map((item) => (item.id === currentAwardId ? object : item))
           );
           message.success("Award updated successfully!");
         } else {
-          // Adding a new award
-          setAwards([...awards, formData]);
+          setAwards([...awards, { ...object, id: awards.length + 1 }]);
           message.success("Award added successfully!");
         }
-        setIsModalVisible(false); // Close modal after success
-        form.resetFields(); // Reset form
-        setCurrentAwardId(null); // Reset current award ID
+        setIsModalVisible(false);
+        form.resetFields();
+        setEditMode(false);
+        setCurrentAwardId(null);
       } else {
-        message.error(`Error: ${response.statusText}`);
+        message.error("Failed to add or update award.");
       }
-
-      console.log("Response Data:", response.data);
     } catch (error) {
-      // Handle different types of errors
       if (error.response) {
         message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
       } else if (error.request) {
@@ -130,22 +150,26 @@ const AdminAwards = () => {
       } else {
         message.error(`Error: ${error.message}`);
       }
-
-      console.error("Error in Axios POST request:", error);
+      console.error("Error in Axios request:", error);
     }
   };
 
-  // Show the modal
+  useEffect(() => {
+    controller.getAll(endpoints.award).then((res) => {
+      setAwards(res);
+    });
+  }, []);
+
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  // Handle closing the modal
   const handleCancel = () => {
     setIsModalVisible(false);
-    setCurrentAwardId(null); // Reset current award ID
-    form.resetFields(); // Reset form
-    setImageBase64(null); // Clear image
+    setCurrentAwardId(null);
+    form.resetFields();
+    setImageBase64(null);
+    setEditMode(false);
   };
 
   return (
@@ -153,24 +177,21 @@ const AdminAwards = () => {
       <Button type="primary" onClick={showModal} style={{ float: "right", margin: "20px 0" }}>
         Add New Award
       </Button>
-      {/* Table to display awards */}
       <Table columns={columns} dataSource={awards} rowKey="id" />
 
-      {/* Modal with form inside */}
       <Modal
         title={currentAwardId ? "Edit Award" : "Add New Award"}
         visible={isModalVisible}
         onCancel={handleCancel}
-        footer={null} // Hide default footer buttons
+        footer={null}
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
-
-          <Form.Item label="Upload Image">
+          <Form.Item name="image" label="Upload Image">
             <Upload
               name="image"
               listType="picture"
               maxCount={1}
-              beforeUpload={beforeUpload} // Convert file to Base64 before upload
+              beforeUpload={beforeUpload}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>

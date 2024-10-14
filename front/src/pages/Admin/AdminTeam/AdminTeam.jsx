@@ -148,6 +148,7 @@ const AdminTeam = () => {
         position_RU: values.position_RU,
         eMail: values.eMail,
         image: imageBase64 || "", 
+        isDeleted:false
       };
 
       if (currentMemberId) {
@@ -190,6 +191,8 @@ const AdminTeam = () => {
     };
     fetchTeamMembers();
   }, []);
+  console.log(teamMembers);
+  
 
   const showModal = () => {
     setIsModalVisible(true);
