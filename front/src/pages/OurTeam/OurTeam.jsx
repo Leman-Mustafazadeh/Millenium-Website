@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import img1 from "../../assets/img/bg/breadcumb-bg.jpg";
+import img1 from "../../assets/img/bg/breadcumb-bg.jpg"; // Regular image import
 import controller from '../../API';
 import { endpoints } from '../../API/constant';
 
+// Component for displaying each team member
 const TeamMember = ({ name, position, email, imageUrl }) => {
-
-  useEffect(()=>{
-controller.getAll(endpoints.team).then((res)=>{
-  console.log(res);
-  
-})
-  },[])
   return (
     <div className="col-lg-4 col-md-6 col-sm-12 mb-5">
       <div className="tour-box th-ani">
         <div className="tour-box_img global-img">
-          <img src={imageUrl} alt={`${name}`} />
+          {/* Ensure image is displayed correctly as a Base64 image */}
+          <img src={`data:image/jpeg;base64,${imageUrl}`} alt={`${name}`} />
         </div>
         <div className="tour-content">
           <h4 className="">
@@ -23,7 +18,7 @@ controller.getAll(endpoints.team).then((res)=>{
           </h4>
           <div className="tour-rating">{position}</div>
           <div className="tour-action">
-            <span><i className="fa-light fa-clock"></i> {email}</span>
+            <span><i className="fa-light fa-clock"></i><a href="" style={{color:"black"}}> {email}</a></span>
           </div>
         </div>
       </div>
@@ -31,42 +26,20 @@ controller.getAll(endpoints.team).then((res)=>{
   );
 };
 
+// Main component for displaying the team section
 const OurTeam = () => {
-  const teamMembers = [
-    {
-      name: "Ruslan Guliyev",
-      position: "Director",
-      email: "gmanager@millenniumtour.az",
-      imageUrl: "https://millenniumtour.az/uploads/images/team/e8b9d52b1bf4be192775956d441cf12f.png"
-    },
-    {
-      name: "Vugar Aliyev",
-      position: "Founder",
-      email: "vugar@millenniumtour.az",
-      imageUrl: "https://millenniumtour.az/uploads/images/team/e8b9d52b1bf4be192775956d441cf12f.png"
-    },
-    {
-      name: "Husniya Mammadova",
-      position: "Finance Director",
-      email: "finance@millenniumtour.az",
-      imageUrl: "https://millenniumtour.az/uploads/images/team/e8b9d52b1bf4be192775956d441cf12f.png"
-    },
-    {
-      name: "Ruslan Guliyev",
-      position: "Director",
-      email: "gmanager@millenniumtour.az",
-      imageUrl: "https://millenniumtour.az/uploads/images/team/e8b9d52b1bf4be192775956d441cf12f.png"
-    },
-  ];
-  const[data,setData] = useState([])
-  useEffect(()=>{
-controller.getAll(endpoints.team).then((res)=>{
-  setData(res)
-})
-  },[])
+  const [data, setData] = useState([]);
+
+  // Fetch team data from the API
+  useEffect(() => {
+    controller.getAll(endpoints.team).then((res) => {
+      setData(res); // Set the fetched data to state
+    });
+  }, []);
 
   return (
     <div>
+      {/* Breadcrumb section */}
       <div className="breadcumb-wrapper" style={{ backgroundImage: `url(${img1})` }}>
         <div className="container">
           <div className="breadcumb-content">
@@ -75,16 +48,18 @@ controller.getAll(endpoints.team).then((res)=>{
         </div>
       </div>
 
+      {/* Team members section */}
       <section className="space">
         <div className="container">
           <div className="row gy-24 gx-24">
+            {/* Map over the fetched team data and display each member */}
             {data.map((member, index) => (
-              <TeamMember 
+              <TeamMember
                 key={index}
                 name={member.fullName_EN}
                 position={member.position_EN}
-                email={member.email}
-                imageUrl={member.image}
+                email={member.eMail}  
+                imageUrl={member.image}  
               />
             ))}
           </div>

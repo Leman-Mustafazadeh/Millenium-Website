@@ -7,8 +7,7 @@ export const endpoints = {
 
   hero: "/api/Gallery/get-slides",//hero area
   addhero:"/api/Gallery/add-slide",
-  delhero: "/api/Gallery/delete-slide/{id}",
-  delhero:"/api/Gallery/delete-slide/{id}",
+  delhero: "/api/Gallery/delete-slide",
 puthero:"/api/Gallery/update-slide{id}",
 
 
@@ -16,14 +15,14 @@ puthero:"/api/Gallery/update-slide{id}",
 
   gallery: "/api/Gallery/get-gallery", //2ci section
   addGallery: "/api/Gallery/add-image",
-  delgallery:"/api/Gallery/delete-image/{id}",
+  delgallery:"/api/Gallery/delete-image",
   putgallery:"/api/Gallery/update-gallery/{id}",
 
 
 
   tour:"/api/Tour/get-tours",//most popular tour
   addtour:"/api/Tour/add-tour",
-  deltour:"/api/Tour/delete-tour/{id}",
+  deltour:"/api/Tour/delete-tour",
   puttour:"/api/Tour/update-tour{id}",
 
 
@@ -46,7 +45,7 @@ puthero:"/api/Gallery/update-slide{id}",
 
   addlogo: "/api/Gallery/add-logo",//home hissesindeki logo olan section
   logo: "/api/Gallery/get-logos",
-  dellogo:"/api/Gallery/delete-logo/{id}",
+  dellogo:"/api/Gallery/delete-logo",
   putlogo:"/api/Gallery/update-logo{id}",
 
 
@@ -81,6 +80,6 @@ puthero:"/api/Gallery/update-slide{id}",
 
 activity:"/api/Activity/get-activities",//acticity page
   addactivity:"/api/Activity/add-activity",
-  delactivity:"/api/Activity/delete-activity/{id}",
+  delactivity:"/api/Activity/delete-activity",
   putactivity:"/api/Activity/update-activity{id}"
 };

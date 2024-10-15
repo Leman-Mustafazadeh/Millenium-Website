@@ -62,7 +62,7 @@ const AdminActivities = () => {
   };
 
   const handleDelete = (id) => {
-    controller.delete(endpoints.delactivity, id).then((res) => {
+    controller.getOne(`${endpoints.delactivity}/${id}`).then((res) => {
       console.log("Deleted activity:", res);
       setActivities(activities.filter(activity => activity.id !== id));
       message.success("Activity deleted successfully!");

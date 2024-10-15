@@ -109,7 +109,7 @@ const AdminServices = () => {
         return;
       }
 
-      const response = await axios.post(BASE_URL + endpoints.addService, object, {
+      const response = await axios.post(BASE_URL + endpoints.addservice, object, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -142,12 +142,14 @@ const AdminServices = () => {
 
   useEffect(() => {
     const fetchServices = async () => {
-      const res = await controller.getAll(endpoints.services);
+      const res = await controller.getAll(endpoints.service);
       setServices(res);
     };
 
     fetchServices();
   }, []);
+  console.log();
+  
 
   const showModal = () => {
     setEditMode(false);

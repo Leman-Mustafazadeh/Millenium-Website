@@ -10,7 +10,7 @@ const getBase64 = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const base64 = reader.result.split(",")[1]; 
+      const base64 = reader.result.split(",")[1]; // Extract base64 part
       resolve(base64);
     };
     reader.onerror = (error) => {
@@ -19,7 +19,6 @@ const getBase64 = (file) => {
     };
   });
 };
-
 const AdminTeam = () => {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);

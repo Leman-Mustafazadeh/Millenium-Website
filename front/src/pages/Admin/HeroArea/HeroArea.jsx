@@ -84,7 +84,10 @@ const HeroArea = () => {
   ];
 
   const handleDelete = (id) => {
-    // controller.delete(endpoints.delhero,id)
+    controller.getOne(`${endpoints.delhero}/${id}`).then((res)=>{
+      console.log(res);
+      
+    })
     // axios.delete(endpoints.de)
     setHeroItems(heroItems.filter((item) => item.id !== id));
     message.success("Hero item deleted successfully!");
@@ -95,7 +98,7 @@ const HeroArea = () => {
   // const handleDelete = async (id) => {
   //     try {
   //         // Send delete request to backend
-  //         // await axios.delete(`${BASE_URL}${endpoints.delhero}/${id}`);
+  //         await axios.delete(`${BASE_URL}${endpoints.puthero}/${id}`);
 
   //         // Update the local state to remove the item from the table
   //         setHeroItems((prevItems) => prevItems.filter((item) => item.id !== id));

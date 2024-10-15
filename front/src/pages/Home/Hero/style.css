@@ -32,3 +32,9 @@
     line-height: 1.18;
     color: #ffffff;
   }
+  .th-hero-bg{
+    height: 100%;
+  }
+  .hero_inner{
+    height: 100vh !important;
+  }

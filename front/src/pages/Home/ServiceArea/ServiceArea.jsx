@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -11,8 +11,19 @@ import tourImage3 from '../../../assets/img/tour/tour_box_3.jpg';
 import tourImage4 from '../../../assets/img/tour/tour_box_4.jpg';
 import backgroundImg from '../../../assets/img/bg/tour_bg_1.jpg'; // Arka plan resmi
 import '../../../assets/css/style.css'; // Kendi stilleriniz
+import controller from '../../../API';
+import { endpoints } from '../../../API/constant';
 
 const ServiceArea = () => {
+  const[popular,setPopular]=useState([])
+  useEffect(()=>{
+    controller.getAll(endpoints.tour).then((res)=>{
+      
+      setPopular(res)
+    })
+  },[])
+  console.log(popular);
+  
   
   return (
     <section
@@ -55,112 +66,29 @@ const ServiceArea = () => {
             modules={[Pagination]}
             className="mySwiper"
           >
-            {/* Tour 1 */}
-            <SwiperSlide>
-              <div className="tour-box th-ani gsap-cursor">
-                <div className="tour-box_img global-img">
-                  <img src={tourImage1} alt="Greece Tour Package" />
-                </div>
-                <div className="tour-content">
-                  <h3 className="box-title"><a href="tour-details.html">Greece Tour Package</a></h3>
-                  <div className="tour-rating">
-                    <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                      <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
-                    </div>
-                    <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
+          
+         {
+          popular.map((item,index)=>(
+            <SwiperSlide key={index}>
+            <div className="tour-box th-ani gsap-cursor">
+              <div className="tour-box_img global-img">
+                <img src={item.image} alt="Greece Tour Package" />
+              </div>
+              <div className="tour-content">
+                <h3 className="box-title"><a href="tour-details.html">{item.name_EN}</a></h3>
+                <div className="tour-rating">
+                  <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
+                    <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
                   </div>
+                  <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
                 </div>
               </div>
-            </SwiperSlide>
+            </div>
+          </SwiperSlide>
+          ))
+         }
 
-            {/* Tour 2 */}
-            <SwiperSlide>
-              <div className="tour-box th-ani gsap-cursor">
-                <div className="tour-box_img global-img">
-                  <img src={tourImage2} alt="Italy Tour Package" />
-                </div>
-                <div className="tour-content">
-                  <h3 className="box-title"><a href="tour-details.html">Italy Tour Package</a></h3>
-                  <div className="tour-rating">
-                    <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                      <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
-                    </div>
-                    <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-
-            {/* Tour 3 */}
-            <SwiperSlide>
-              <div className="tour-box th-ani gsap-cursor">
-                <div className="tour-box_img global-img">
-                  <img src={tourImage3} alt="Dubai Tour Package" />
-                </div>
-                <div className="tour-content">
-                  <h3 className="box-title"><a href="tour-details.html">Dubai Tour Package</a></h3>
-                  <div className="tour-rating">
-                    <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                      <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
-                    </div>
-                    <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-
-            {/* Tour 4 */}
-            <SwiperSlide>
-              <div className="tour-box th-ani gsap-cursor">
-                <div className="tour-box_img global-img">
-                  <img src={tourImage4} alt="Switzerland Tour Package" />
-                </div>
-                <div className="tour-content">
-                  <h3 className="box-title"><a href="tour-details.html">Switzerland Tour Package</a></h3>
-                  <div className="tour-rating">
-                    <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                      <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
-                    </div>
-                    <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-    {/* Tour 2 */}
-    <SwiperSlide>
-              <div className="tour-box th-ani gsap-cursor">
-                <div className="tour-box_img global-img">
-                  <img src={tourImage2} alt="Italy Tour Package" />
-                </div>
-                <div className="tour-content">
-                  <h3 className="box-title"><a href="tour-details.html">Italy Tour Package</a></h3>
-                  <div className="tour-rating">
-                    <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                      <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
-                    </div>
-                    <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-
-            {/* Tour 3 */}
-            <SwiperSlide>
-              <div className="tour-box th-ani gsap-cursor">
-                <div className="tour-box_img global-img">
-                  <img src={tourImage3} alt="Dubai Tour Package" />
-                </div>
-                <div className="tour-content">
-                  <h3 className="box-title"><a href="tour-details.html">Dubai Tour Package</a></h3>
-                  <div className="tour-rating">
-                    <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                      <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
-                    </div>
-                    <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
+        
           </Swiper>
         </div>
       </div>

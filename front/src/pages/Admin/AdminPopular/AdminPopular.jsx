@@ -90,9 +90,18 @@ const AdminPopular = () => {
     return false;
   };
 
-  const handleDelete = (id) => {
-    setPopularItems(popularItems.filter(item => item.id !== id));
-    message.success("Popular item deleted successfully!");
+  const handleDelete = async (id) => {
+    try {
+      await controller.getOne(`${endpoints.deltour}/${id}`).then((res)=>{
+        console.log(res);
+      })
+      message.success("Popular item deleted successfully!");
+      
+      setPopularItems(popularItems.filter(item => item.id !== id));
+    } catch (error) {
+      message.error("Failed to delete popular item.");
+      console.error("Error deleting item:", error);
+    }
   };
 
   const handleEdit = (record) => {

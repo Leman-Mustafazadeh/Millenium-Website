@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import img1 from "../../assets/img/bg/breadcumb-bg.jpg"; 
 import controller from "../../API";
 import { endpoints } from "../../API/constant";
-
+import "./style.css"
 const AwarLicenses = () => {
+  
   const awardImages = [
     "https://millenniumtour.az/uploads/images/team/e8b9d52b1bf4be192775956d441cf12f.png",
     "https://millenniumtour.az/uploads/images/team/e8b9d52b1bf4be192775956d441cf12f.png",
@@ -40,14 +41,14 @@ const AwarLicenses = () => {
       <section className="space">
         <div className="container">
           <div className="row gy-24 gx-24">
-            {awardImages.map((imageUrl, index) => (
+            {data.map((imageUrl, index) => (
               <div
                 className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"  
                 key={index}
               >
                 <div className="tour-box th-ani">
-                  <div className="tour-box_img global-img">
-                    <img src={imageUrl} alt={`Award ${index + 1}`} className="img-fluid" /> 
+                  <div className="tour-box_img globals-img">
+                    <img src={imageUrl.image} alt={`Award ${index + 1}`} className="img-fluid" /> 
                   </div>
                 </div>
               </div>

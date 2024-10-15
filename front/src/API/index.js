@@ -15,13 +15,9 @@ export async function getAll(endpoint) {
 }
 
 //get one
-export async function getOne(endpoint, id, token) {
+export async function getOne(endpoint, id) {
   try {
-    const response = await axios.get(BASE_URL + endpoint + `/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(BASE_URL + endpoint);
     return response.data;
   } catch (error) {
     return error;
@@ -50,14 +46,10 @@ export async function post(endpoint, payload) {
 // }
 
 //delete
-export async function deleteOne(endpoint, id, token) {
+export async function deleteOne(endpoint, id) {
   try {
-    const response = await axios.delete(BASE_URL + endpoint + `/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+    const response = await axios.delete(BASE_URL + endpoint + `/${id}`);
+    return response;
   } catch (error) {
     return error;
   }
@@ -79,11 +71,11 @@ export async function patch(endpoint, id, payload, token) {
     const response = await axios.patch(
       BASE_URL + endpoint + `/${id}`,
       payload,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
     );
     return response.data;
   } catch (error) {

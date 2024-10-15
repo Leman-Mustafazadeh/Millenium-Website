@@ -4,14 +4,14 @@ import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
 import Cookies from 'js-cookie'
+import controller from "../../../API";
 
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file);  
     reader.onload = () => {
-      const base64 = reader.result.split(","); // Extract base64 string
-      resolve(base64);
+      resolve(reader.result);  
     };
     reader.onerror = (error) => {
       console.error("Error reading file: ", error);
@@ -19,6 +19,7 @@ const getBase64 = (file) => {
     };
   });
 };
+
 
 const Blogs = () => {
   const [form] = Form.useForm();
@@ -39,10 +40,9 @@ const Blogs = () => {
       dataIndex: "image",
       key: "image",
       render: (image) => {
-        // Prepend "data:image/png;base64," if the image is base64 encoded
         const imageSrc = image.startsWith("http")
           ? image
-          : `data:image/png;base64,${image}`;
+          : `${image}`;
         return (
           <img
             src={imageSrc}
@@ -84,7 +84,7 @@ const Blogs = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}${endpoints.deleteGallery}/${id}`);
+      await controller.getOne(`${endpoints.delgallery}/${id}`);
       setTourImages(tourImages.filter((image) => image.id !== id));
       message.success("Image deleted successfully!");
     } catch (error) {
@@ -103,29 +103,27 @@ const Blogs = () => {
     try {
       const imageBase64 = imageFile ? await getBase64(imageFile) : null;
       const object = {
-        image: imageBase64,
-        isDeleted: false
+        image: imageBase64,  
       };
+  
+      console.log(object);
+  
       const token = window !== undefined ? Cookies.get("ftoken") : null;
       if (!token || token === "null") {
         console.log("Token not found or is null");
       } else {
         console.log("Token:", token);
       }
-
-      const response = await axios.post(
-        BASE_URL + endpoints.addGallery,
-        object,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+  
+      const response = await axios.post(BASE_URL + endpoints.addGallery, object, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
       console.log(response);
-      
+  
       if (response.status === 200 || response.status === 201) {
         if (editMode) {
           setTourImages(
@@ -151,9 +149,7 @@ const Blogs = () => {
           `Server Error: ${error.response.status} - ${error.response.data}`
         );
       } else if (error.request) {
-        message.error(
-          "No response from the server. Please check your network."
-        );
+        message.error("No response from the server. Please check your network.");
       } else {
         message.error(`Error: ${error.message}`);
       }
@@ -172,6 +168,7 @@ const Blogs = () => {
     };
     fetchTourImages();
   }, []);
+console.log(tourImages);
 
   const showModal = () => {
     setIsModalVisible(true);

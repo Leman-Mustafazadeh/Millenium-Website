@@ -1,0 +1,13 @@
+.tours-box{
+    position: relative;
+    background-color: var(--white-color);
+    border: 1px solid #BCCED2;
+    border-top: transparent;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.tours-box:hover{
+
+    box-shadow: 0px 20px 20px rgba(204, 204, 204, 0.25);
+        border-radius: 16px;
+}

@@ -1,9 +1,17 @@
-import React from 'react';
-import bakuImage from '../../assets/img/tour/baku.jpg'; // Adjust the path as necessary
-import culturalCenterImage from '../../assets/img/tour/baku1.jpg'; // Adjust the path as necessary
+import React, { useEffect, useState } from 'react';
 import bgImage from '../../assets/img/bg/breadcumb-bg.jpg'; // Background image path
-
+import controller from '../../API';
+import { endpoints } from '../../API/constant';
+import "./style.css"
 const Activities = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    controller.getAll(endpoints.activity).then((res) => {
+      setData(res);
+    });
+  }, []);
+
   return (
     <section>
       <div className="breadcumb-wrapper" style={{ backgroundImage: `url(${bgImage})` }}>
@@ -17,68 +25,20 @@ const Activities = () => {
       <div className="space">
         <div className="container">
           <div className="row">
-            <div className="col-xxl-8 col-lg-7">
-              <div className="row gx-24 gx-24">
-                {/* Activity 1 */}
-                <div className="col-md-6">
-                  <ActivityBox
-                    image={bakuImage}
-                    title="Baku Old City"
-                    rating="5.00"
-                    description="Historic quarter with a blend of ancient sites and modern touches, featuring pedestrian streets and local crafts. Home to UNESCO sites and vibrant street life."
-                    link="activities-details.html"
-                  />
-                </div>
-
-                {/* Activity 2 */}
-                <div className="col-md-6">
-                  <ActivityBox
-                    image={culturalCenterImage}
-                    title="Heydar Aliyev Cultural Center"
-                    rating="5.00"
-                    description="Cultural center with a striking design, displaying an extensive musical instrument collection, classic cars, and traditional crafts, ideal for history and automobile aficionados."
-                    link="activities-details.html"
-                  />
-                </div>
-
-                {/* Repeated Activity Example */}
-                <div className="col-md-6">
-                  <ActivityBox
-                    image={culturalCenterImage}
-                    title="Heydar Aliyev Cultural Center"
-                    rating="5.00"
-                    description="Cultural center with a striking design, displaying an extensive musical instrument collection, classic cars, and traditional crafts, ideal for history and automobile aficionados."
-                    link="activities-details.html"
-                  />
-                </div>
-
-                {/* More activities can be added here */}
+            <div>
+              <div className="row">
+                {data.map((item, index) => (
+                  <div className="col-lg-4 col-md-6" key={index}>
+                    <ActivityBox
+                      image={item.image} // Dynamic image from API
+                      name_EN={item.name_EN} // Dynamic name from API
+                      title_EN={item.title_EN} // Dynamic title from API
+                      text_EN={item.text_EN} // Dynamic description from API
+                      link={`activities-details/${item.id}`} // Dynamic link to details page
+                    />
+                  </div>
+                ))}
               </div>
-            </div>
-
-            <div className="col-xxl-4 col-lg-5">
-              <aside className="sidebar-area">
-                <div className="widget widget_categories">
-                  <h3 className="widget_title">Activity Type</h3>
-                  <ul>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Food and drink</a><span>(10)</span></li>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Entertainment</a><span>(6)</span></li>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Sports</a><span>(2)</span></li>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Nature and outdoors</a><span>(7)</span></li>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Culture and events</a><span>(9)</span></li>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Mountain Campaigning</a><span>(10)</span></li>
-                  </ul>
-                </div>
-
-                <div className="widget widget_categories">
-                  <h3 className="widget_title">Duration</h3>
-                  <ul>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Gozayan Tour, BD</a><span>(26)</span></li>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>Tourope UK</a><span>(27)</span></li>
-                    <li><a href="blog.html"><i className="fa-light fa-square-check"></i>European Tours Limited</a><span>(29)</span></li>
-                  </ul>
-                </div>
-              </aside>
             </div>
           </div>
         </div>
@@ -88,22 +48,17 @@ const Activities = () => {
 };
 
 // ActivityBox Component for reusability
-const ActivityBox = ({ image, title, rating, description, link }) => {
+const ActivityBox = ({ image, name_EN, title_EN, text_EN, link }) => {
   return (
     <div className="tour-box th-ani">
       <div className="tour-box_img global-img">
-        <img src={image} alt={`Image of ${title}`} />
+        <img src={image} alt={`Image of ${title_EN}`} />
       </div>
       <div className="tour-content">
-        <h4 className=""><span className="currency">{title}</span></h4>
-        <div className="tour-rating">
-          <div className="star-rating" role="img" aria-label={`Rated ${rating} out of 5`}>
-            <span style={{ width: '100%' }}>Rated <strong className="rating">{rating}</strong> out of 5</span>
-          </div>
-        </div>
-        <h2 className="box-title"><a href={link}>Speciality Museums</a></h2>
+        <h4 className=""><span className="currency">{name_EN}</span></h4>
+        <h2 className="box-title"><a href={link}>{title_EN}</a></h2>
         <div className="tour-action">
-          <span><i className="fa-light fa-clock"></i>{description}</span>
+          <span><i className="fa-light fa-clock"></i>{text_EN}</span>
         </div>
       </div>
     </div>

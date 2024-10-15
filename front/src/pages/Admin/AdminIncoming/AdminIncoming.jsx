@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { BASE_URL, endpoints } from '../../../API/constant';
 import controller from '../../../API';
 
@@ -11,7 +13,10 @@ const AdminIncoming = () => {
   const [incomingItems, setIncomingItems] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-  const [images, setImages] = useState([null, null, null, null]); // for image uploads
+  const [images, setImages] = useState([null, null, null, null]);
+  const [descriptionAZ, setDescriptionAZ] = useState('');
+  const [descriptionEN, setDescriptionEN] = useState('');
+  const [descriptionRU, setDescriptionRU] = useState('');
 
   const columns = [
     {
@@ -54,7 +59,7 @@ const AdminIncoming = () => {
     reader.readAsDataURL(file);
     reader.onload = () => {
       const newImages = [...images];
-      newImages[index] = reader.result; // Store the base64 image
+      newImages[index] = reader.result;
       setImages(newImages);
     };
     return false;
@@ -62,12 +67,11 @@ const AdminIncoming = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.delete(endpoints.delIncoming, id); // API call for deletion
+      await controller.delete(endpoints.delIncoming, id);
       setIncomingItems(incomingItems.filter(item => item.id !== id));
       message.success("Item deleted successfully!");
     } catch (error) {
       message.error("Error deleting item.");
-      console.error("Delete error:", error);
     }
   };
 
@@ -79,35 +83,34 @@ const AdminIncoming = () => {
       name_EN: record.name_EN,
       name_RU: record.name_RU,
       serialNumber: record.serialNumber,
-      text_AZ: record.text_AZ,
-      text_EN: record.text_EN,
-      text_RU: record.text_RU,
     });
     setImages([record.image1, record.image2, record.image3, record.image4]);
+    setDescriptionAZ(record.text_AZ || '');
+    setDescriptionEN(record.text_EN || '');
+    setDescriptionRU(record.text_RU || '');
     setIsModalVisible(true);
   };
 
   const onFinish = async (values) => {
     const object = {
-      id: currentId || 0, // Assuming new items have an ID of 0
+      id: currentId || 0,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image1: images[0], // Use the first image
-      image2: images[1], // Use the second image
-      image3: images[2], // Use the third image
-      image4: images[3], // Use the fourth image
-      text_AZ: values.text_AZ,
-      text_EN: values.text_EN,
-      text_RU: values.text_RU,
+      image1: images[0],
+      image2: images[1],
+      image3: images[2],
+      image4: images[3],
+      text_AZ: descriptionAZ,
+      text_EN: descriptionEN,
+      text_RU: descriptionRU,
       serialNumber: values.serialNumber,
-      isDeleted: false, 
+      isDeleted: false,
     };
 
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token || token === "null") {
-        console.log("Token not found or is null");
         return;
       }
 
@@ -132,13 +135,15 @@ const AdminIncoming = () => {
         form.resetFields();
         setEditMode(false);
         setCurrentId(null);
-        setImages([null, null, null, null]); // Reset images
+        setImages([null, null, null, null]);
+        setDescriptionAZ('');
+        setDescriptionEN('');
+        setDescriptionRU('');
       } else {
         message.error("Failed to add or update incoming item.");
       }
     } catch (error) {
       message.error("Error occurred while saving data.");
-      console.error("Error in Axios request:", error);
     }
   };
 
@@ -150,8 +155,6 @@ const AdminIncoming = () => {
 
     fetchIncomingItems();
   }, []);
-  console.log(incomingItems);
-  
 
   const showModal = () => {
     setEditMode(false);
@@ -161,9 +164,12 @@ const AdminIncoming = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
-    setImages([null, null, null, null]); // Reset images
+    setImages([null, null, null, null]);
     setEditMode(false);
     setCurrentId(null);
+    setDescriptionAZ('');
+    setDescriptionEN('');
+    setDescriptionRU('');
   };
 
   return (
@@ -202,7 +208,7 @@ const AdminIncoming = () => {
                 name="image1"
                 listType="picture"
                 maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 0)} // for image 1
+                beforeUpload={(file) => beforeUpload(file, 0)}
                 showUploadList={false}
               >
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -214,7 +220,7 @@ const AdminIncoming = () => {
                 name="image2"
                 listType="picture"
                 maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 1)} // for image 2
+                beforeUpload={(file) => beforeUpload(file, 1)}
                 showUploadList={false}
               >
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -226,7 +232,7 @@ const AdminIncoming = () => {
                 name="image3"
                 listType="picture"
                 maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 2)} // for image 3
+                beforeUpload={(file) => beforeUpload(file, 2)}
                 showUploadList={false}
               >
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -238,7 +244,7 @@ const AdminIncoming = () => {
                 name="image4"
                 listType="picture"
                 maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 3)} // for image 4
+                beforeUpload={(file) => beforeUpload(file, 3)}
                 showUploadList={false}
               >
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -246,15 +252,27 @@ const AdminIncoming = () => {
             </Form.Item>
 
             <Form.Item label="Description (AZ)" name="text_AZ" rules={[{ required: true, message: 'Please enter the description!' }]}>
-              <input />
+              <CKEditor
+                editor={ClassicEditor}
+                data={descriptionAZ}
+                onChange={(event, editor) => setDescriptionAZ(editor.getData())}
+              />
             </Form.Item>
 
             <Form.Item label="Description (EN)" name="text_EN">
-              <input />
+              <CKEditor
+                editor={ClassicEditor}
+                data={descriptionEN}
+                onChange={(event, editor) => setDescriptionEN(editor.getData())}
+              />
             </Form.Item>
 
             <Form.Item label="Description (RU)" name="text_RU">
-              <input />
+              <CKEditor
+                editor={ClassicEditor}
+                data={descriptionRU}
+                onChange={(event, editor) => setDescriptionRU(editor.getData())}
+              />
             </Form.Item>
 
             <Form.Item>

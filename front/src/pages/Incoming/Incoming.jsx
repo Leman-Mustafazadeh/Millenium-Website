@@ -90,14 +90,12 @@ const Incoming = () => {
             <button className="btn-day1">{dayData.day}</button>
           <div className="row incoming-image-wrapper mt-4" key={index}>
 
-            {/* Image Columns */}
             {[...Array(4)].map((_, imgIndex) => (
               <div className="col-12 col-md-3 mb-4" key={imgIndex}>
                 <img src={hy} alt={`Incoming feature ${imgIndex + 1}`} className="incoming-image img-fluid" />
               </div>
             ))}
 
-            {/* Day Text Block */}
             <div className="col-12">
               <div className="text-content mt-2">
                 <ul>

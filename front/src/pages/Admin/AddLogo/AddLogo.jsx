@@ -118,6 +118,10 @@ const AddLogo = () => {
   };
 
   const handleDelete = (id) => {
+    controller.getOne(`${endpoints.dellogo}/${id}`).then((res)=>{
+      console.log(res);
+      
+    })
     setBlogs(blogs.filter((blog) => blog.id !== id));
     message.success("Blog deleted successfully!");
   };
