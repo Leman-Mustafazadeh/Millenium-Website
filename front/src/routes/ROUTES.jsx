@@ -22,6 +22,8 @@ import OutgoingDetail from "../pages/OutgoingDetail/OutgoingDetail";
 import AdminIncoming from "../pages/Admin/AdminIncoming/AdminIncoming";
 import AdminOutgoing from "../pages/Admin/AdminOutgoing/AdminOutgoing";
 import AdminServicies from "../pages/Admin/AdminServicies/AdminServicies";
+import AdminServiceCategory from "../pages/Admin/AdminServiceCategory/AdminServiceCategory";
+import ActivitiesDetail from "../pages/ActiviesDetail/ActivitiesDetail";
 
 export const Routes = [
   {
@@ -65,8 +67,12 @@ export const Routes = [
         element: <Outgoing />,
       },
       {
-        path: "outgoingdetail",
+        path: "outgoingdetail/:id",
         element: <OutgoingDetail />,
+      },
+      {
+        path: "activities-details/:id",
+        element: <ActivitiesDetail />,
       },
     ],
   },
@@ -124,6 +130,11 @@ export const Routes = [
         path: "adminservicies",
         element: <AdminServicies />,
       },
+      {
+        path: "adminserviciescategory",
+        element: <AdminServiceCategory />,
+      },
+    
     ],
   },
 ];

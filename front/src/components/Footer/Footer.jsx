@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/img/logo-mill.jpeg';
+import logo from '../../assets/img/logos.jpeg';
 import phoneIcon from '../../assets/img/icon/phone.svg';
 import envelopeIcon from '../../assets/img/icon/envelope.svg';
 import locationIcon from '../../assets/img/icon/location-dot.svg';
@@ -19,7 +19,7 @@ const Footer = () => {
             <div className="col-md-6 col-xl-3">
               <div className="widget footer-widget">
                 <div className="th-widget-about">
-                  <div className="about-logo" style={{ width: '90%', height: '90px' }}>
+                  <div className="footer-logo" >
                     <a href="home-travel.html">
                       <img src={logo} style={{ width: '100%', height: '100%', borderRadius: '10px' }} alt="Tourm" />
                     </a>
@@ -43,9 +43,9 @@ const Footer = () => {
                   <ul className="menu">
                     <li><a href="/">Home</a></li>
                     <li><a href="/about">About us</a></li>
+                    <li><a href="/activities">Activite</a></li>
                     <li><a href="/servicies">Our Service</a></li>
-                    <li><a href="/contact">Terms of Service</a></li>
-                    <li><a href="/contact">Tour Booking Now</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
                   </ul>
                 </div>
               </div>
@@ -61,7 +61,7 @@ const Footer = () => {
                     <div className="details">
                       <p>
                         <a href="tel:+99412 4975400" className="info-box_link" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          +99412 4975400
+                          +994 12 497 54 00
                         </a>
                       </p>
                     </div>

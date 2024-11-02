@@ -20,10 +20,8 @@ const getBase64 = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const base64 = reader.result; // Keep the full data URL
-      resolve(base64); // Return the full base64 URL
-    };
-    reader.onerror = (error) => {
+      const base64 = reader.result; 
+      resolve(base64); 
       console.error("Error reading file: ", error);
       reject(error);
     };
@@ -118,7 +116,7 @@ const AddLogo = () => {
   };
 
   const handleDelete = (id) => {
-    controller.getOne(`${endpoints.dellogo}/${id}`).then((res)=>{
+    controller.getOne(endpoints.dellogo,id).then((res)=>{
       console.log(res);
       
     })

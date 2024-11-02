@@ -86,7 +86,7 @@ const AdminAwards = () => {
   };
 
   const handleDelete = (id) => {
-    controller.delete(endpoints.delaward, id).then((res) => {
+    controller.getOne(endpoints.delaward, id).then((res) => {
       console.log("deleted", res);
     });
     setAwards(awards.filter((award) => award.id !== id));
@@ -96,11 +96,9 @@ const AdminAwards = () => {
   const onFinish = async (values) => {
     let image;
 
-    // Only get Base64 if a new image is uploaded
     if (values.image && values.image.file) {
       image = await getBase64(values.image.file);
     } else if (currentAwardId) {
-      // Use the existing image if editing and no new image uploaded
       image = imageBase64;
     }
 

@@ -5,13 +5,11 @@ import "../../assets/css/bootstrap.min.css";
 import "../../assets/css/fontawesome.min.css";
 import "../../assets/css/magnific-popup.min.css";
 import "../../assets/css/swiper-bundle.min.css";
-import logo from "../../assets/img/logo-mill.jpeg";
+import logo from "../../assets/img/logos.jpeg";
 
 const Navbar = () => {
-  // State to manage the mobile menu visibility
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Function to toggle the menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -103,7 +101,7 @@ const Navbar = () => {
             <div className="th-container">
               <div className="row align-items-center justify-content-between">
                 <div className="col-auto">
-                  <div className="header-logo" style={{ width: '100%', height: '90px' }}>
+                  <div className="headers-logos" style={{ width: '100%', height: '90px' }}>
                     <a href="/">
                       <img
                         style={{ width: '100%', height: '100%', borderRadius: '10px' }}

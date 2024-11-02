@@ -3,16 +3,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
-
-// Resimleri içe aktar
+import "./style.css"
 import tourImage1 from '../../../assets/img/tour/tour_box_1.jpg';
 import tourImage2 from '../../../assets/img/tour/tour_box_2.jpg';
 import tourImage3 from '../../../assets/img/tour/tour_box_3.jpg';
 import tourImage4 from '../../../assets/img/tour/tour_box_4.jpg';
-import backgroundImg from '../../../assets/img/bg/tour_bg_1.jpg'; // Arka plan resmi
-import '../../../assets/css/style.css'; // Kendi stilleriniz
+import backgroundImg from '../../../assets/img/bg/tour_bg_1.jpg'; 
+import '../../../assets/css/style.css'; 
 import controller from '../../../API';
 import { endpoints } from '../../../API/constant';
+import { Link } from 'react-router-dom';
 
 const ServiceArea = () => {
   const[popular,setPopular]=useState([])
@@ -22,7 +22,6 @@ const ServiceArea = () => {
       setPopular(res)
     })
   },[])
-  console.log(popular);
   
   
   return (
@@ -37,7 +36,7 @@ const ServiceArea = () => {
             <div className="title-area text-center">
               <h2 className="sec-title">Most Popular Tour</h2>
               <p className="sec-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Explore our 'Most Popular Tours,' featuring the top choices among our customers for unforgettable experiences and cultural adventures.
               </p>
             </div>
           </div>
@@ -70,20 +69,14 @@ const ServiceArea = () => {
          {
           popular.map((item,index)=>(
             <SwiperSlide key={index}>
-            <div className="tour-box th-ani gsap-cursor">
+           <Link to={'/outgoing'}> <div className="tour-box th-ani gsap-cursor">
               <div className="tour-box_img global-img">
                 <img src={item.image} alt="Greece Tour Package" />
               </div>
               <div className="tour-content">
                 <h3 className="box-title"><a href="tour-details.html">{item.name_EN}</a></h3>
-                <div className="tour-rating">
-                  <div className="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                    <span style={{ width: '100%' }}>Rated <strong className="rating">5.00</strong> out of 5 based on <span className="rating">4.8</span> (4.8 Rating)</span>
-                  </div>
-                  <a href="tour-details.html" className="woocommerce-review-link">(<span className="count">4.8</span> Rating)</a>
-                </div>
               </div>
-            </div>
+            </div></Link>
           </SwiperSlide>
           ))
          }

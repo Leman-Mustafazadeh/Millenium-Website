@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import bgImage from '../../assets/img/bg/breadcumb-bg.jpg'; // Background image path
+import bgImage from '../../assets/img/bg/serviceheadd.jpg';
 import controller from '../../API';
 import { endpoints } from '../../API/constant';
-import "./style.css"
+import "./style.css";
+import { Link } from 'react-router-dom';
+
 const Activities = () => {
   const [data, setData] = useState([]);
 
@@ -25,21 +27,19 @@ const Activities = () => {
       <div className="space">
         <div className="container">
           <div className="row">
-            <div>
-              <div className="row">
-                {data.map((item, index) => (
-                  <div className="col-lg-4 col-md-6" key={index}>
-                    <ActivityBox
-                      image={item.image} // Dynamic image from API
-                      name_EN={item.name_EN} // Dynamic name from API
-                      title_EN={item.title_EN} // Dynamic title from API
-                      text_EN={item.text_EN} // Dynamic description from API
-                      link={`activities-details/${item.id}`} // Dynamic link to details page
-                    />
-                  </div>
-                ))}
+            {data.map((item, index) => (
+              <div className="col-lg-4 col-md-6" key={index}>
+                <Link to={`/activities-details/${item.id}`}>
+                  <ActivityBox
+                    image={item.image}
+                    name_EN={item.name_EN}
+                    title_EN={item.title_EN}
+                    text_EN={item.text_EN}
+                    link={`activities-details/${item.id}`}
+                  />
+                </Link>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -47,7 +47,6 @@ const Activities = () => {
   );
 };
 
-// ActivityBox Component for reusability
 const ActivityBox = ({ image, name_EN, title_EN, text_EN, link }) => {
   return (
     <div className="tour-box th-ani">
@@ -55,11 +54,8 @@ const ActivityBox = ({ image, name_EN, title_EN, text_EN, link }) => {
         <img src={image} alt={`Image of ${title_EN}`} />
       </div>
       <div className="tour-content">
-        <h4 className=""><span className="currency">{name_EN}</span></h4>
+        <h4><span className="currency">{name_EN}</span></h4>
         <h2 className="box-title"><a href={link}>{title_EN}</a></h2>
-        <div className="tour-action">
-          <span><i className="fa-light fa-clock"></i>{text_EN}</span>
-        </div>
       </div>
     </div>
   );

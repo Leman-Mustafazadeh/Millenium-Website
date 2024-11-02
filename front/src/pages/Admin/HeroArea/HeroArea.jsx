@@ -84,7 +84,7 @@ const HeroArea = () => {
   ];
 
   const handleDelete = (id) => {
-    controller.getOne(`${endpoints.delhero}/${id}`).then((res)=>{
+    controller.getOne(endpoints.delhero,id).then((res)=>{
       console.log(res);
       
     })

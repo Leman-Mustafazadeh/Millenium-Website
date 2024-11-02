@@ -38,8 +38,8 @@ puthero:"/api/Gallery/update-slide{id}",
 
   addteam: "/api/Team/add-employee",//our team
   team: "/api/Team/get-team",
-  delteam:"/api/Team/delete-employee/{id}",
-  putteam:"/api/Team/update-employee{id}",
+  delteam:"/api/Team/delete-employee",
+  putteam:"/api/Team/update-employee",
 
 
 
@@ -66,20 +66,21 @@ puthero:"/api/Gallery/update-slide{id}",
 
   service:"/api/Service/get-services",//service page
   addservice:"/api/Service/add-services",
-  delservice:"/api/Service/delete-services/{id}",
+  delservice:"/api/Service/delete-services",
   putservice:"/api/Service/update-services/{id}",
 
 
 
-  servicecategory:"",//service in sagindaki category 
+  servicecategory:"/api/Service/get-servicesCategories",//service in sagindaki category 
   addservicecategory:"/api/Service/add-serviceCategory",
-  delservicecategory:"/api/Service/delete-serviceCategory/{id}",
+  delservicecategory:"/api/Service/delete-serviceCategory",
   putservicecategory:"/api/Service/update-serviceCategory/{id}",
 
 
 
 activity:"/api/Activity/get-activities",//acticity page
+getOneactivity:"/api/Activity/get-activity",
   addactivity:"/api/Activity/add-activity",
   delactivity:"/api/Activity/delete-activity",
-  putactivity:"/api/Activity/update-activity{id}"
+  putactivity:"/api/Activity/update-activity"
 };

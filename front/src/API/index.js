@@ -6,7 +6,7 @@ export async function getAll(endpoint) {
   // const token = window !== undefined ? Cookies.get("ftoken") : null;
   // console.log(token);
   
-  try {
+  try { 
     const response = await axios.get(BASE_URL + endpoint);
     return response.data;
   } catch (error) {
@@ -17,7 +17,7 @@ export async function getAll(endpoint) {
 //get one
 export async function getOne(endpoint, id) {
   try {
-    const response = await axios.get(BASE_URL + endpoint);
+    const response = await axios.get(BASE_URL + endpoint +`/${id}`);
     return response.data;
   } catch (error) {
     return error;

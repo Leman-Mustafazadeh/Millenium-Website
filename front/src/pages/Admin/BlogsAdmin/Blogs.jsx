@@ -84,7 +84,7 @@ const Blogs = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(`${endpoints.delgallery}/${id}`);
+      await controller.getOne(endpoints.delgallery,id);
       setTourImages(tourImages.filter((image) => image.id !== id));
       message.success("Image deleted successfully!");
     } catch (error) {

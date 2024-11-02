@@ -19,9 +19,9 @@ const BlogArea = () => {
       <div className="container">
         <div className="mb-30 text-center text-md-start">
           <div className="row align-items-center justify-content-between">
-            <div className="col-md-7">
+            <div className="">
               <div className="title-area mb-md-0">
-                <h2 className="sec-title">News & Articles From Tourm</h2>
+                <h2 className="sec-title">New Tour Types: Discover Worthy Innovations!</h2>
               </div>
             </div>
           </div>

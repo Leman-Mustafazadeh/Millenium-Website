@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Upload, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import { BASE_URL, endpoints } from '../../../API/constant';
-import controller from '../../../API';
+import React, { useEffect, useState } from "react";
+import { Table, Button, Modal, Form, Upload, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { BASE_URL, endpoints } from "../../../API/constant";
+import controller from "../../../API";
+import { Select, Space } from "antd";
 
 const AdminServices = () => {
   const [form] = Form.useForm();
@@ -15,34 +16,46 @@ const AdminServices = () => {
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: 'Name (AZ)',
-      dataIndex: 'name_AZ',
-      key: 'name_AZ',
+      title: "Name (AZ)",
+      dataIndex: "name_AZ",
+      key: "name_AZ",
     },
     {
-      title: 'Image',
-      dataIndex: 'image',
-      key: 'image',
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
       render: (image) => (
-        <img src={image} alt="Service" style={{ width: 100, height: 100, objectFit: 'cover' }} />
+        <img
+          src={image}
+          alt="Service"
+          style={{ width: 100, height: 100, objectFit: "cover" }}
+        />
       ),
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       render: (_, record) => (
         <>
-          <Button type="link" onClick={() => handleEdit(record)}>Edit</Button>
-          <Button type="link" onClick={() => handleDelete(record.id)}>Delete</Button>
+          <Button type="link" onClick={() => handleEdit(record)}>
+            Edit
+          </Button>
+          <Button type="link" onClick={() => handleDelete(record.id)}>
+            Delete
+          </Button>
         </>
       ),
     },
   ];
+
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
 
   const beforeUpload = (file) => {
     const isImage = file.type.startsWith("image/");
@@ -58,8 +71,10 @@ const AdminServices = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.delete(endpoints.deleteService, id); // API call for deletion
-      setServices(services.filter(service => service.id !== id));
+      await controller.getOne(endpoints.delservice, id).then((res)=>{
+        console.log(res);
+      }) 
+      setServices(services.filter((service) => service.id !== id));
       message.success("Service deleted successfully!");
     } catch (error) {
       message.error("Error deleting service.");
@@ -84,42 +99,41 @@ const AdminServices = () => {
 
   const onFinish = async (values) => {
     const object = {
-      id: currentId || 0, // New items will have an ID of 0
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: imageBase64, // Use the uploaded image
+      image: imageBase64,
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
-      isDeleted: false, // Default to false
-      servicesId: currentId || 0, // Assuming this is the same as id
-      serviceCategory: {
-        id: 0, // Assuming a default category id, adjust as necessary
-        name: "Default Category", // Placeholder for service category name
-        isDeleted: false,
-        services: [] // You can populate this as needed
-      }
+      servicesCategoryId: values.servicesCategoryId || 0,
+     
     };
 
     try {
-      const token = JSON.parse(localStorage.getItem("token"));
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
-        return;
-      }
+      // const token = JSON.parse(localStorage.getItem("token"));
+      // if (!token || token === "null") {
+      //   console.log("Token not found or is null");
+      //   return;
+      // }
 
-      const response = await axios.post(BASE_URL + endpoints.addservice, object, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        BASE_URL + endpoints.addservice,
+        object,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.data) {
         if (editMode) {
           setServices(
-            services.map((service) => (service.id === currentId ? object : service))
+            services.map((service) =>
+              service.id === currentId ? object : service
+            )
           );
           message.success("Service updated successfully!");
         } else {
@@ -130,7 +144,7 @@ const AdminServices = () => {
         form.resetFields();
         setEditMode(false);
         setCurrentId(null);
-        setImageBase64(null); // Reset image
+        setImageBase64(null);
       } else {
         message.error("Failed to add or update service.");
       }
@@ -149,7 +163,6 @@ const AdminServices = () => {
     fetchServices();
   }, []);
   console.log();
-  
 
   const showModal = () => {
     setEditMode(false);
@@ -159,26 +172,61 @@ const AdminServices = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
-    setImageBase64(null); // Reset image
+    setImageBase64(null); 
     setEditMode(false);
     setCurrentId(null);
   };
 
+  const [serviceCategory, setServiceCategory] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await controller.getAll(endpoints.servicecategory);
+      setServiceCategory(res);
+    };
+
+    fetchCategories();
+  }, []);
+  console.log(serviceCategory);
+
   return (
     <section>
-      <Button type="primary" onClick={showModal} style={{ float: 'right', margin: '20px 0' }}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{ float: "right", margin: "20px 0" }}
+      >
         Add New Service
       </Button>
       <Table columns={columns} dataSource={services} rowKey="id" />
 
       <Modal
-        title={editMode ? 'Edit Service' : 'Add New Service'}
-        visible={isModalVisible}
+        title={editMode ? "Edit Service" : "Add New Service"}
+        open={isModalVisible}
         onCancel={handleCancel}
         footer={null}
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
-          <Form.Item label="Name (AZ)" name="name_AZ" rules={[{ required: true, message: 'Please enter the name in AZ!' }]}>
+          <Form.Item label="Service Category" name="servicesCategoryId" rules={[{ required: true }]}>
+            <Select
+              defaultValue="lucy"
+              style={{
+                width: 120,
+              }}
+              placeholder="Select a Service Category"
+              onChange={handleChange} 
+              options={serviceCategory.map((item) => ({
+                value: item.id, 
+                label: item.name, 
+              }))}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Name (AZ)"
+            name="name_AZ"
+            rules={[
+              { required: true, message: "Please enter the name in AZ!" },
+            ]}
+          >
             <input />
           </Form.Item>
 
@@ -202,7 +250,16 @@ const AdminServices = () => {
             </Upload>
           </Form.Item>
 
-          <Form.Item label="Description (AZ)" name="text_AZ" rules={[{ required: true, message: 'Please enter the description in AZ!' }]}>
+          <Form.Item
+            label="Description (AZ)"
+            name="text_AZ"
+            rules={[
+              {
+                required: true,
+                message: "Please enter the description in AZ!",
+              },
+            ]}
+          >
             <input />
           </Form.Item>
 

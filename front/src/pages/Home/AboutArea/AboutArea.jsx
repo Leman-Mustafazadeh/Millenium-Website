@@ -32,9 +32,9 @@ const AboutArea = () => {
           <div className="col-xl-6">
             <div className="ps-xl-4 ms-xl-2">
               <div className="title-area mb-20 pe-xl-5 me-xl-5">
-                <h2 className="sec-title mb-20 pe-xl-5 me-xl-5 heading">Plan Your Trip With Us</h2>
+                <h2 className=" mb-20 sec-title  heading pe-xl-5 me-xl-5">Plan Your Trip With Us</h2>
                 <p className="sec-text mb-30">
-                  There are many variations of passages of available but the majority have suffered alteration in some form, by injected hum randomised words which don't look even slightly.
+                Plan your trip with Millennium Travel and create unforgettable memories! Our professional team is here to assist you with ideal itineraries and exclusive offers. Wherever you want to go and whenever you wish, we are dedicated to making your travel dreams a reality!"
                 </p>
               </div>
               <div className="about-item-wrap">
@@ -53,7 +53,8 @@ const AboutArea = () => {
                   </div>
                   <div className="about-item_content">
                     <h5 className="box-title">Professional Guide</h5>
-                    <p className="about-item_text">There are many variations of passages of available but the majority.</p>
+                    <p className="about-item_text">
+                    Travel with our professional guides and unlock the secrets of history and culture with every step you take.                    </p>
                   </div>
                 </div>
               </div>

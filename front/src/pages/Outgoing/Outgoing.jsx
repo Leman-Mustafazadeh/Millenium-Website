@@ -22,10 +22,6 @@ const Outgoing = () => {
       name: "New York Tour"
     },
     {
-      image: "https://millenniumtour.az/uploads/images/catalogs_products/another_image_3.jpg",
-      name: "Tour to Israel"
-    },
-    {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/d0721a707ca2c1c8d7d3e09c90fcd395_thumb.jpg",
       name: "Sri Lanka Tour"
     }

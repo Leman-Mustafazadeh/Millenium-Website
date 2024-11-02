@@ -123,15 +123,16 @@ const AdminTeam = () => {
     setIsModalVisible(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete =  (id) => {
     try {
-      await axios.delete(`${BASE_URL}${endpoints.deleteteam}/${id}`);
+      controller.getOne(endpoints.delteam,id);
       setTeamMembers(teamMembers.filter((member) => member.id !== id));
       message.success("Team member deleted successfully!");
     } catch (error) {
       message.error(`Error deleting team member: ${error.message}`);
     }
   };
+
 
   const onFinish = async (values) => {
     try {

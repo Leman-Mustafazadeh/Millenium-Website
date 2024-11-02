@@ -1,4 +1,5 @@
 import React from 'react';
+import CountUp from 'react-countup';
 import img1 from "../../../assets/img/shape/shape_1.png";
 import shape2 from "../../../assets/img/shape/shape_2.png";
 import shape3 from "../../../assets/img/shape/shape_3.png";
@@ -10,45 +11,53 @@ const CounterArea = () => {
     <div className="counter-area space">
       <div className="container">
         <div className="row">
-          {/* Çalışan Sayısı */}
+          {/* Employees */}
           <div className="col-sm-6 col-xl-3 counter-card-wrap">
             <div className="counter-card">
               <div className="counter-shape"><span></span></div>
               <div className="media-body">
-                <h3 className="box-number"><span className="counter-number">170</span></h3>
+                <h3 className="box-number">
+                  <CountUp start={1} end={170} duration={2.5} className="counter-number" />
+                </h3>
                 <h6 className="counter-title">Employees</h6>
               </div>
             </div>
           </div>
 
-          {/* Alt Ajan Sayısı */}
+          {/* Sub-Agents */}
           <div className="col-sm-6 col-xl-3 counter-card-wrap">
             <div className="counter-card">
               <div className="counter-shape"><span></span></div>
               <div className="media-body">
-                <h3 className="box-number"><span className="counter-number">500</span></h3>
+                <h3 className="box-number">
+                  <CountUp start={1} end={500} duration={2.5} className="counter-number" />
+                </h3>
                 <h6 className="counter-title">Sub-Agents</h6>
               </div>
             </div>
           </div>
 
-          {/* Uçak Bileti Sayısı */}
+          {/* Flight Tickets */}
           <div className="col-sm-6 col-xl-3 counter-card-wrap">
             <div className="counter-card">
               <div className="counter-shape"><span></span></div>
               <div className="media-body">
-                <h3 className="box-number"><span className="counter-number">40000</span></h3>
+                <h3 className="box-number">
+                  <CountUp start={1} end={40000} duration={2.5} className="counter-number" />
+                </h3>
                 <h6 className="counter-title">Flight Tickets</h6>
               </div>
             </div>
           </div>
 
-          {/* Telefon Arama Sayısı */}
+          {/* Phone Calls */}
           <div className="col-sm-6 col-xl-3 counter-card-wrap">
             <div className="counter-card">
               <div className="counter-shape"><span></span></div>
               <div className="media-body">
-                <h3 className="box-number"><span className="counter-number">20000</span></h3>
+                <h3 className="box-number">
+                  <CountUp start={1} end={20000} duration={2.5} className="counter-number" />
+                </h3>
                 <h6 className="counter-title">Phone Calls</h6>
               </div>
             </div>
@@ -56,7 +65,7 @@ const CounterArea = () => {
         </div>
       </div>
 
-      {/* Şekil Mockup */}
+      {/* Shape Mockups */}
       <div className="shape-mockup shape1 d-none d-xl-block" data-top="30%" data-left="2%">
         <img src={img1} alt="shape" />
       </div>

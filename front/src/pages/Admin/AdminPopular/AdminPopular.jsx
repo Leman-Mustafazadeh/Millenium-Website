@@ -92,7 +92,7 @@ const AdminPopular = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(`${endpoints.deltour}/${id}`).then((res)=>{
+      await controller.getOne(endpoints.deltour,id).then((res)=>{
         console.log(res);
       })
       message.success("Popular item deleted successfully!");

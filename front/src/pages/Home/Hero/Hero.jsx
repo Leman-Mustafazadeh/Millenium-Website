@@ -9,13 +9,10 @@ import img4 from "../../../assets/img/icon/right-arrow.svg";
 import img5 from "../../../assets/img/icon/left-arrow.svg";
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-
 import './style.css';
 
-// import required modules
 import { Pagination } from 'swiper/modules';
 import controller from '../../../API';
 import { endpoints } from '../../../API/constant';
@@ -28,6 +25,8 @@ const Hero = () => {
       setData(res);
     });
   }, []);
+  console.log(data);
+  
 
   return (
     <div className="th-hero-wrapper hero-1" id="hero">
@@ -38,11 +37,9 @@ const Hero = () => {
         modules={[Pagination]}
         className="mySwiper"
       >
-        {/* Map through the data array */}
         {data.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="hero-inner">
-              {/* Assuming item has a 'backgroundImage' field */}
               <div
                 className="th-hero-bg"
                 style={{ backgroundImage: `url(${item.image})`,backgroundPosition:"center",backgroundSize:"cover" }}
@@ -54,7 +51,7 @@ const Hero = () => {
                     data-ani="slideinup"
                     data-ani-delay="0.4s"
                   >
-                    {item.name_EN} {/* Assuming item has a 'title' field */}
+                    {item.name_EN} 
                   </h1>
                 </div>
               </div>
