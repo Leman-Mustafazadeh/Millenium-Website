@@ -7709,6 +7709,7 @@ heding animation  end
   display: -ms-flexbox;
   display: flex;
   gap: 16px;
+  align-items: center;
 }
 
 .info-box_text .icon {

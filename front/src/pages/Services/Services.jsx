@@ -29,10 +29,9 @@ const Services = () => {
   const handleCategoryClick = (serviceId) => {
     const selected = description.find(
       (item) => item.serviceCategoryId === serviceId
-    ); 
+    );
     setSelectedService(selected);
     console.log(selected);
-    
 
     if (selected) {
       setServiceImage(selected.image);
@@ -73,8 +72,6 @@ const Services = () => {
                       <p className="box-text mb-30">
                         {selectedService.text_EN}
                       </p>
-
-                      
                     </div>
                   ) : (
                     <>
@@ -110,13 +107,35 @@ const Services = () => {
                           local and foreign sanatoriums.
                         </li>
                       </ul> */}
-                      <p className="pt-40">Millennium Travel offers a wide range of services to make your travel experiences unforgettable. Our visa services simplify the application process for various countries, providing you with the support you need. With a personalized approach for each client, we assist you at every stage of the visa application, from document preparation to submission.
- <br />
-Our transportation services ensure that you travel comfortably and reliably. With airport transfers, car rentals, and other transport options, we provide you with maximum convenience. Our airline ticket sales allow you to compare offers from various airlines to find the best options for you.
-<br />
-Our cargo services provide excellent solutions for safely and timely shipping your goods. Our F.I.T (Fully Independent Traveler) services help you plan your travel experiences tailored to your interests. Meanwhile, our M.I.C.E services ensure perfect event organization for meetings, conferences, and exhibitions.
-<br />
-Additionally, our hotel reservations help you choose the most suitable and comfortable accommodations in your destination area. Travel with Millennium Travel, experience new adventures, and make the most of every moment!</p>
+                      <p className="pt-40">
+                        Millennium Travel offers a wide range of services to
+                        make your travel experiences unforgettable. Our visa
+                        services simplify the application process for various
+                        countries, providing you with the support you need. With
+                        a personalized approach for each client, we assist you
+                        at every stage of the visa application, from document
+                        preparation to submission.
+                        <br />
+                        Our transportation services ensure that you travel
+                        comfortably and reliably. With airport transfers, car
+                        rentals, and other transport options, we provide you
+                        with maximum convenience. Our airline ticket sales allow
+                        you to compare offers from various airlines to find the
+                        best options for you.
+                        <br />
+                        Our cargo services provide excellent solutions for
+                        safely and timely shipping your goods. Our F.I.T (Fully
+                        Independent Traveler) services help you plan your travel
+                        experiences tailored to your interests. Meanwhile, our
+                        M.I.C.E services ensure perfect event organization for
+                        meetings, conferences, and exhibitions.
+                        <br />
+                        Additionally, our hotel reservations help you choose the
+                        most suitable and comfortable accommodations in your
+                        destination area. Travel with Millennium Travel,
+                        experience new adventures, and make the most of every
+                        moment!
+                      </p>
                     </>
                   )}
                 </div>
@@ -155,7 +174,7 @@ Additionally, our hotel reservations help you choose the most suitable and comfo
                       <div className="offer">
                         <h6 className="offer-title">You Get Online support</h6>
                         <a className="offter-num" href="tel:+994124975400">
-                          +99412 4975400
+                          +994 12 497 54 00
                         </a>
                       </div>
                       <a href="/contact" className="th-btn style2 th-icon">

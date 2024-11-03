@@ -80,7 +80,7 @@ const Navbar = () => {
                   </ul>
                 </div>
               </div>
-              <div className="col-auto">
+              {/* <div className="col-auto">
                 <div className="header-right">
                   <div className="currency-menu">
                     <select className="form-select nice-select" defaultValue="USD">
@@ -91,7 +91,7 @@ const Navbar = () => {
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

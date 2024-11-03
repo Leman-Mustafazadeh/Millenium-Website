@@ -28,10 +28,10 @@ const Footer = () => {
                     Millennium tourism, the leading Azerbaijan travel agency, we outdo at helping you get your trip planned. Not just a trip, but exceptional trips filled with exciting and life-enriching experiences.
                   </p>
                   <div className="th-social">
-                    <a href="https://www.facebook.com/"><i className="fab fa-facebook-f"></i></a>
-                    <a href="https://www.linkedin.com/"><i className="fab fa-linkedin-in"></i></a>
-                    <a href="https://www.whatsapp.com/"><i className="fab fa-whatsapp"></i></a>
-                    <a href="https://instagram.com/"><i className="fab fa-instagram"></i></a>
+                    <a target='blank'  href="https://www.facebook.com/people/Millenium-Tour/61553073116344/"><i className="fab fa-facebook-f"></i></a>
+                    <a  target='blank' href="https://www.linkedin.com/company/millennium-tour"><i className="fab fa-linkedin-in"></i></a>
+                    <a target='blank' href="https://www.whatsapp.com/"><i className="fab fa-whatsapp"></i></a>
+                    <a  target='blank'href="https://www.instagram.com/millenniumtour.az?igsh=c3BiYW5sZWk0YWRj"><i className="fab fa-instagram"></i></a>
                   </div>
                 </div>
               </div>

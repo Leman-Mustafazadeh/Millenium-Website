@@ -8,7 +8,7 @@ export const endpoints = {
   hero: "/api/Gallery/get-slides",//hero area
   addhero:"/api/Gallery/add-slide",
   delhero: "/api/Gallery/delete-slide",
-puthero:"/api/Gallery/update-slide{id}",
+puthero:"/api/Gallery/update-slide",
 
 
 

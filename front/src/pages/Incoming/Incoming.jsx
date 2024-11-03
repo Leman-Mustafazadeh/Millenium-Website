@@ -46,7 +46,7 @@ const destinationsData = {
     description:
       "Gabala is considered a popular tourist destination due to the combination of a very good spring climate, woods along the mountains and beautiful nature was exploited by the construction of large numbers of hotels and apartments in city. The city contains “Gabaland” amusement park, There are all conditions for recreation and entertainment for children an ice skating rink Gabala has several shopping malls; the most famous city center mall is Gabala Mall. Tufan Dag Ski Complex, one of the biggest mountain resorts in Caucasus located in Gabala Since 2009, city has been home of Gabala International Music Festival, which included performances from classical and jazz performers Here tourists are available for restaurants and hotel services at a high level.",
     imageUrl:
-      "https://www.alisontravelgroup.com/uploads/05804b7c5c17fcc4c389.jpeg", 
+      "https://www.alisontravelgroup.com/uploads/05804b7c5c17fcc4c389.jpeg",
     tours: [
       {
         title: "Gabala Ski Resort Package",
@@ -63,6 +63,227 @@ const destinationsData = {
         daysNights: "3 Days / 2 Nights",
         reviews: "4.7",
         reviewCount: "8 reviews",
+      },
+      {
+        title: "Gabala Adventure Tour",
+        image:
+          "https://www.alisontravelgroup.com/uploads/b55ce8b829bb77bb9a46.webp",
+        daysNights: "3 Days / 2 Nights",
+        reviews: "4.7",
+        reviewCount: "8 reviews",
+      },
+      {
+        title: "Gabala Adventure Tour",
+        image:
+          "https://www.alisontravelgroup.com/uploads/b55ce8b829bb77bb9a46.webp",
+        daysNights: "3 Days / 2 Nights",
+        reviews: "4.7",
+        reviewCount: "8 reviews",
+      },
+    ],
+  },
+  Sheki: {
+    name: "Sheki",
+    description:
+      "Shaki (Sheki), a small town in the lower slopes of Greater Caucasus. The main attractions in Shaki, alongside the surrounding forested mountains and snow-topped peaks of Caucasus, are related to the colorful history of the city. The first settlements in the area date back to the Bronze Age, but the present day city was established in 18th century, after floods destroyed the original Shaki. The town, and royal capital was moved to Nukha Fortress, built by Khan Haji Chalabi in year 1772. In early 19th century Shaki flourished as a trade town between caravan routes, and as a silk-weaving town. The walled fortress is well-preserved, and on a stroll in the old town, tourists can visit beautifully restored royal palaces and historical caravanserais.",
+    imageUrl:
+      "https://www.alisontravelgroup.com/uploads/091549b5131d92bff881.jpg",
+    tours: [
+      {
+        title: " Azerbaijan Guided tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/ba1ae0e6ddb33cc11b8f.webp",
+        daysNights: "12 Days / 11 Nights",
+        reviews: "4.7",
+        reviewCount: "15 reviews",
+      },
+    ],
+  },
+  Shamakhi: {
+    name: "Shamakhi",
+    description:
+      "Shamakhi is in the east-central Azerbaijan. It is located 76 miles (122 km) west of Baku and is one of the oldest cities in the republic, dating from the 6th century AD, but the modern city was not incorporated until 1824. From the 9th to the 16th century, it was the residence of the Shirvan shahs. There are numerous historical buildings, including a mosque and a mausoleum, which have been damaged by the frequent earthquakes. Şamaxı is now a centre of food industries and is especially noted for wines. A brocaded, flat-stitch carpet with mosaic-tile patterns is produced in the surrounding area",
+    imageUrl:
+      "https://www.alisontravelgroup.com/uploads/e1877fc3f43e1fb6df87.jpg",
+    tours: [
+      {
+        title: "Baku-Shamakhi-Gabala tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/e11936cedb82db81fd88.webp",
+        daysNights: "2 Days / 1 Night",
+        reviews: "4.5",
+        reviewCount: "6 reviews",
+      },
+      {
+        title: "Great Azerbaijan tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/447c35f5e28d0ada8886.webp",
+        daysNights: "9 days |8 nights",
+        reviews: "4.5",
+        reviewCount: "6 reviews",
+      },
+      {
+        title: " Baku-Shamakhi-Gabala tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/e11936cedb82db81fd88.webp",
+        daysNights: "7 days | 6 night",
+        reviews: "4.5",
+        reviewCount: "6 reviews",
+      },
+
+      {
+        title: "Great Azerbaijan tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/447c35f5e28d0ada8886.webp",
+        daysNights: "2 Days / 1 Night",
+        reviews: "4.5",
+        reviewCount: "6 reviews",
+      },
+    ],
+  },
+  Quba: {
+    name: "Guba",
+    description:
+      "Located in the picturesque north-east of Azerbaijan, Guba is a prime destination for experiencing the natural beauty of the Caucasus Mountains. This charming town is surrounded by timeless mountain villages, each with its own distinct culture and traditions, reflecting the diversity of the people who call this region home. Visitors to Guba can immerse themselves in the serene landscapes and breathtaking scenery that make the area perfect for hiking, nature walks, and ecotourism. The rolling hills and mountain trails offer unique opportunities to explore untouched wilderness, making it a haven for adventure enthusiasts and nature lovers alike.Guba also boasts a rich cultural and culinary heritage. The city is known for its delicious local cuisine, with dishes that showcase the area's fresh produce and time-honored recipes passed down through generations. In the surrounding villages, traditional crafts are still very much alive, with local women creating some of the finest handmade carpets in the Caucasus. These intricately woven carpets are renowned for their vibrant colors, detailed patterns, and exceptional craftsmanship, and they reflect centuries of skill and artistry unique to this region.Whether you’re drawn to Guba for its natural beauty, cultural richness, or the welcoming hospitality of its people, this region offers an unforgettable experience for travelers looking to connect with Azerbaijan’s traditional way of life.",
+    imageUrl:
+      "https://www.alisontravelgroup.com/uploads/6934b250101f8ea9be29.jpg",
+    tours: [
+      {
+        title: "Quba Nature Tour ",
+        image:
+          "https://www.alisontravelgroup.com/uploads/f9e31bb3e378f92eeab1.webp",
+        daysNights: "11 Days / 10 Nights",
+        reviews: "4.6",
+        reviewCount: "12 reviews",
+      },
+      {
+        title: "Quba Nature Tour ",
+        image:
+          "https://www.alisontravelgroup.com/uploads/f9e31bb3e378f92eeab1.webp",
+        daysNights: "11 Days / 10 Nights",
+        reviews: "4.6",
+        reviewCount: "12 reviews",
+      },
+
+      {
+        title: "Quba Nature Tour ",
+        image:
+          "https://www.alisontravelgroup.com/uploads/f9e31bb3e378f92eeab1.webp",
+        daysNights: "11 Days / 10 Nights",
+        reviews: "4.6",
+        reviewCount: "12 reviews",
+      },
+
+      {
+        title: "Quba Nature Tour ",
+        image:
+          "https://www.alisontravelgroup.com/uploads/f9e31bb3e378f92eeab1.webp",
+        daysNights: "11 Days / 10 Nights",
+        reviews: "4.6",
+        reviewCount: "12 reviews",
+      },
+    ],
+  },
+  Shahdag: {
+    name: "Shahdag",
+    description:
+      "Shahdag is an enchanting destination that feels like stepping into a true winter wonderland. Nestled in the breathtaking Greater Caucasus Mountains, Shahdag is the perfect escape for anyone yearning for the beauty and tranquility of snow-covered landscapes. Imagine vast, pristine white fields stretching as far as the eye can see, kissed by the bright mountain sun. The crisp, refreshing mountain air and serene surroundings provide the ideal antidote to the hustle and bustle of city life, making Shahdag a haven of peace and relaxation.As Azerbaijan’s first ski resort, Shahdag has quickly become a favorite getaway for both locals and visitors alike. Opened in 2012, it offers a wide range of winter sports and activities, from skiing and snowboarding to sledding and snowshoeing, ensuring there’s something for everyone, whether you’re an experienced adventurer or a beginner. With modern facilities, equipment rentals, and well-groomed slopes suitable for all skill levels, Shahdag is the go-to spot for winter sports enthusiasts in AzerbaijanShahdag is also a popular destination for celebrating special occasions, especially during the New Year season. The resort's cozy chalets, luxurious hotels, and scenic views make it an ideal spot for ringing in the New Year or spending a memorable winter weekend with family and friends. ",
+    imageUrl:
+      "https://www.alisontravelgroup.com/uploads/8179236789b95eaca003.webp",
+    tours: [
+      {
+        title: "10-day Azerbaijan nature tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/d5115a501d0dbe62865b.webp",
+        daysNights: "10 Days / 9 Nights",
+        reviews: "5.0",
+        reviewCount: "20 reviews",
+      },
+
+      {
+        title: "10-day Azerbaijan nature tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/d5115a501d0dbe62865b.webp",
+        daysNights: "10 Days / 9 Nights",
+        reviews: "5.0",
+        reviewCount: "20 reviews",
+      },
+
+      {
+        title: "10-day Azerbaijan nature tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/d5115a501d0dbe62865b.webp",
+        daysNights: "10 Days / 9 Nights",
+        reviews: "5.0",
+        reviewCount: "20 reviews",
+      },
+      {
+        title: "10-day Azerbaijan nature tour package",
+        image:
+          "https://www.alisontravelgroup.com/uploads/d5115a501d0dbe62865b.webp",
+        daysNights: "10 Days / 9 Nights",
+        reviews: "5.0",
+        reviewCount: "20 reviews",
+      },
+    ],
+  },
+  Ganja: {
+    name: "Ganja",
+    description:
+      "Ganja, the second-largest city in Azerbaijan, is a captivating destination that leaves a lasting impression on its visitors with its rich history, stunning architecture, and vibrant culture. Known for its unique name, Ganja boasts an array of beautiful red brick structures that reflect its historical significance and architectural heritage. The city serves as an excellent base for exploring the stunning natural landscapes nearby, particularly the picturesque lakes of Goygol and Maralgol, both renowned for their serene beauty and recreational opportunities.Ganja is also a significant cultural center, recognized as the birthplace of some of Azerbaijan’s most celebrated literary figures. The renowned poet Nizami Ganjavi, a pivotal figure in Persian literature, hailed from Ganja. His legacy is honored at the Mausoleum of Nizami Ganjavi, located at the city's entrance. This mausoleum has been a site of pilgrimage for centuries, attracting visitors who come to pay their respects to the poet who has had a profound influence on Azerbaijani and Persian literature. Alongside Nizami, Ganja is also the home of the poetess Mahsati Ganjavi and Mirza Shafi Vazeh, often referred to as the sage of Ganja. Their contributions to literature and poetry further enhance the city’s cultural significance.",
+
+    imageUrl:
+      "https://www.alisontravelgroup.com/uploads/04c0a5a7eb038a001e1b.webp",
+    tours: [
+      {
+        title: "Ganja Historical Tour",
+        image:
+          "https://www.alisontravelgroup.com/uploads/4cb5e5a201e125bdb921.webp",
+        daysNights: "13 Days / 12 Nights",
+        reviews: "4.4",
+        reviewCount: "5 reviews",
+      },
+      {
+        title: "Ganja Historical Tour",
+        image:
+          "https://www.alisontravelgroup.com/uploads/4cb5e5a201e125bdb921.webp",
+        daysNights: "13 Days / 12 Nights",
+        reviews: "4.4",
+        reviewCount: "5 reviews",
+      },
+
+      {
+        title: "Ganja Historical Tour",
+        image:
+          "https://www.alisontravelgroup.com/uploads/4cb5e5a201e125bdb921.webp",
+        daysNights: "13 Days / 12 Nights",
+        reviews: "4.4",
+        reviewCount: "5 reviews",
+      },
+      {
+        title: "Ganja Historical Tour",
+        image:
+          "https://www.alisontravelgroup.com/uploads/4cb5e5a201e125bdb921.webp",
+        daysNights: "13 Days / 12 Nights",
+        reviews: "4.4",
+        reviewCount: "5 reviews",
+      },
+    ],
+  },
+  Lankaran: {
+    name: "Lankaran",
+    description:
+      "Lankaran is a fascinating region in southern Azerbaijan, nestled between the serene Caspian Sea and the lush, green Talysh Mountains. Known for its unique natural diversity, Lankaran’s landscapes blend coastal beauty with mountainous terrain, making it a captivating destination for nature lovers. This area is not only rich in scenic beauty but also steeped in history and culture, with a variety of experiences to offer to visitors.The city of Lankaran itself is an ancient port town, once fortified with walls that protected its strategic location on the Caspian coast. Its history dates back centuries, and remnants of the old fortifications still whisper stories of past empires and the city's importance as a trading hub. Walking through Lankaran, you can sense the blend of its historical significance and modern charm. The region also benefits from a subtropical climate, which makes it ideal for agriculture and adds to its lush, green landscapes year-round.Lankaran is also celebrated for its citrus orchards and flavorsome cuisine, which are unique to the region. The mild, humid climate creates ideal conditions for growing lemons, oranges, and other citrus fruits, which are a point of local pride. In fact, Lankaran is often referred to as Azerbaijan’s “citrus capital.” The regional cuisine reflects this abundance, with dishes that incorporate fresh, locally grown ingredients, offering a delicious and distinctive taste of Azerbaijani food.",
+    imageUrl:
+      "https://www.alisontravelgroup.com/uploads/f7d0b6f6817c5481ac5c.webp",
+    tours: [
+      {
+        title: "Lankaran Coastal Tour",
+        image:
+          "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTEhMVFRUXGBgYGBcYFxoYFxcYFxgYGBcZGh0dHyggGBolHRYYIjEhJiorLi8vGR8zODMsNyguLisBCgoKDg0OGxAQGy0lICUtLS0tLS0vLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAFAQIDBAYABwj/xABMEAABAgQDBAcEBgcFBQkAAAABAhEAAxIhBDFBBSJRYQYTMnGBkaFCscHwFCNSYnLRBxUzgpLh8RZTY5PSNEOisuIkc5SjpLPC0/L/xAAZAQEBAQEBAQAAAAAAAAAAAAABAAIDBAX/xAAlEQACAgICAwACAgMAAAAAAAAAAQIREjEDIRNBUSIyBJFCYXH/2gAMAwEAAhEDEQA/APRiIYREhEI0fSs8BERDSmJSIQiGyISIaRExTDCmGwImhGiQiGEQ2Q0iGkQ8iGtFZMYRDSIkIhCIbAjIhpESEQhEVjRERCNEhEI0NhRG0I0PIhGiIaRDWiQiEaKyGNHNDmjobEY0IRDyIRohGtHNCxzRAI0c0OaOaKyEjoVo6KwNG0IREpTCUx5rOhCRCNEpTCFMNhRCRDSmJimGlMNhRAUwwpiwRDSmKyorkQ0iLBTDCmGwoiaGtExTDSmGxIiIa0TUwyYoC5IAcC5a5sBFYEbQlMUsVtuQgsV1FnZN35Pk8RDpFIYkqIuzUl++2kGaGmESmEaEwmLlzRVLWFDVsxyIzB74mKY1YUQ0wlMT0wyatKbqIHfFZUR0wlMV1bXkAP1g043flnFc7fk6EkMdL8rc+MWSGghTCFMVF7bkB99zwHz8vAzEdJs+rQLP2i7huAZrka8YnNDTDtMdTGNnbamq/wB4rJiE29wtcfLww7fnhvrMuLX77d8Z8iHBm2phKYzOC6UqY1pCm9p6Q987ZN7ouy+lckkAhQdri7F7+GsOaDFhmmFhv02V/eI/iEdDkgo1dMNKYnKYaUx5cjtRAUw0iJymGlMOQUQEQ0iJymGlMOQUQEQ0iJimEKYbCiEphpEJjMVLlgFagl8n1bhGbxHSkuKEBrO9jqFB+OTG/dDkVGjIgZj9syZYBqqfIJIPG+fJoyWI2rMWGUtarjzuLNygZPxNKmzPMWHEA/OUZz+GlE0+M6UK/wB2gDjVc+njGdxmPXNWCVqJyuwtn5C+nCK9FQckgfOXhFXEY0BkoTvXD3b0YmMOTY40W2AY2GVyefjmRnFaZiALEnk3kcx7octKgl1tkNxT5ZC1yGc6d5iuogkslxnwfW9zmePCMJmmixs/HGVME2Vem7EOGYgjiHciNxszpLKmAdYRLUwzO6TfI+GvGMN9DsTkBd2Z2y5Ad0MVLZLiydVB2Af3x0jyGXE2u1ekDApl533uVvWM1iNoLUkVElIAAvwDed84opxYukKe1uLdzWiM4hJLHda4NrvxAtGsr2GJKqcDx14eEMCzoD38WF4Vct/Zvbuf42ueEMQg+y50uLNf0iyRUx+HJc6nMkvZ/jD8S7tVdhpm9yB5QkpQADGoeVz43tblDJy82DnzYHQtZ8oMuxoVA3SbXyCjZ3+fOEC9AAcnc52HpCLJNlKIe5tYODZ4UTEprSBYZFiSosGYcHgciohqD3dzmPk+kShba94b8tbekV5pJLhKlX0GT35/IhErUynGVnJbMvo5eLJDRJ1o4+iY6OdXFfmY6DNFiz6BhDCGYI4qjlZ0oQwhEIZgycecQzMZLGa0jvUIbCiYiGlMBsd0lkosl18xk9mBP5PGY2nt4zXdRpdwgZDTv43740jLo12L2vIQ7rcjRN/XL1gDtLpS6SJKSH9os47hGSn40HtFgDfIt3RWXjASwuRzbxyiugou4nFKU5UoqOpPrnkPSKylAW9VDXQiKP6wBaoc37vfDMRjQpLJOfeQO9xeBsaLfXKLjiw7jq+jRBSlJL7yrFs9Xb+UV5uKBIpBKsmyFgHLZ65c4gxONUhLAgkmwGXB2zg7eiLk6tSjUd0ZJGeepNtDrDpUgIYkCpjcOWflnqA55xRlYmYXNk6BrZaq88o44pQN1FyxO6bGzh+DwOzReSAQ6iTfm2YOTWyHzn06cbFjc+1mT49z5aQPl4m5K7AZO3gSHfwggmYCzO/HPyAyjLTEQzVMQpQ4bzXs4t85iIUEJIuDxN3bMsAD5e6OM4BVILk8VNoeAiwrFpTmUu2pLeZs/CG6QFOatFXZKToGsSz97w4SDqhbPfNtAHs2o8m72zMcr7QY2YAC/nl3xBNxa0qCAXVq51tFbKkXBNHHdekF878hr6c4UI3KiQLBgH1U2Z0Yjh2ngcMXv00vS5YAAA3b3tFTFY53UHzbPT5eLsgwdwgpNuTOrUHuDZn846ZixZnJqz1LBxkz5e7hA7DT3UkEuwANs3v4NZu6JRKKVkkqvYABwx+fnV/6Q6ROKnIUXsH4AcntraJZa6SQSTW4sHIs41bOz8uURqKhooF+ywJJbWnSz5RwlTS5ZsmBKXAYOSSRdntA2hJp0xO65vYgX7QZnI0D8b34w1I3VEIAPkQLEAuLauOWrxBik0VVMVmyftAXb0iAylMlUxT1CyagSXbgbB34ZQWiJuu/xx5R0V+pH2UeafyjobRGgw+LnHdQVOS/aDPxclgecXjjJ+GSEieCo3KELJIe9yLZ6P74zbCWN65d3Y2N7A5f0hE4sqexc2ydm+PnGskAUTtOYVqNZvvNVkx72d4b9NWX3ib1Zix+H84HgXrJDsQwdo6QStRSCXGYtpo57znwgyKi+rFrvmAcwxF8jfXWGzNpjJRVxy+fnWGTMQEskAhhxOZzPa428BFCfMlvU+9wL8mudOUNlSLExbvdTaCwDC2UdNnJSzkg2s92LMeLWBhuFw5mrCVroSzhRYgDhdQAfQEiKuLwdSlUqJSkm62dhYEgWGQyMZyKiSdMqYB0gjIB+94fh54SaQlQTndNW8MrnLwhmExy5QUlC2cOrdBUbDJ0ks2j/GI8XiFKZaiHICUixqzfuGQtxhsqJxOXXdYAfdqGT8viTEslSlrKUlCanqMxSZY7Ts5IccgOFop4RIIdaCE5B2Dq0zu0EcHsqbMcghKQ5YjNg9wH04jhA2tEkO+hTusZKBMpIBVLBUliNFswFxfi8VZsqYlSgxqfIqG6zvyB/KJsTImoY1OzMxsDlcMO7JoegrupRAp3tHJyPJr5HjFaFlYInJFwggB2cPlfkTrrEqFzJikpAZ2s1ud/DSFRNEwKWVsWdj2nLgC2Q4GF2dKXMUogBSEi5CmCGDuTZnyuRnE3EEhmOwdKylKjwUopIY6gfIyERJkh12cbtLpKnfk7DSLO0pk5K1JKSCkkEVXcWOvi+sD8NPTNUyxSp2OSSWuLNfmIzbFxofiJRdBJCWZ0jNx3WiguQpe8hyxubJYHiTmc+ME8ZhZYTYTKiS1lUtrclicrczlC4PBGk0EuQO8AO5Zi18tYcqVlQPkYZAANQJGtQKH0zSH+c46dhwSlKlJcl1EBRe2QYsbDQRPNw7roUkAEpAVkazkL5lzqwDF4voASGAcsWLuXcaiwb4CLJEogzqlA0oUlNV2JKeYzdiBpHJwqkzCkqDuLpVUL3yHd7onxFKkh9eyRdzbI6mIDjgBSO7ny0v8AzgyRUEOvWlNKGZjUs+4cM4gOImUopUGSDdXtE6i3vhZqU0J1ACSHBclrkvyHpA3EYgqYAMCwc2fPLT/9RjYlnqZ6lupT8QDkBdnZhn8vCT1LmrKihRANzcAkDVR74qScUEqIQSSxDkC19M3+eLRcC1rDGptSTSl83uMw5ytDdCVf1Ir+8l/xiOi7+rl/3yPJf+qOi8hYh5PQ/FLS4KEoYOlRUFBrmxQAfCHJ6Krkj6wrvw6vT98ny4xt5SlpQQlluCwJBcGwuS6bNqe6LcvGSpmSk1apqSSDwsS8DkzeCPKJ2DKV9mYqWbpUEuzh9MmPpFnAbIWsfV4iRLWSCQtS0K03QSmkl318YhG0FJs6j4k+htD1YkkDs31pHuDCOySOTZLtLZuIlq+tw8wP7bAoPOtLpyHGKKkgk1gABmDM/wCY5n+mgVj5aJMtMifikzC/WAKTLlgfdQlKnz1Jy5wEXhFlRWqYlQL2SXmO1nDDXP8AnE0gBfX0PMILuaWsz2q7uHdEX05c/dXUTmohipQakWNych4k3g5M2EpbhaZQ0sFJbgQ1reVoG/2ZW/1cxNaDcF+RBDAsHcX4eWaRqmVJkwAAFCkkCzuDnzF84sYxAT1YSHvU4u5AD5dw9Ykw3R6aCN0gAF5iFJWQwOQrDvlb4iO6QSlpUjrKgRUHKFoLWZwdc9YGAOxeImBhVZ7XIbzyLjwi3s/HTVOGqDNVYEdx17vGB+JnKUlApOpUwIc3tlwbjBGXISFJQHoG8WU5dhmQOXoeUT6IdNWsKH1jEA5EmxsxUC3NucWF4gN2rnVrevdnAtVU6YpnCRfIkFRIsfEiHKX1ilm4RLAsCACQoPqc7seVzA7IsS9mFRcqLnUXIA7jeNXszaaJUlEtOImViXMJSkkhJSZixuhQQ9LA80jiYxGDxRWqjJLk57qQNT9o6XixKxiETgGLEKTp7aFIHLMiHtjF0aLDzhOngrmBiRUV7pWw9oiyAWYkObhhqO6V4yVLxDSDJpEuWKkhC6iUhSmUqpWZbOzQBrZ3BDC5sRr+UQTwFgKGtr68ARrlrCnT7FtyWyxsrEzFVJN0oJLm4budja+UToqmEbzg28LD0BiEIVQEBnY+LHPnn6Z8bHXCWhLbygOHH3xyk7BFbFzjJBa1WZd8tACfWHSMQJssJcpUASSAyXdnPmPOINoy1zDu0htci5b58Ig+jzEpKEEKqLm11cA5yyPDO7w10QVTKUkABTv7LOkDQtmTd4oysPLSv6xlBL/vGwuDZmvEqpsxgGAtlckAdoA+Iz4mK4SCScjewbkNIEmhCOJxxUm6QpJz+RdoF4bBqKFqLhLhKQRcnMtqLa3D90LWlJYOXa5JYvo1gREA2ipBBSakgm7M4I9LeUKTWiC2ydgKmTAqYKJedJN3NiTwBueJbxgjjZshG6hetISmxF8n7ObZNbjALG7XeWhKVpvYsGVdizkW+dIq4XFBKiogr3b2S11OXBBDW5eEYcZN2xNL9CxHFf8A5f5x0VP15K4TP8uTCRnGY0iTB9K8UlgVhTW3kP6pYnzi+jbCptXWSEEgPUgLlkhwL3Jy74Jqk4cA9WhMtTFiEkHuibAqCQ4mJd6hdtCG9YJfyFVpGVIyqZZUSwyv4D3w/CpJSlIF7+pt74PY/CqmLBRSl7KZtGL2LHxB7Xk07HoqUlRKQLkoKSeICQSDbWw7o6Lni1s0qAS0kQ2o84vSpaVqKagCAo8zTm0WMRslaE9YEpVeyEkFR19pkt4+BjfkX0emDJeIUMioDkW8rtEi9pqG8bs7VJD39fB4l2mFqoCJExJZymlyH40pA04QIxaWQXzAuDmMs41lZnFeiT9cTLgLUAe0Bw1i3h9tz0BVJWU/d3Q+rsOMB1YhKUBNCaim5PO9vDX3RGdqUJZJtcMeYv74G2y6RqZG1psyWtsHh59KkhSloqWK91KSUGWWfLO6jALHdYhRJwpw5vkJ9N/xrUB4ZRLsjas+VLoloWqpUuZSkA9hYWH3SQ9Iv3RuUdMMQs/7AlJKUukzikJurecoJJNt3RhzglJIqTPO5E5QCxWKlFJsc8rcWbwibCYdpRTUEuSo2KiS1gA/LO3dG7wU4AqE6ShaVXusFrlwNy4uNNIpq2dhVqWBJMtFrS1NkveLAgdkcI5eWLLEw8yYpKTLftEgEWBDJCW0YMbc4bs7AAzQZthT1jHg1QGd9PWN1K2BhCgrScQACaTQVSi1hv0lOl7vYxDJ2EiaVFUyght228Tmkki1vfrGvLEMWZHH4jraQgliQFOGYqNjaxipOBlrWlLKADXOobQ53vGwWgbkuWyL7pKbAk2qa73HrCY7okQAgdXMmTLhVRQwFtWJOjMNO6KPIvZYv0ZrES5gWlRzIJVSzWcsOIZs84sTJFcozFKG6FJAcDfAZyXyBLtq0aA9Fp0sAGylMgKapySbM+gAzN7w7F9EcTQK1SurRcg23Xdmcu3c2XCMvkXokmZTZOEmLes0pSCSbHTdHK5+XiPZ5mqmI3qUlRTrfUny/KNJgtkrnpmKlUKCiHBmJlKNLixUku45xLg9kJW0pEmYKCQaVBVKrvvZHWFz/wBFRk1iYpakI3qH8nPEgswziPacsoWJQVelIUfvEl/ePKNtJ6PCQQEV1zVe2yiBqdwcSMoOTej8lCVzpsupQFRUolTEXsCAwfR4fKvgqLZ53trD0GUwSGQWYlnYre9mqVDJWzh9HLEVLpUQG3aSpIBPMqT5mNxgcBMmpXMTKkqUoAoUoOdWqtlkQz5aRdxeHmVAykgWZADAFaQXCrAJS/Ak58IM3SHEwmA6Prly1KmBisUpuki7acT/AFZniLCdFJ1dU9CkpSKsnfgCRYDx5CNptPBYiewmqEpQXusFXACznk9NJzsxzeLIkdaFVqWEJJS6UzKWAD1FCTcU+sZfLJFSPOv7OT/vfwqjo9J/s3K+2v8A9R/ojoz55fH/AEWINmSFezPmJ/HKkTfMBMu3cYq/q6eVClUmYkNYKXIVbQVGjTiRBdWGMKZBJJcAatkI4LnrdGLsEzFoBO5NlqSpSSCykummoVAi3MA+6Kc3aipaqapahpTOCT4iYEknuBygjtPClKTStxdwNXIDW5l/KLSJOHnISpMtNRISpJSCpKrVaPk+v8txaaurHEy83pAETD1koKdjYipiO648eEXMHtsLKSjDrCVZqKlFL5MLEAP3ZQYxsvCpDK6sseyllKByJ3eybAMWgVjOlKJW7LkpbipTZv7I7s7jjnGkstRCiTD4yaokpkBItUS4ShgO0SAE55E30eHbS2yhCCGC3AKlKTUHYABKViw+8pL8kwGlTMbjlU4dK1BnI3QBkHADACwuLFo0Wx+gUtJTMxc1c2YGNEtW6PurURpkQlROdo6rjUezSi/RmMHs+diVKKJSSTcJKCpRLPYJDseJZrd0aGT0SxUopq6qWzMpaUJJHtXBMz0za0b2VPKU9XJSmUj7EoU58SLk8w0MSgd5OfPvOsTbZvxoAydjykL6wT1F7KAQXPDfnKFu5JytBUYWSfYuNVTFHLkmi3iYnGyBPIFIcaizDmc2vlFLFJwspW6FTZibVVKloBc6g1L8wDGJYLtmqSIzNLTN1HZsQkAgC2agSC+oPC5jtlqUcIyppS9dlEpSQklwE1AFRHv8IErx0wJmJqJSo9lNncsxObXGZ5wMWtCGS4BSBk7gm9Ra6sk30cxyy+IxmOxM9MiX1csML1JIzckA1Wa/H+sUjaqpdSQzkEFsiGsDZhd/PINA/aE0qIWClRURkqqwzY3vq/Dlcw4mQtYTSCMgoksXdwSMwPzbhG0voWEJk9AmAjVJBcVAu4Ob3uQ/jmL2dlbXWmbLahQSpZU77u6wYuDckWfOKqymtRqYBxYFiQokC+XcIjlLQmlJSFA5kqKCkOdTcBybNFYM0G1turLGot1ko0kMkUKqJSSxU7DU8tXsz9uLmSVy7KVSQrxz9oZDlAXZskBJSlBAb7QWk8WLv5tD04imsgVVKHAWyAu1tH7o5uT0jOTCWyttzJcpCEy0JAcB90kvm1JHrEewsbNkhabVKJUTukFTlzmVN4RXmrSoEgUqAN2Y8r/lE+ICaQCXHO7Nz0icmKbJMTtScZsucWIAKQUkMxcuakpF+fARW2xtWZiJa5T1gKRUyWpfe0B04GGbQvJWiWQkkMNM+ERbGZAUEhQJFSq0l1EJ+0CUtaJPqx7CyNtThSlKgNAmkHIE5pJOn2Yg2btaYgCWSU0uch7aiq4LKfwgRiMUvrkrZJCUlnJapTe01rHXjEs2etQmKR2lp4PkGSzfihxdF2PRtuZWmcqkFlLCakoJqQBUHDK3Q2flFzE7emUiWAUlQO6qkEO55i7G7xRm4cqkmWhWgSxKSzNYa5DX0h/0Xerak2sQUsA/tJJAd8rxZIOxf1pP/wAH/Ml/6Y6JqJnH/i/6YWDMewlMxUtNTrQ6e0KgojkUpdQPItA7FbZlsxBN+SQcr1EuLtpAlWOl0KCE3CiAwJyGZ8fhATElapiSogJS13AqJBquM72b+cbhww+EFlbbIXQBejNncm5N2DOBpAVO2Zhl9WSogOwqsHIdk5OXLQybJmdYVWOhA4OzHLTjF3ZOyytaeoFZUW6lzUTbJQJI1yt5GPQsUZVtlPB4HEz1CWEqUVFgEsXpscnG69zkLve0eh7A/RzJkATcasTVGlpYSKamsnis56DJ7MY1PRbZKMPKchAmkfWrYDJyxOYQkPn3wmIKpiqiQnRKT7KTx+8WBPgNHOXN+jvHjrZFiAhqUoRLSQ1CAAGGQWU9q2nZD65xXEhgGDDRrWFtNP5xIMOp+0PIw6YWIBU7Bu7kOAiNCSAd696bP3h/R4dLXe4t3xBjpgRLWoWIYA8FKID+AqPhAnC7SWO0yhzF/Aj4vGJcijsy2o7NhgZ9BJF3DHieF9G+MDsfsJCyVSF9WTmhT0nWxGQ+bQPk7VQdafUel/SCGGxgJzCuQN/zEZeMx6kjObW2HMA+slKtksbyf4km3ifdAU4YJVWmoMkh3Bsbmx1Yn0zj0PEYg0skqBVYEfE8IzG1JiwFIUhMwpSXmEAEguQUuxJG6Gc5njGMGtM5uFaM2tJLL+rJapwgggMTfQagqs7xQxOImIU1KlO5ZnULWdmLMc7aWgnjsQEq3UkVAgUupJKc3DEsGVa5c5kAxBKwqpiyApaSlJU5ZVt2gByA5fQPuhgTaOkUFAtGLIBpLJs1g+YItkzcvfFzDbzkJy471lZauzh3ytGiwvRVUxJKVgCpVPWInOdCVDq1U3BGbnN7xdk9G51IV9SDcUrmKlkAEixKciziwsRllGZN+kVMA4Oaq9SWLOFEGnldm/KLezpWEmSQJ8ucXOSFoG6xUz0uC4T33sIvrwKg4UAk33hOlFObWVU3O/GGztjYtFKpeGXNA1QyizZilwfOMRlKL0Zp/AdNTKZQkhQNaWSsFSmZJW7EjOvJtO4U8TiFmdSCyBYlsrOQNO/lTBCfOYnrZc2URn1stSWJ+8Q3rECpEomsgu5pUXWGbRnYZwudvtGRRh3ABLkXcbt7c4uYp0yzZ7Za8x5RBhcQlRdCkq03Sk+hYjzMVdrTlA7oJGt2PC2UZjblRuJ2FnFQLHiTwNmAyBN/cYvhqgzCkMbcfkZwJwq1M7lJJyUGdyTnm/5RfwagbMPxJJd+eRGvERrkQltc5NdJ4A3Ta/PJMUcdi1JTOWHASndPsudRxzHHKLakkEmoMTkRy4i4Pe8VsRNIDi48ucc4lkP+no/vB5pjoF/rA/Z/5vyhYcTOQzDYRK98JSAFXJolocKDpBGZLmwcnnFuXspKkFfU1KHtv1IsAxSkoKyX1NL3tC7DTLRMG8k36srUXZnIAUS7XjR9ZHv44wl3ZlyaPPZeCXMWUBCHGjzCS3FlAcso3n6NOjNCV4qaihZVRLpKhZnmKLqL5hI7lRBKwwTNVM+0B3a+vON9s9kYaSAPYKtPbJV8YpxxidON3Ij2mKkhL5qA5hIBUrwJSlJ4hREDFJZ96rvz8Wt6Rd2i6gn2f2nD/C+DwHWbs8cYndluTMGbERXmq1B8oWWqI58sE3SD4AxoCHbCfqHBv1iH8lge+MritoABuBYvk8a6ddCpasleYIIIPO49YHYXZclKipYKzoDugd9yT6eMcp8alsxOOQDwGFnzexLLaqJpSPP3Qbw+wCLzJ6j92WAB5q/KCasWbAMALAMwA7shDpbm7tCuNIVBItYFpaWBWbNvrq9MvSBHSKUVpT2UsoqJLtupJBI1Y025nKC6SAPiYr7VkhchfWEBDZq+1mKRqr3Z5Qm2ujKYGSqYoqSgFUpN0mwVWuZWlOQKWKg50Izi/wBF5nWTJswoTLShSUMHJUUBRZRLHcMxTv7QA9lzHhNryZKp3VS6t5KQVE3CUA3SDxUdfCB2xdvzkyUhBCAqpZISKiZiislyHzVxiySRytI9ARNBNk37hFlNWiVeAMefq2zPPamzD++r84jVtFR1V/ETHN8iNeQ9ELjMEd4IiFUlBLlCCeaRGDGOmDsqUOQUYfL21iPZmTB+8b++DyoPKvhv0zAAwKkj7i1IHgAQBECsMk5sr8cuWsn94pq9YxsvpJiBmUnkUI97esXZfSpXtyR+6VD3v7o1lFj5IsK4/YGGm3mYdBP2kKWhQ53KvQRn9s9HJCUpTLVMqWsJSlbKzcq3jSoEJSo5QaR0hlKAapJ+8xT4kXH8MdNmInzpSELSulK5hCSQXYSwxsQd9WV7PGlXovxegArorMZ/pCk59qWT3MyyBxufPKOThkSSyjMmhLhSkFMplEON1YJPhybhB3a+0EyXExAStnQVJ7QS26VM6TduTu8Zba2JelSQwNPWZi7E2Ivokul8tdZ9hJJB7Ys2StbCWAGsZqlqrNjupcFmIyIz10OJw6ASoSZCFD25ctKVnvqqPrGT6MYuSw6tKlkppqUkmq9wk9m+rcNdLO3VqlpPVKIWSlgFlwAbpzCRYtyBLQYpGo1VhX+0M3+8V/An/wCmOjEfTJ32R/F/1QkZplmU9prEtYoQkABzUwZwGJ43cW7oNbF2mJiAxcgb1wWJ0BFiO6Hyuic+aEKmSFVoNDqATWhbUXU1qiR+8OcG8B0Jnopl/Vo3TTUvQMCNwG4cR6+Kl2zjJN+geZsbvZc8LwshYOSerPF0Gn4P4xl9o7BTIlqXPxASQaQlMsqqLVC7hgRq2hzaAc/bbASMKVqQsiYymSp6blJyTYJsToeJh5GpKkXGnF9noG026ureNLuAHLKYOw4EJ84DGWLEve93GcE8Bt7Cq6lCCCuYySmo7hIDu1lZ6Wh+2NnUKvcHInM9/OOOj0LsDEgQ4qOpzyLiGqIuAkGGkQkKkg55xGtehhyi+l4jVwMQCBDQ9E1XeIRJaHiXwgIJYIBR3rJSCpRzskFRPknzIjF9JNrTJpbJ3CUjJCT7I5njmbxrtnpJrlktWlSHOlaVJf8AiKPB4wm0klKhUCCCUqBzBfI8Mow9MOS8egXMnFNbhjcjJyabDh7IGcTYOckpAQXYAcDYDTMZQ+ZLc6Ee+BitkJD0qUPIgHlqPCOaprs84TxE0pIIIIY1aX9kAvaIpe1Uj9oCk3cZsxbOBGLlrG5WqliRUbMBe7AvlxinPmBwDSklg+8w4uHsY6R400RpEbalk5kd7ANzc3iRO1pViFBzcNYFvd4xkpmGAU9VV87ue7SDMpKQBx4sHPG4jpH+PGWisOInhThlH935vnCKxIGRPMZM/fFCXjlgjeULpAu1h6MPlo0mzFzZ4S0t7JuCCreUpOTAWCXhl/FS9kqYMTMfVtYjVIWVVpIcJZiLEBRL7twb84NY/ZSa1pKOyASbp4DtILBieIyMCp8lUt6SbaG4dvtM4y5xyfC46HB+h52hMSAJqag1Ll1Mk/ZVmnM3DEPzgngPoM1Kpc6UUPSHCib0q3nJcE1u76JYZRWxsyUiSZhxKSoJBUmhQPNqX5+RgBj5ILqoJy7JAPrrB+Uf2CMzY4PodJlTETcPOWUoIqSTWCGyIsZZLvcaZQP/AEg4QBCZyKlKqppdRDEOci4yZhxOT3x0jbE6Qr6uYuWoaEXbgeIPODx6VCYJSsTVLmAqP1VNK2ZlLTel2UndHgDcdEmzopxaojqm8MP/AJsr/VHRGyfs4T+OVHRvEjRzP0lTzL6mVgCEsAla5t0j2TTSN5IbXNMVZ/Tba024GGkM5SUIJIJBT7ZUDYmKKlxq+jHQ2ZPImT3lytE3C1D/AOKfXusY6NRQJyZk8dtDHTZZGIxC5pW10pCE7t0p3QEk9s+MDcFgymtKkKqocOH6tKmd7OFGrTTvePoI7LkdWmV1SChF0gpDJLEPyLE3zuYzqei8j6auYg0vLQVJYKBClqqTfsp3EkDQvoWjJrFmZ/RvsFaP+1zEFVJ3MiQhqSq2Rd25CPUpspE5DWUlWR4fkYemYw+MDVS5klRXKug3XLGn3k/l8g2aXRnNq7KVKJ4cRkRAfETQG5m7vYMb2HLkI9HEtE6W/aSfQ/Ax5v0k2YEzdycFFS6EMoPLUU1AsQfyLgDNo5U0buxVAiEC+JhmFugFNgN1iCns2yOUKpIhshVKY8RyiRBAiuksb5RZmySljYpORFx4cDyN4iJZa4i25soYkFaQ8xt9DftGsFD/ABANPazF3B5MTypzQDvo88xCDLISpyD2VNbuPA2Py8NKA5LcsyD32j0TaGAlYgGvdWfaZwr8Y9rvz/FYRjdqdH52HLtUnTgeSVvf8KmPGObj8OEoNAnqEG6VKLZbzgagwHx2GCVO7lRycM3Nub+sFcVKMwFhQeY+bxRkbJWd5SrcDm4y1HwjUXW2YBCkEFqGN2L28dDHSMeUWVdOQbT8xF7FySkip7lgu4Oe9ZzrqLRVnYHtA1JINnyPHxj0QnQBHDTwsbpBDvmzeEXcLtOZLLoVSWYWAbubPWMxN2XNSxbRwx9zawicfNRYktwUAfXP1jrmmWJukdKJ9QVMImG11tdiCSfXzi1J2miYkDdqu9snjz9O2FsxCT4EfGE/Wd3Ce67xmSTNR6N+tLi1xqC3zzinLNSQtJSpOYUC/L+sY7FbamzE0uEpyZL3HAkklvG8XOi89QWUjskOc8xkQ2R0jhyw6sptM0c2SDmkctff4xErZssgVMzMNGDm3c5MP61hnb+cEdkbRmSFlUsgOGIUlKkkcDUMjyYx5raMIE/qqTx+fOOg9+uD/dYX/wAPL/0x0a8kvpvo3nRjoVLkBMzEqSubmE5pR3faVzPhxjWnEoA7YA8mjAbZ/SDJTNmIKS6FqQd5IuglJ7rgwD2r006+X1UgELUpIBCgo5jK2ceum2dOkj2BSxk3zzjEnYeNRifpJxYKDSJiUJupKVE2SzZEhrlsnIY6vDhdCAs1LpFRtvKA3lNoCXgT0i2UuYklBIYbwBIKnzAvly5CBbF6M10l6dKlzlIkmWpAyUFOS4BBsws/PLSKPRzpxM+kvOUSlTgpyCSWpUHcaMRbtPFbafRIldQkLPH6xN/I/CB6dlJkTElUopIuytRytxBDx3jFPo5OT2eqY/asmUnrkLSglJUUm6VgBzVS4T3lveYyOLxEqdNlzt+ROmzUIWiWvs1BSFTE3pIqUHJHeC8aCTsmQqU6hT1oZNQTUgsTuWuWDixNozOK2WoqmJ6pWKExBmSlUhCQEmUgCwDU7xpAe+RIjg9mzWY7YBUlw1bXADJPcHseT+UZnEYFSSQQUkaGNRgJczCt15XNSAR1gUVU1EFlJewDMOAsHgvOkS5yQSUqTooH4/CObjWjopfTzgyFalofJnFDsc89Qe8GxjQ7T2MUuUb6fUeH5QD+j3vGb+m6+Dzi0kAdUh+LqB97QxBBhpwnAxGpxYwgWQGyieXiSAQbg2IIcEcCDYjllAZG0qZplzFISVN1QfeWG3s7ODoNGgmmZE0SZHjdi4acLpoPK48jcHuIA4QFxfQ9af2SisaUmpm0CSyzn94RoRDkrIgBxTPP8bs1YcLSVcQ2XDmD82inLkoSQm7ptfNlaF+/v5x6mZ9QZYChpUApu4HKK0/ZeGX2pZT+E28anHkIDD4zztOESbBmPzxiurZaCS4d+PLh/KN3N6GSCXRMpPA1IH/CSPSK07oYtt1b8wtPnvBMGtMz42ef4ro+g3SluGbE972iiro+yXNXMM7RvpvRPEg7qquICSrL8Kj7oYejWMu6VXsHlL/0iNqUzOLPP5Oyi7UKJB1BZQ8Ljvg5gJKQCEy6Dw1Oepz8I3m0NloXKQmXhFSZiQylIEw1kZllAgB9TUdHaBKejeLNglff1a1sMsrZgesEspE4AdKPnOFmTQLAZ87Pp/SD0nojOP7Raub0Swb5HrDaDuzui8iUQtShVxusvyJIlpPMGMYpbYrjfowv0WbwV/lq/KOj07q8P/if5kv8o6H8TfiZoZuwcLNUVrkyFqJdSlS0FRa3B46VsbDS1OiRKSoXBTLQCDxcB489w36T5duvkLSeRSrO+tJ1g9gun+CV/vurLWCwpH/MKfWO9MMkbFPpqW90Z/pl0iRg0ywsKImVMxAainNyLmr0MXsJtpEy8uahY4ghXH7JaFxcmVPTRNlS5iXdlMoPxYixiHKzEyunuHPszB/CfcqMnjNt4lRnYxEkTZImJBdJJloZQQQRl2Q5YgPzv6avods5WeFljwUP+UwX2bs2TIR1chCUpJJYObnN3JJsNeEaUktBVmF/Rzt5WKUoLWqWtJFCSmp5KU7wqYB6iTkOQ4Irpbhzi0lS8T1YKlgpBQLmWEWqLoZCtxnOdL3jf4fASpRUZcpCKu0UAJKm4tATG7LAqWjC4cLTvpWWmKURd7JqCzorPLvgtNlToLbS6QyZSlSz20gFQIITvdlJUzAnNjpeKsiSg78lYlrICihJCk34pdmezho8/wAVsXECcJomUlQASpgqWoswSsuOQLpIsMzEkvamN60YTqgh3sEkOCCd1u0mrQZOQeS41ol2ehyNsoemYySDTUC6CeD+yb5GLU/Z6Jgdg51Hv5wK6JbGmyZSkTylSFb3VsCxYB+GQFr98EDshUvew0wo1oXvSz3aiMtJim0CsXsNabp3h6+UDFymsRGp/XKE7uIQqSr7TPLUfukP86xOuXLmpeygciDn4iObgzopHneM2PKXMTNUn6yX2C5DWvbIu+sSlBEHhsiYVzQZZlgLHVlRSRMTSkOCkli4NlAG+sVp+BUmxSR7oG62SSYNQtomEyFCHsRfjpDlSGygsaI6jDkLhCkiGvxisqJ0zIeTFfxiRJMREhUeJ9YZTqw8gYUTOI+EcF/LwEIX5fwj8obTyH8I/KJKocmLoSErP2j5mGU8onUpoSuECFo6JKoSKyo896Tdpff8Yy+KyT+AfGFjo9J5iST/ALSP+8+Me6bG/ZIjo6BkG05Dv+Bhs7Ix0dGDSHy8on1MJHRHQEbS/bfuH3KjA4D/AG3A/hxH/tGOjo6L9Qj+39nsC4f7Ijo6OaIGba/YTfwwI6G5zO4QsdGvQf5GpxXYP4T7oqYv9l4D3R0dHOWjUdmWxPaMQpjo6OS0dWdPyMQ4nKOjokTIUaQ8ZmOjo0A4QsdHRAKM4fHR0TFEcyGiFjoCFjo6OhI//9k=",
+        daysNights: "3 Days / 2 Nights",
+        reviews: "4.8",
+        reviewCount: "9 reviews",
       },
     ],
   },
@@ -188,12 +409,7 @@ const Incoming = () => {
                           <p>{tour.daysNights}</p>
                         </div>
                         <h4>{tour.title}</h4>
-                        <div className="review-section">
-                          <span className="stars">
-                            ⭐ ⭐ ⭐ ⭐ ⭐ {tour.reviews}
-                          </span>
-                          <span> ({tour.reviewCount})</span>
-                        </div>
+                   
                       </div>
                     </div>
                   </div>

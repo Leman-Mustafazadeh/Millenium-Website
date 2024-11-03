@@ -118,6 +118,9 @@ const HeroArea = () => {
   // };
 
   const handleEdit = (record) => {
+    controller.put(endpoints.puthero,record.id).then((res) => {
+      console.log(res);
+    })
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({

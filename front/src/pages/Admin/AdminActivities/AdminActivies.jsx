@@ -70,6 +70,9 @@ const AdminActivities = () => {
   };
 
   const handleEdit = (record) => {
+    controller.put(endpoints.putactivity,record.id).then((res) => {
+      console.log(res);
+    })
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({

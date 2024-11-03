@@ -36,14 +36,7 @@ export async function post(endpoint, payload) {
     throw new Error(error.response ? error.response.data : "Network Error");
   }
 }
-// export async function post(endpoint, payload) {
-//   try {
-//     const response = await axios.post(BASE_URL + endpoint, payload);
-//     return response.data;
-//   } catch (error) {
-//     return error;
-//   }
-// }
+
 
 //delete
 export async function deleteOne(endpoint, id) {
