@@ -19,7 +19,7 @@ const Home = () => {
       <RecentGallery/>
       <CounterArea/>
       <Brands/>
-      <BlogArea/>
+      {/* <BlogArea/> */}
         
       
     </div>

@@ -6,6 +6,22 @@ import { Link } from 'react-router-dom';
 const Outgoing = () => {
   const tours = [
     {
+      image: "https://www.alisontravelgroup.com/uploads/cea8bd89af7ff1a38e03.avif",
+      name: "Georgia Tour",
+    },
+    {
+      image: "https://www.alisontravelgroup.com/uploads/a1c7590700a9730416af.webp",
+      name: "Turkey Tour"
+    },
+    {
+      image: "https://www.alisontravelgroup.com/uploads/8b38900a6c5770a65796.webp",
+      name: "Russia Tour"
+    },   
+    {
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShIZCzZyghDDE4cFh7ITqh_7NzLLsfc8SQTg&s",
+      name: "Dubai Tour Package"
+    },   
+    {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/87d8920a4c24d3c27122f2a795a1c3d7_thumb.jpg",
       name: "Sharm el Sheikh tour"
     },
@@ -19,7 +35,7 @@ const Outgoing = () => {
     },
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/a2b0868630799ba0a409597c3acc5d29_thumb.jpg",
-      name: "Tour Montenegro"
+      name: "Montenegro Tour"
     },
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/d0721a707ca2c1c8d7d3e09c90fcd395_thumb.jpg",
@@ -27,11 +43,11 @@ const Outgoing = () => {
     },
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/48dfdb10c7d85c7fb8a983d74bba1a47_thumb.jpg",
-      name: "Tour Italy"
+      name: " Italy Tour"
     },
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/36b826f0569e0fca7bae80b3c196b450_thumb.jpg",
-      name: "Tour to Israel"
+      name: "Israel Tour"
     },
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/b8137d6d84a7f0db20429462c3ea1108_thumb.jpg",
@@ -40,18 +56,18 @@ const Outgoing = () => {
 
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/0ed5246edcfd4899615d115f276773ee_thumb.jpg",
-      name: "Excursion around St.Petersburg"
+      name: "Excursion around St.Petersburg Tour"
     },
 
 
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/2e6fdbdba20cff6b5a6f0497a24b3aae_thumb.jpg",
-      name: "Magical Paris"
+      name: "Magical Paris Tour"
     },
 
     {
       image: "https://millenniumtour.az/uploads/images/catalogs_products/f4b16400ad54f9a9314331403fbfbf3c_thumb.jpg",
-      name: "Rogaska"
+      name: "Rogaska Tour"
     },
 
     {

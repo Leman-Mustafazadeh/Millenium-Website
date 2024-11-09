@@ -34,7 +34,7 @@ const ServiceArea = () => {
         <div className="row">
           <div className="col-lg-6 offset-lg-3">
             <div className="title-area text-center">
-              <h2 className="sec-title">Most Popular Tour</h2>
+              <h2 className="sec-title">Most Popular Tours</h2>
               <p className="sec-text">
               Explore our 'Most Popular Tours,' featuring the top choices among our customers for unforgettable experiences and cultural adventures.
               </p>
@@ -69,7 +69,7 @@ const ServiceArea = () => {
          {
           popular.map((item,index)=>(
             <SwiperSlide key={index}>
-           <Link to={'/outgoing'}> <div className="tour-box th-ani gsap-cursor">
+           <Link style={{width:'100%'}} to={'/outgoing'}> <div className="tour-box th-ani gsap-cursor">
               <div className="tour-box_img global-img">
                 <img src={item.image} alt="Greece Tour Package" />
               </div>

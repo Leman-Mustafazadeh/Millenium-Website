@@ -13,7 +13,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './style.css';
 
-import { Pagination } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules'; 
 import controller from '../../../API';
 import { endpoints } from '../../../API/constant';
 
@@ -34,15 +34,19 @@ const Hero = () => {
         pagination={{
           dynamicBullets: true,
         }}
-        modules={[Pagination]}
-        className="mySwiper"
-      >
+        autoplay={{
+          delay: 2000, 
+          disableOnInteraction: false, 
+        }}
+        modules={[Pagination, Autoplay]} 
+        className="mySwiper">
+          
         {data.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="hero-inner">
               <div
                 className="th-hero-bg"
-                style={{ backgroundImage: `url(${item.image})`,backgroundPosition:"center",backgroundSize:"cover" }}
+                style={{ backgroundImage: `url(${item.image})`, backgroundPosition: "center", backgroundSize: "cover" }}
               ></div>
               <div className="container">
                 <div className="hero-style1">
@@ -59,8 +63,6 @@ const Hero = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      
     </div>
   );
 };

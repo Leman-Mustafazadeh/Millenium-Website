@@ -21,6 +21,8 @@ const RecentGallery = () => {
         {/* Başlık */}
         <div className="title-area text-center">
           <h2 className="sec-title">Recent Gallery</h2>
+          <p className="sec-text">Our Customers' Amazing Pictures!
+              </p>
         </div>
         <div className="row gy-10 gx-10 justify-content-center align-items-center">
           {/* Galeri Öğeleri */}

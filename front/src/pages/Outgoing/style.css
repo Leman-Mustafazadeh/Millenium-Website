@@ -25,9 +25,13 @@
 .tour-item p{
     padding-top: 20px;
 }
+.tour-image{
+    height: 330px;
+}
 .tour-image img {
     border-radius: 8px;
     width: 100%;
+    height: 100%;
     transition: transform 0.3s ease;
     cursor: pointer;
 }

@@ -34,7 +34,7 @@ const AboutArea = () => {
               <div className="title-area mb-20 pe-xl-5 me-xl-5">
                 <h2 className=" mb-20 sec-title  heading pe-xl-5 me-xl-5">Plan Your Trip With Us</h2>
                 <p className="sec-text mb-30">
-                Plan your trip with Millennium Travel and create unforgettable memories! Our professional team is here to assist you with ideal itineraries and exclusive offers. Wherever you want to go and whenever you wish, we are dedicated to making your travel dreams a reality!"
+                Plan your trip with Millennium Tourism and create unforgettable memories! Our professional team is here to assist you with ideal itineraries and exclusive offers. Wherever you want to go and whenever you wish, we are dedicated to making your travel dreams a reality!"
                 </p>
               </div>
               <div className="about-item-wrap">
@@ -43,8 +43,8 @@ const AboutArea = () => {
                     <img src={mapIcon} alt="Map Icon" />
                   </div>
                   <div className="about-item_content">
-                    <h5 className="box-title">Exclusive Trip</h5>
-                    <p className="about-item_text">There are many variations of passages of available but the majority.</p>
+                    <h5 className="box-title">Comfortable Trip</h5>
+                    <p className="about-item_text">Prioritize your comfort on every journey so you can fully enjoy exploring new places.</p>
                   </div>
                 </div>
                 <div className="about-item">
@@ -52,9 +52,9 @@ const AboutArea = () => {
                     <img src={guideIcon} alt="Guide Icon" />
                   </div>
                   <div className="about-item_content">
-                    <h5 className="box-title">Professional Guide</h5>
+                    <h5 className="box-title">Professional Guides</h5>
                     <p className="about-item_text">
-                    Travel with our professional guides and unlock the secrets of history and culture with every step you take.                    </p>
+                    Make your comfort a prierity on every journey to fully enjoy exploring new places.                  </p>
                   </div>
                 </div>
               </div>
