@@ -53,14 +53,25 @@ puthero:"/api/Gallery/update-slide",
   
   incoming:"/api/Coming/get-incomings",//incoming
   addincoming:"/api/Coming/add-incoming",
-  delincoming:"/api/Coming/delete-incoming/{id}",
-  putincoming:"/api/Coming/update-incoming/{id}",
+  delincoming:"/api/Coming/delete-incoming",
+  putincoming:"/api/Coming/update-incoming",
+  getoneicomig:"/api/Coming/get-incoming/{id}",
+
+
+  categoryincoming:"/api/Coming/get-all-regionCategories",//categoryincoming
+  addcategoryincoming:"/api/Coming/create-regionCategories",
+  delcategoryincoming:"/api/Coming/delete-incoming",
+  putcategoryincoming:"/api/Coming/update-incoming",
+
+
+
 
 
   outgoing:"/api/Coming/get-outgoings",//outgoing
   addoutgoing:"/api/Coming/add-outgoing",
-  deloutgoing:"/api/Coming/delete-outgoing/{id}",
-  putoutgoing:"/api/Coming/update-outgoing/{id}",
+  getOneOutgoing:"/api/Coming/get-outgoing",
+  deloutgoing:"/api/Coming/delete-outgoing",
+  putoutgoing:"/api/Coming/update-outgoing",
 
 
 

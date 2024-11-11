@@ -110,6 +110,10 @@ const AdminAppBar = () => {
               key: '13',
               icon: <Link style={{padding:0}} to="adminserviciescategory">Admin Servicies Category</Link> ,
             },
+            {
+              key: '14',
+              icon: <Link style={{padding:0}} to="categoryincoming">Admin Category Incoming</Link> ,
+            },
           ]}
         />
       </Sider>

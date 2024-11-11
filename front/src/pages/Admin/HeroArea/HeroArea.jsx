@@ -141,21 +141,22 @@ const HeroArea = () => {
     };
 
     try {
-      const token = window !== undefined ? Cookies.get("ftoken") : null;
-      console.log(token);
+      // const token = window !== undefined ? Cookies.get("ftoken") : null;
+      // console.log(token);
 
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
-      } else {
-        console.log("Token:", token);
-      }
-
+      // if (!token || token === "null") {
+      //   console.log("Token not found or is null");
+      // } else {
+      //   console.log("Token:", token);
+      // }
+      const token = Cookies.get("ftoken");
       const response = await axios.post(BASE_URL + endpoints.addhero, object, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: ` ${token}`,
         },
-      });
+      }
+    );
       console.log(JSON.parse(response.config.data));
       
 

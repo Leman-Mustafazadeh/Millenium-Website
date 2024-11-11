@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./style.css";
+import { useParams } from 'react-router-dom';
+import { endpoints } from '../../API/constant';
 
 // Sample data for tours with extended information
 const tourData = [
@@ -45,6 +47,15 @@ const tourData = [
     `,
   },
 ];
+
+// const {id}= useParams()
+// useEffect(()=>{
+//   controller.getOne(endpoints.getoneicomig, id).then((res)=>{
+//     console.log(res);
+//   })
+// })
+
+
 
 const IncomingDetail = () => {
   const [selectedTour, setSelectedTour] = useState(tourData[0]); // Default to the first tour

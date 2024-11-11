@@ -11,7 +11,8 @@ const AdminOutgoing = () => {
   const [outgoingItems, setOutgoingItems] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-  const [imageBase64, setImageBase64] = useState(null);
+  const [image, setImage] = useState(null);
+  const [outGoingImages, setOutGoingImages] = useState([null, null, null, null]);
 
   const columns = [
     {
@@ -44,7 +45,7 @@ const AdminOutgoing = () => {
     },
   ];
 
-  const beforeUpload = (file) => {
+  const beforeUpload = (file, index) => {
     const isImage = file.type.startsWith("image/");
     if (!isImage) {
       message.error("You can only upload image files!");
@@ -52,18 +53,25 @@ const AdminOutgoing = () => {
     }
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setImageBase64(reader.result);
+    reader.onload = () => {
+      if (index === "main") {
+        setImage(reader.result);
+      } else {
+        const newImages = [...outGoingImages];
+        newImages[index] = reader.result;
+        setOutGoingImages(newImages);
+      }
+    };
     return false;
   };
 
   const handleDelete = async (id) => {
     try {
-      await controller.delete(endpoints.delOutgoing, id); // API call for deletion
+      await controller.getOne(endpoints.deloutgoing, id); // API call for deletion
       setOutgoingItems(outgoingItems.filter(item => item.id !== id));
       message.success("Item deleted successfully!");
     } catch (error) {
       message.error("Error deleting item.");
-      console.error("Delete error:", error);
     }
   };
 
@@ -78,35 +86,39 @@ const AdminOutgoing = () => {
       text_EN: record.text_EN,
       text_RU: record.text_RU,
     });
-    setImageBase64(record.image);
+    setImage(record.image);
+    setOutGoingImages(record.outGoingImages?.map(imgObj => imgObj.base64) || [null, null, null, null]);
     setIsModalVisible(true);
   };
 
   const onFinish = async (values) => {
+    const outgoingImageObjects = outGoingImages.map((img, index) => ({
+      image: `Image ${index + 1}`,
+      base64: img || '',
+    })).filter(img => img.base64);
+
     const object = {
-      id: currentId || 0, // Assuming new items have an ID of 0
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: imageBase64, // Use the uploaded image
+      image: image,
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
-      createDate: new Date().toISOString(), // Current date
-      isDeleted: false, // Default to false
+      outGoingImages: outgoingImageObjects,
     };
 
     try {
-      const token = JSON.parse(localStorage.getItem("token"));
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
-        return;
-      }
+      // const token = JSON.parse(localStorage.getItem("token"));
+      // if (!token || token === "null") {
+      //   console.log("Token not found or is null");
+      //   return;
+      // }
 
       const response = await axios.post(BASE_URL + endpoints.addoutgoing, object, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
 
@@ -124,13 +136,13 @@ const AdminOutgoing = () => {
         form.resetFields();
         setEditMode(false);
         setCurrentId(null);
-        setImageBase64(null); // Reset image
+        setImage(null);
+        setOutGoingImages([null, null, null, null]);
       } else {
         message.error("Failed to add or update outgoing item.");
       }
     } catch (error) {
       message.error("Error occurred while saving data.");
-      console.error("Error in Axios request:", error);
     }
   };
 
@@ -142,9 +154,9 @@ const AdminOutgoing = () => {
 
     fetchOutgoingItems();
   }, []);
+
   console.log(outgoingItems);
   
-
   const showModal = () => {
     setEditMode(false);
     setIsModalVisible(true);
@@ -153,7 +165,8 @@ const AdminOutgoing = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
-    setImageBase64(null); // Reset image
+    setImage(null);
+    setOutGoingImages([null, null, null, null]);
     setEditMode(false);
     setCurrentId(null);
   };
@@ -184,27 +197,41 @@ const AdminOutgoing = () => {
             <input />
           </Form.Item>
 
-          <Form.Item label="Image" name="image">
+          <Form.Item label="Primary Image" name="main_image">
             <Upload
-              name="image"
+              name="main_image"
               listType="picture"
               maxCount={1}
-              beforeUpload={beforeUpload}
+              beforeUpload={(file) => beforeUpload(file, "main")}
               showUploadList={false}
             >
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload>
           </Form.Item>
 
-          <Form.Item label="Description (AZ)" name="text_AZ" rules={[{ required: true, message: 'Please enter the description!' }]}>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Form.Item label={`Additional Image ${index + 1}`} key={index}>
+              <Upload
+                name={`outGoingImage${index + 1}`}
+                listType="picture"
+                maxCount={1}
+                beforeUpload={(file) => beforeUpload(file, index)}
+                showUploadList={false}
+              >
+                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              </Upload>
+            </Form.Item>
+          ))}
+
+          <Form.Item label="Text (AZ)" name="text_AZ" rules={[{ required: true, message: 'Please enter the text in AZ!' }]}>
             <input />
           </Form.Item>
 
-          <Form.Item label="Description (EN)" name="text_EN">
+          <Form.Item label="Text (EN)" name="text_EN">
             <input />
           </Form.Item>
 
-          <Form.Item label="Description (RU)" name="text_RU">
+          <Form.Item label="Text (RU)" name="text_RU">
             <input />
           </Form.Item>
 

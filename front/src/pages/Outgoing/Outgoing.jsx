@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { Link } from 'react-router-dom';
+import controller from '../../API';
+import { endpoints } from '../../API/constant';
 
 const Outgoing = () => {
   const tours = [
@@ -76,20 +78,28 @@ const Outgoing = () => {
     },
   ];
   
+  const[outgoing,setOutgoing]=useState([])
+  useEffect(()=>{
+    controller.getAll(endpoints.outgoing).then((res)=>{
+      setOutgoing(res)
+    })
+  },[])
+  console.log(outgoing);
+  
   return (
     <section className='outgoing'>
       <div className="container">
         <div className="outgoing_head text-center">
           <h1>Outgoing Tours</h1>
           <div className="row">
-            {tours.map((tour, index) => (
+            {outgoing.map((tour, index) => (
               <div key={index} className="col-lg-3 col-md-6 col-sm-12 mb-4">
                <Link to={"/outgoingdetail/" +tour.id}>
                <div className="tour-item text-center">
                   <div className="tour-image">
-                    <img src={tour.image} alt={tour.name} className="img-fluid" />
+                    <img src={tour.image} alt={tour.name_EN} className="img-fluid" />
                   </div>
-                  <p>{tour.name}</p>
+                  <p>{tour.name_EN}</p>
                 </div>
                </Link>
               </div>

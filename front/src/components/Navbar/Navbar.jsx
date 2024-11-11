@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useTranslation } from 'react-i18next'; // i18next istifadə etmək üçün
 import "../../assets/css/style.css";
 import "../../assets/css/app.min.css";
 import "../../assets/css/bootstrap.min.css";
@@ -6,18 +7,29 @@ import "../../assets/css/fontawesome.min.css";
 import "../../assets/css/magnific-popup.min.css";
 import "../../assets/css/swiper-bundle.min.css";
 import logo from "../../assets/img/logos.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLanguage } from "../../redux/slices/languages";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { t, i18n } = useTranslation(); // i18next hook-u ilə tərcümə alırıq
+const dispatch = useDispatch();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const selectedLanguage = useSelector(state => state.languages.currentLanguage)
+console.log(selectedLanguage);
+
+  const handleLanguageChange = (language) => {
+    dispatch(changeLanguage(language))
+    i18n.changeLanguage(language);
   };
 
   return (
     <>
       {/* Mobile Menu Wrapper */}
-      <div className={`th-menu-wrapper onepage-nav ${isMenuOpen ? 'open' : ''}`}>
+      <div className={`th-menu-wrapper onepage-nav ${isMenuOpen ? "open" : ""}`}>
         <div className="th-menu-area text-center">
           <button className="th-menu-toggle" onClick={toggleMenu}>
             <i className="fal fa-times"></i>
@@ -30,32 +42,28 @@ const Navbar = () => {
           <div className="th-mobile-menu">
             <ul>
               <li>
-                <a className="active" href="/">Home</a>
+                <a className="active" href="/">
+                  {t('home')}
+                </a>
               </li>
               <li className="menu-item-has-children">
-                <a href="/about">About Us</a>
+                <a href="/about">{t('about')}</a>
                 <ul className="sub-menu">
-                  <li><a href="/about">Our Company</a></li>
-                  <li><a href="/ourteam">Our Team</a></li>
-                  <li><a href="/award">Awards And Licenses</a></li>
+                  <li><a href="/about">{t('our_company')}</a></li>
+                  <li><a href="/ourteam">{t('our_team')}</a></li>
+                  <li><a href="/award">{t('awards_licenses')}</a></li>
                 </ul>
               </li>
               <li className="menu-item-has-children">
-                <a href="#">Tours</a>
+                <a href="#">{t('tours')}</a>
                 <ul className="sub-menu">
-                  <li><a href="/incoming">Incoming</a></li>
-                  <li><a href="/outgoing">Outgoing</a></li>
+                  <li><a href="/incoming">{t('incoming')}</a></li>
+                  <li><a href="/outgoing">{t('outgoing')}</a></li>
                 </ul>
               </li>
-              <li>
-                <a href="/activities">Activities</a>
-              </li>
-              <li>
-                <a href="/servicies">Services</a>
-              </li>
-              <li>
-                <a href="/contact">Contact us</a>
-              </li>
+              <li><a href="/activities">{t('activities')}</a></li>
+              <li><a href="/servicies">{t('services')}</a></li>
+              <li><a href="/contact">{t('contact')}</a></li>
             </ul>
           </div>
         </div>
@@ -71,7 +79,9 @@ const Navbar = () => {
                   <ul>
                     <li className="d-none d-xl-inline-block">
                       <i className="fa-sharp fa-regular fa-location-dot"></i>
-                      <span>492, I.Gutgashinli str. , AZ1073 Baku, Republic of Azerbaijan</span>
+                      <span>
+                        492, I.Gutgashinli str., AZ1073 Baku, Republic of Azerbaijan
+                      </span>
                     </li>
                     <li className="d-none d-xl-inline-block">
                       <i className="fa-regular fa-clock"></i>
@@ -80,18 +90,42 @@ const Navbar = () => {
                   </ul>
                 </div>
               </div>
-              {/* <div className="col-auto">
-                <div className="header-right">
-                  <div className="currency-menu">
-                    <select className="form-select nice-select" defaultValue="USD">
-                      <option value="USD">USD</option>
-                      <option value="CNY">CNY</option>
-                      <option value="EUR">EUR</option>
-                      <option value="AUD">AUD</option>
-                    </select>
-                  </div>
+
+              {/* Language Selector */}
+              <div className="col-auto">
+                <div className="language-selector">
+                  <select
+                    onChange={(e) => handleLanguageChange(e.target.value)}
+                    value={selectedLanguage}
+                    className="form-select"
+                  >
+                    <option value="AZ" className={selectedLanguage === "AZ" ? "active" : ""}>
+                      <img
+                        src="https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/azerbaijan-flag-icon.png"
+                        alt="Azerbaijani"
+                        className="flag-icon"
+                      />
+                      AZ
+                    </option>
+                    <option value="EN" className={selectedLanguage === "EN" ? "active" : ""}>
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png"
+                        alt="English"
+                        className="flag-icon"
+                      />
+                      EN
+                    </option>
+                    <option value="RU" className={selectedLanguage === "RU" ? "active" : ""}>
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/en/archive/f/f3/20120812153730%21Flag_of_Russia.svg"
+                        alt="Russian"
+                        className="flag-icon"
+                      />
+                      RU
+                    </option>
+                  </select>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -101,10 +135,10 @@ const Navbar = () => {
             <div className="th-container">
               <div className="row align-items-center justify-content-between">
                 <div className="col-auto">
-                  <div className="headers-logos" style={{ width: '100%', height: '90px' }}>
+                  <div className="headers-logos" style={{ width: "100%", height: "90px" }}>
                     <a href="/">
                       <img
-                        style={{ width: '100%', height: '100%', borderRadius: '10px' }}
+                        style={{ width: "100%", height: "100%", borderRadius: "10px" }}
                         src={logo}
                         alt="Tourm"
                       />
@@ -113,29 +147,39 @@ const Navbar = () => {
                 </div>
                 <div className="col-auto me-xl-auto">
                   <nav className="main-menu d-none d-xl-inline-block">
-                    <ul style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                      <li><a className="active" href="/">Home</a></li>
+                    <ul
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <li><a className="active" href="/">{t('home')}</a></li>
                       <li className="menu-item-has-children">
-                        <a href="/about">About Us</a>
+                        <a href="/about">{t('about')}</a>
                         <ul className="sub-menu">
-                          <li><a href="/about">Our Company</a></li>
-                          <li><a href="/ourteam">Our Team</a></li>
-                          <li><a href="/award">Awards And Licenses</a></li>
+                          <li><a href="/about">{t('our_company')}</a></li>
+                          <li><a href="/ourteam">{t('our_team')}</a></li>
+                          <li><a href="/award">{t('awards_licenses')}</a></li>
                         </ul>
                       </li>
                       <li className="menu-item-has-children">
-                        <a href="#">Tours</a>
+                        <a href="#">{t('tours')}</a>
                         <ul className="sub-menu">
-                          <li><a href="/incoming">Incoming</a></li>
-                          <li><a href="/outgoing">Outgoing</a></li>
+                          <li><a href="/incoming">{t('incoming')}</a></li>
+                          <li><a href="/outgoing">{t('outgoing')}</a></li>
                         </ul>
                       </li>
-                      <li><a href="/activities">Activities</a></li>
-                      <li><a href="/servicies">Services</a></li>
-                      <li><a href="/contact">Contact us</a></li>
+                      <li><a href="/activities">{t('activities')}</a></li>
+                      <li><a href="/servicies">{t('services')}</a></li>
+                      <li><a href="/contact">{t('contact')}</a></li>
                     </ul>
                   </nav>
-                  <button type="button" className="th-menu-toggle d-block d-xl-none" onClick={toggleMenu}>
+                  <button
+                    type="button"
+                    className="th-menu-toggle d-block d-xl-none"
+                    onClick={toggleMenu}
+                  >
                     <i className="far fa-bars"></i>
                   </button>
                 </div>
@@ -145,46 +189,6 @@ const Navbar = () => {
           </div>
         </div>
       </header>
-
-      {/* Additional CSS to handle the mobile menu visibility */}
-      <style jsx>{`
-        .th-menu-wrapper {
-          display: none;
-        }
-
-        .th-menu-wrapper.open {
-          display: block;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.8);
-          z-index: 999;
-        }
-
-        .th-mobile-menu {
-          background-color: #fff;
-          padding: 20px;
-          width: 80%;
-          margin: 0 auto;
-        }
-
-        .th-menu-toggle {
-          cursor: pointer;
-          font-size: 24px;
-        }
-
-        @media (max-width: 1200px) {
-          .th-menu-wrapper {
-            display: none;
-          }
-
-          .th-menu-wrapper.open {
-            display: block;
-          }
-        }
-      `}</style>
     </>
   );
 };
