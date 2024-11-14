@@ -4,6 +4,8 @@ import controller from '../../API';
 import { endpoints } from '../../API/constant';
 import "./style.css";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { home } from '../../i18n';
 
 const Activities = () => {
   const [data, setData] = useState([]);
@@ -13,13 +15,15 @@ const Activities = () => {
       setData(res);
     });
   }, []);
+  const currentlanguage = useSelector((state) => state.languages.currentLanguage);
 
+  const translate = (key) => home[key]?.[currentlanguage] || key;
   return (
     <section>
       <div className="breadcumb-wrapper" style={{ backgroundImage: `url(${bgImage})` }}>
         <div className="container">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title">Activities</h1>
+            <h1 className="breadcumb-title">{translate('activities')}</h1>
           </div>
         </div>
       </div>
@@ -32,9 +36,10 @@ const Activities = () => {
                 <Link to={`/activities-details/${item.id}`}>
                   <ActivityBox
                     image={item.image}
-                    name_EN={item.name_EN}
-                    title_EN={item.title_EN}
-                    text_EN={item.text_EN}
+                    name_EN= {item[`name_${currentlanguage}`]} 
+            
+                    title_EN= {item[`title_${currentlanguage}`]} 
+                    text_EN={item[`text_${currentlanguage}`]} 
                     link={`activities-details/${item.id}`}
                   />
                 </Link>

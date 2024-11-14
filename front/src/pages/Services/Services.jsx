@@ -9,6 +9,8 @@ import shape3 from "../../assets/img/shape/shape_3.png";
 import "./style.css";
 import controller from "../../API";
 import { endpoints } from "../../API/constant";
+import { useSelector } from "react-redux";
+import { categories, home, needhelp, onlineSupport, readmore, servicestitle } from "../../i18n";
 
 const Services = () => {
   const [serviceImage, setServiceImage] = useState(destinationInnerImage);
@@ -25,7 +27,7 @@ const Services = () => {
       setDescription(res);
     });
   }, []);
-
+  const currentlanguage = useSelector((state) => state.languages.currentLanguage);
   const handleCategoryClick = (serviceId) => {
     const selected = description.find(
       (item) => item.serviceCategoryId === serviceId
@@ -37,9 +39,8 @@ const Services = () => {
       setServiceImage(selected.image);
     }
   };
-  console.log(services);
-  console.log(description);
-  console.log(selectedService);
+
+  const translate = (key) => home[key]?.[currentlanguage] || key;
 
   return (
     <div>
@@ -49,7 +50,7 @@ const Services = () => {
       >
         <div className="container">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title">Services</h1>
+            <h1 className="breadcumb-title">{translate('services')}</h1>
           </div>
         </div>
       </div>
@@ -66,11 +67,10 @@ const Services = () => {
                       <div className="service-inner-img mb-40">
                         <img
                           src={selectedService.image || serviceImage}
-                          alt={selectedService.name_EN}
+                          alt= {selectedService[`name_${currentlanguage}`]} 
                         />
                       </div>
-                      <p className="box-text mb-30">
-                        {selectedService.text_EN}
+                      <p className="box-text mb-30"> {selectedService[`text_${currentlanguage}`]} 
                       </p>
                     </div>
                   ) : (
@@ -108,33 +108,7 @@ const Services = () => {
                         </li>
                       </ul> */}
                       <p className="pt-40">
-                        Millennium Travel offers a wide range of services to
-                        make your travel experiences unforgettable. Our visa
-                        services simplify the application process for various
-                        countries, providing you with the support you need. With
-                        a personalized approach for each client, we assist you
-                        at every stage of the visa application, from document
-                        preparation to submission.
-                        <br />
-                        Our transportation services ensure that you travel
-                        comfortably and reliably. With airport transfers, car
-                        rentals, and other transport options, we provide you
-                        with maximum convenience. Our airline ticket sales allow
-                        you to compare offers from various airlines to find the
-                        best options for you.
-                        <br />
-                        Our cargo services provide excellent solutions for
-                        safely and timely shipping your goods. Our F.I.T (Fully
-                        Independent Traveler) services help you plan your travel
-                        experiences tailored to your interests. Meanwhile, our
-                        M.I.C.E services ensure perfect event organization for
-                        meetings, conferences, and exhibitions.
-                        <br />
-                        Additionally, our hotel reservations help you choose the
-                        most suitable and comfortable accommodations in your
-                        destination area. Travel with Millennium Travel,
-                        experience new adventures, and make the most of every
-                        moment!
+                      {servicestitle[currentlanguage]}
                       </p>
                     </>
                   )}
@@ -145,7 +119,7 @@ const Services = () => {
             <div className="col-xxl-4 col-lg-5">
               <aside className="sidebar-area style3">
                 <div className="widget widget_categories">
-                  <h3 className="widget_title">Categories</h3>
+                  <h3 className="widget_title">{categories[currentlanguage]}</h3>
                   <ul>
                     {services.map((category) => (
                       <li key={category.id}>
@@ -154,8 +128,7 @@ const Services = () => {
                           onClick={() => handleCategoryClick(category.id)}
                         >
                           <img src={mapIcon} alt="Map Icon" />
-                          {category.name_EN}
-                          {category.name}
+                          {category[`name_${currentlanguage}`]} 
                         </a>
                       </li>
                     ))}
@@ -169,16 +142,16 @@ const Services = () => {
                   <div className="offer-banner">
                     <div className="offer">
                       <h6 className="box-title">
-                        Need Help? We Are Here To Help You
+                      {needhelp[currentlanguage]}
                       </h6>
                       <div className="offer">
-                        <h6 className="offer-title">You Get Online support</h6>
+                        <h6 className="offer-title">  {onlineSupport[currentlanguage]}</h6>
                         <a className="offter-num" href="tel:+994124975400">
                           +994 12 497 54 00
                         </a>
                       </div>
                       <a href="/contact" className="th-btn style2 th-icon">
-                        Read More
+                      {readmore[currentlanguage]}
                       </a>
                     </div>
                   </div>

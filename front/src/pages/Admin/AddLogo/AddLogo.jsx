@@ -69,11 +69,6 @@ const AddLogo = () => {
       ),
     },
     {
-      title: "Link",
-      dataIndex: "link",
-      key: "link",
-    },
-    {
       title: "Edit",
       key: "Edit",
       render: (_, record) => (

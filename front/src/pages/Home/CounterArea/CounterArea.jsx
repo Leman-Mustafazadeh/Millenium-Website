@@ -5,8 +5,13 @@ import shape2 from "../../../assets/img/shape/shape_2.png";
 import shape3 from "../../../assets/img/shape/shape_3.png";
 import shape6 from "../../../assets/img/shape/shape_6.png";
 import shape5 from "../../../assets/img/shape/shape_5.png";
+import { counter } from '../../../i18n';
+import { useSelector } from 'react-redux';
+
 
 const CounterArea = () => {
+  const selectedLanguage = useSelector((state) => state.languages.currentLanguage);
+  const count = (key) => counter[key]?.[selectedLanguage] || key;
   return (
     <div className="counter-area space">
       <div className="container">
@@ -19,7 +24,7 @@ const CounterArea = () => {
                 <h3 className="box-number">
                   <CountUp start={1} end={170} duration={2.5} className="counter-number" />
                 </h3>
-                <h6 className="counter-title">Employees</h6>
+                <h6 className="counter-title">{count('employees')}</h6>
               </div>
             </div>
           </div>
@@ -32,7 +37,7 @@ const CounterArea = () => {
                 <h3 className="box-number">
                   <CountUp start={1} end={500} duration={2.5} className="counter-number" />
                 </h3>
-                <h6 className="counter-title">Sub-Agents</h6>
+                <h6 className="counter-title">{count('agent')}</h6>
               </div>
             </div>
           </div>
@@ -45,7 +50,7 @@ const CounterArea = () => {
                 <h3 className="box-number">
                   <CountUp start={1} end={40000} duration={2.5} className="counter-number" />
                 </h3>
-                <h6 className="counter-title">Flight Tickets</h6>
+                <h6 className="counter-title">{count('ticket')}</h6>
               </div>
             </div>
           </div>
@@ -58,7 +63,7 @@ const CounterArea = () => {
                 <h3 className="box-number">
                   <CountUp start={1} end={20000} duration={2.5} className="counter-number" />
                 </h3>
-                <h6 className="counter-title">Phone Calls</h6>
+                <h6 className="counter-title">{count('phone')}</h6>
               </div>
             </div>
           </div>

@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import controller from '../../API';
 import { endpoints } from '../../API/constant';
 import { Carousel } from 'antd';
-
+import { useSelector } from 'react-redux';
+import "./style.css"
 const OutgoingDetail = () => {
     const { id } = useParams();
     const [getData, setGetData] = useState({
@@ -19,6 +20,9 @@ const OutgoingDetail = () => {
             .catch((err) => console.error("Error fetching outgoing details:", err));
     }, [id]);
 
+    const currentlanguage = useSelector(
+        (state) => state.languages.currentLanguage
+      );
     return (
         <div style={{
             display: 'flex',
@@ -41,7 +45,7 @@ const OutgoingDetail = () => {
                             <img
                                 src={image.base64}
                                 alt={`${getData.name_EN} image ${index + 1}`}
-                                style={{ width: '100%', height: '500px !important', objectFit: 'cover' }}
+                                style={{ width: '100%', height: '600px !important', objectFit: 'cover' }}
                             />
                         </div>
                     ))}
@@ -57,7 +61,7 @@ const OutgoingDetail = () => {
                     marginBottom: '20px',
                     textAlign: 'left'
                 }}>
-                    {getData.name_EN}
+                 {getData[`name_${currentlanguage}`]}
                 </h1>
                 <p style={{
                     fontSize: '1.1em',
@@ -65,7 +69,8 @@ const OutgoingDetail = () => {
                     color: '#555',
                     textAlign: 'left'
                 }}>
-                    {getData.text_EN}
+                   
+                    {getData[`text_${currentlanguage}`]}
                 </p>
             </div>
         </div>

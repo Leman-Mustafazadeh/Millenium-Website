@@ -216,7 +216,7 @@ const AdminServices = () => {
               onChange={handleChange} 
               options={serviceCategory.map((item) => ({
                 value: item.id, 
-                label: item.name, 
+                label: item.name_EN, 
               }))}
             />
           </Form.Item>

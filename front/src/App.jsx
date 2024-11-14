@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./App.css";
 import { Routes } from "./routes/ROUTES";
-import { store } from "./redux/store";
+import { store } from "./services/store";
 
 function App() {
   const routesa = createBrowserRouter(Routes);

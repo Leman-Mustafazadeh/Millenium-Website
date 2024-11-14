@@ -16,7 +16,7 @@ import './style.css';
 import { Pagination, Autoplay } from 'swiper/modules'; 
 import controller from '../../../API';
 import { endpoints } from '../../../API/constant';
-
+import {useSelector} from "react-redux"
 const Hero = () => {
   const [data, setData] = useState([]);
 
@@ -25,9 +25,8 @@ const Hero = () => {
       setData(res);
     });
   }, []);
-  console.log(data);
+  const currentlanguage = useSelector((state) => state.languages.currentLanguage);
   
-
   return (
     <div className="th-hero-wrapper hero-1" id="hero">
       <Swiper
@@ -55,8 +54,8 @@ const Hero = () => {
                     data-ani="slideinup"
                     data-ani-delay="0.4s"
                   >
-                    {item.name_EN} 
-                  </h1>
+                    {item[`name_${currentlanguage}`]} 
+                    </h1>
                 </div>
               </div>
             </div>

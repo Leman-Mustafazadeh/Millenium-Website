@@ -22,7 +22,7 @@ const Brands = () => {
     });
   }, []);
 
-  console.log(data);
+  
   
   return (
     <div className="brand-area overflow-hidden space-bottom">

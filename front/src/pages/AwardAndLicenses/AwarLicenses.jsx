@@ -3,6 +3,8 @@ import img1 from "../../assets/img/bg/breadcumb-bg.jpg";
 import controller from "../../API";
 import { endpoints } from "../../API/constant";
 import "./style.css";
+import { home } from "../../i18n";
+import { useSelector } from "react-redux";
 
 const AwarLicenses = () => {
   const [data, setData] = useState([]);
@@ -12,7 +14,8 @@ const AwarLicenses = () => {
       setData(res);
     });
   }, []);
-
+  const selectedLanguage = useSelector((state) => state.languages.currentLanguage)
+  const translate = (key) => home[key]?.[selectedLanguage] || key;
   return (
     <div>
       <div
@@ -21,7 +24,7 @@ const AwarLicenses = () => {
       >
         <div className="container">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title">Awards & Licenses</h1>
+            <h1 className="breadcumb-title">{translate('awards_licenses')}</h1>
           </div>
         </div>
       </div>

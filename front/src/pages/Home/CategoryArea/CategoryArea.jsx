@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import controller from '../../../API';
 import { endpoints } from '../../../API/constant';
+import { useSelector } from 'react-redux';
 
 const CategoryArea = () => {
   const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ const CategoryArea = () => {
       setData(updatedData);
     });
   }, []);
+  const currentlanguage = useSelector((state) => state.languages.currentLanguage);
 
   return (
     <section className="category-area bg-top-center">
@@ -46,7 +48,7 @@ const CategoryArea = () => {
                   <img src={`${item.image}`} alt={`Category ${index + 1}`} />
                 </div>
                 <div className="category-info">
-                  <h3>{item.title}</h3>
+                  <h3>{item[`title${currentlanguage}`]} </h3>
                 </div>
               </div>
             </SwiperSlide>

@@ -12,7 +12,6 @@ const CategoryIncoming = () => {
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const [image, setImage] = useState(null);
-  const [text, setText] = useState('');
   const [isDeleted, setIsDeleted] = useState(false);
 
   const columns = [
@@ -22,9 +21,19 @@ const CategoryIncoming = () => {
       key: 'id',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Name (AZ)',
+      dataIndex: 'name_AZ',
+      key: 'name_AZ',
+    },
+    {
+      title: 'Name (EN)',
+      dataIndex: 'name_EN',
+      key: 'name_EN',
+    },
+    {
+      title: 'Name (RU)',
+      dataIndex: 'name_RU',
+      key: 'name_RU',
     },
     {
       title: 'Image',
@@ -58,7 +67,7 @@ const CategoryIncoming = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.delete(endpoints.delCategory, id);
+      await controller.getOne(endpoints.delcategoryincoming, id);
       setCategories(categories?.filter(item => item.id !== id));
       message.success("Category deleted successfully!");
     } catch (error) {
@@ -70,48 +79,47 @@ const CategoryIncoming = () => {
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({
-      name: record.name,
+      name_AZ: record.name_AZ,
+      name_EN: record.name_EN,
+      name_RU: record.name_RU,
+      text_AZ: record.text_AZ,
+      text_EN: record.text_EN,
+      text_RU: record.text_RU,
     });
     setImage(record.image);
-    setText(record.text);
     setIsDeleted(record.isDeleted);
     setIsModalVisible(true);
   };
 
   const onFinish = async (values) => {
-    console.log(values,"dhdhdh");
-    
     const categoryData = {
-      name: values.name,
+      name_AZ: values.name_AZ,
+      name_EN: values.name_EN,
+      name_RU: values.name_RU,
       image: image,
-      text: text,
+      text_AZ: values.text_AZ,
+      text_EN: values.text_EN,
+      text_RU: values.text_RU,
       isDeleted: false,
     };
-console.log(categoryData);
 
     try {
-    //   const token = JSON.parse(localStorage.getItem("token"));
-    //   if (!token || token === "null") {
-    //     return;
-    //   }
-    //   console.log(token,'dddd');
-      
-
-      const response = await axios.post(BASE_URL + endpoints.addcategoryincoming, categoryData,
-         {
-        headers: {
-          "Content-Type": "application/json",
-        //   Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+      const response = await axios.post(
+        BASE_URL + endpoints.addcategoryincoming,
+        categoryData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.data) {
         if (editMode) {
           setCategories(categories?.map((item) => (item.id === currentId ? { ...item, ...categoryData } : item)));
           message.success("Category updated successfully!");
         } else {
-          setCategories([...categories, { ...categoryData, id: categories?.length + 1 }]);
+          setCategories([...categories, { ...categoryData, id: response.data.id }]);
           message.success("Category added successfully!");
         }
         setIsModalVisible(false);
@@ -119,8 +127,6 @@ console.log(categoryData);
         setEditMode(false);
         setCurrentId(null);
         setImage(null);
-        setText('');
-        setIsDeleted(false);
       } else {
         message.error("Failed to add or update category.");
       }
@@ -147,8 +153,6 @@ console.log(categoryData);
     setIsModalVisible(false);
     form.resetFields();
     setImage(null);
-    setText('');
-    setIsDeleted(false);
     setEditMode(false);
     setCurrentId(null);
   };
@@ -168,16 +172,24 @@ console.log(categoryData);
           footer={null}
         >
           <Form form={form} layout="vertical" onFinish={onFinish}>
-            <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please enter the category name!' }]}>
+            <Form.Item label="Name (AZ)" name="name_AZ" rules={[{ required: true, message: 'Please enter the category name in AZ!' }]}>
               <Input />
             </Form.Item>
-
-            <Form.Item label="Text" name="text" rules={[{ required: true, message: 'Please enter the category description!' }]}>
-              <Input.TextArea
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                rows={4}
-              />
+            <Form.Item label="Name (EN)" name="name_EN" rules={[{ required: true, message: 'Please enter the category name in EN!' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item label="Name (RU)" name="name_RU" rules={[{ required: true, message: 'Please enter the category name in RU!' }]}>
+              <Input />
+            </Form.Item>
+            
+            <Form.Item label="Text (AZ)" name="text_AZ" rules={[{ required: true, message: 'Please enter the category description in AZ!' }]}>
+              <Input.TextArea rows={4} />
+            </Form.Item>
+            <Form.Item label="Text (EN)" name="text_EN" rules={[{ required: true, message: 'Please enter the category description in EN!' }]}>
+              <Input.TextArea rows={4} />
+            </Form.Item>
+            <Form.Item label="Text (RU)" name="text_RU" rules={[{ required: true, message: 'Please enter the category description in RU!' }]}>
+              <Input.TextArea rows={4} />
             </Form.Item>
 
             <Form.Item label="Image" name="image">
@@ -191,7 +203,6 @@ console.log(categoryData);
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
               </Upload>
             </Form.Item>
-
 
             <Form.Item>
               <Button type="primary" htmlType="submit" style={{ marginRight: '10px' }}>

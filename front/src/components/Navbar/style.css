@@ -1,44 +1,28 @@
-.language-selector {
-  width: 70px;  /* Adjust width as needed */
+.selectflags img {
+  width: 40px !important;
+  object-fit: contain;
+}
+.selectflags {
+  height: 40px;
+}
+.selectflags .flag-icon-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.ant-select-item-option-content img {
+  width: 40px;
+}
+
+.ant-select-selection-item > div {
+  display: flex;
+  gap: 10px;
+}
+.ant-select-item-option-content > div {
+  display: flex;
+  gap: 10px;
+}
+
+.lang {
   margin-right: 40px;
-}
-
-.language-selector select {
-  appearance: none;
-  font-size: 14px;
-  padding: 4px 12px;  /* Reduce padding for a smaller height */
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  background-color: #f8f9fa;
-  color: #333;
-  width: 100%;  /* Full width */
-  height: 30px;  /* Smaller height */
-  display: flex;
-  align-items: center;
-}
-
-.language-selector select:focus {
-  border-color: #80bdff;
-  outline: none;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
-}
-
-/* For the flag inside the select options */
-.language-selector option {
-  display: flex;
-  align-items: center;
-  padding: 8px;
-}
-
-.language-selector .flag-icon {
-  width: 20px;
-  height: 14px;
-  margin-right: 8px;
-  border-radius: 2px;
-}
-
-/* Optional: Styling the active option */
-.language-selector option.active {
-  font-weight: bold;
-  color: #007bff;
 }

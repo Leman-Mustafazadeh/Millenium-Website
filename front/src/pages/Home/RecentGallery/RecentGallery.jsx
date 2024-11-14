@@ -14,14 +14,20 @@ import "../../../assets/css/app.min.css";
 import "../../../assets/css/bootstrap.min.css";
 import "../../../assets/css/fontawesome.min.css";
 import "../../../assets/css/magnific-popup.min.css";
+import { useSelector } from 'react-redux';
+import { recent } from '../../../i18n';
 const RecentGallery = () => {
+
+  const selectedLanguage = useSelector((state) => state.languages.currentLanguage);
+  const count = (key) => recent[key]?.[selectedLanguage] || key;
+  
   return (
     <div className="gallery-area">
       <div className="container th-container">
         {/* Başlık */}
         <div className="title-area text-center">
-          <h2 className="sec-title">Recent Gallery</h2>
-          <p className="sec-text">Our Customers' Amazing Pictures!
+          <h2 className="sec-title">{count('recent')}</h2>
+          <p className="sec-text">{count('recentgallery')}
               </p>
         </div>
         <div className="row gy-10 gx-10 justify-content-center align-items-center">

@@ -6,13 +6,18 @@ import mapIcon from '../../assets/img/icon/location-dot3.svg';
 import bgImage from '../../assets/img/bg/breadcumb-bg.jpg'; // Change the path as needed
 import videoBg from '../../assets/img/bg/video_bg_1.jpg'; // Change the path as needed
 import "../../assets/css/style.css"
+import { useSelector } from 'react-redux';
+import { contactHome, home } from '../../i18n';
 const ContactUs = () => {
+  const selectedLanguage = useSelector((state) => state.languages.currentLanguage);
+  const translate = (key) => home[key]?.[selectedLanguage] || key;
+  const contacts = (key) => contactHome[key]?.[selectedLanguage] || key;
   return (
     <div>
       <div className="breadcumb-wrapper" style={{ backgroundImage: `url(${bgImage})` }}>
         <div className="container">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title">Contact Us</h1>
+            <h1 className="breadcumb-title">{translate('contact')}</h1>
           </div>
         </div>
       </div>
@@ -20,7 +25,7 @@ const ContactUs = () => {
       <div className="space">
         <div className="container">
           <div className="title-area text-center">
-            <h2 className="sec-title">Our Contact Information</h2>
+            <h2 className="sec-title">{contacts('contactinfo')}</h2>
           </div>
           <div className="row gy-4 justify-content-center">
             <div className="col-xl-4 col-lg-6">
@@ -29,9 +34,8 @@ const ContactUs = () => {
                   <img src={locationIcon} alt="Location Icon" />
                 </div>
                 <div className="about-contact-details">
-                  <h6 className="box-title">Our Address</h6>
-                  <p className="about-contact-details-text">492, I.Gutgashinli str., AZ1073 Baku,</p>
-                  <p className="about-contact-details-text">Republic of Azerbaijan</p>
+                  <h6 className="box-title">{contacts('address')}</h6>
+                  <p className="about-contact-details-text">{translate('location')}</p>
                 </div>
               </div>
             </div>
@@ -41,7 +45,7 @@ const ContactUs = () => {
                   <img src={phoneIcon} alt="Phone Icon" />
                 </div>
                 <div className="about-contact-details">
-                  <h6 className="box-title">Phone Number</h6>
+                  <h6 className="box-title">{contacts('phonenumber')}</h6>
                   <p className="about-contact-details-text">
                     <a href="tel:+994124975400">+99412 4975400</a>
                   </p>
@@ -54,7 +58,7 @@ const ContactUs = () => {
                   <img src={emailIcon} alt="Email Icon" />
                 </div>
                 <div className="about-contact-details">
-                  <h6 className="box-title">Email Address</h6>
+                  <h6 className="box-title">{contacts('email')}</h6>
                   <p className="about-contact-details-text">
                     <a href="mailto:manager@milleniumtour.az">manager@milleniumtour.az</a>
                   </p>

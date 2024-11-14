@@ -14437,7 +14437,9 @@ span.select2-selection.select2-selection--single:focus {
   /* Medium devices */
   height: 300px;
 }
-
+.global-img img:hover{
+  border-radius: 35px;
+}
 .global-img:after {
   background: rgba(255, 255, 255, 0.5);
   content: "";

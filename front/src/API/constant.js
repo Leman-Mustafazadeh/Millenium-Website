@@ -1,4 +1,4 @@
-export const BASE_URL = "https://millenniumtour.redmark.az";
+export const BASE_URL = "https://hdy.az/swagger/index.html";
 export const endpoints = {
   addlogin: "/Account/Login",
   login: "/Account/get-username",
@@ -55,13 +55,13 @@ puthero:"/api/Gallery/update-slide",
   addincoming:"/api/Coming/add-incoming",
   delincoming:"/api/Coming/delete-incoming",
   putincoming:"/api/Coming/update-incoming",
-  getoneicomig:"/api/Coming/get-incoming/{id}",
+  getoneicomig:"/api/Coming/get-incoming",
 
 
   categoryincoming:"/api/Coming/get-all-regionCategories",//categoryincoming
   addcategoryincoming:"/api/Coming/create-regionCategories",
-  delcategoryincoming:"/api/Coming/delete-incoming",
-  putcategoryincoming:"/api/Coming/update-incoming",
+  delcategoryincoming:"/api/Coming/delete-regionCategories",
+  putcategoryincoming:"/api/Coming/update-RegionCategorie",
 
 
 

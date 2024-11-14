@@ -3,8 +3,10 @@ import img1 from "../../assets/img/bg/breadcumb-bg.jpg";
 import controller from "../../API";
 import { endpoints } from "../../API/constant";
 import "./style.css";
+import { useSelector } from "react-redux";
+import { ourCompanyteam } from "../../i18n";
 
-const TeamMember = ({ name, position, email, imageUrl }) => {
+const TeamMember = ({ name, position, eMail, imageUrl }) => {
   return (
     <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-4">
       <div className="team-member-box">
@@ -15,7 +17,7 @@ const TeamMember = ({ name, position, email, imageUrl }) => {
           <h4>{name}</h4>
           <div className="position">{position}</div>
           <div className="email">
-            <a href={`mailto:${email}`}>{email}</a>
+            <a href={`mailto:${eMail}`}>{eMail}</a>
           </div>
         </div>
       </div>
@@ -39,6 +41,9 @@ const OurTeam = () => {
         setLoading(false);
       });
   }, []);
+ console.log(data);
+ 
+  const currentlanguage = useSelector((state) => state.languages.currentLanguage);
 
   return (
     <div>
@@ -48,10 +53,12 @@ const OurTeam = () => {
       >
         <div className="container">
           <div className="breadcumb-content">
-            <h1 className="breadcumb-title">Our Team</h1>
+            <h1 className="breadcumb-title"> {ourCompanyteam[currentlanguage]}</h1>
           </div>
         </div>
       </div>
+
+             
 
       <section className="space">
         <div className="container">
@@ -64,9 +71,9 @@ const OurTeam = () => {
               data.map((member, index) => (
                 <TeamMember
                   key={index}
-                  name={member.fullName_EN}
-                  position={member.position_EN}
-                  email={member.eMail}
+                  name={member[`fullName_${currentlanguage}`]} 
+                  position={member[`position_${currentlanguage}`]} 
+                  eMail={member.eMail} 
                   imageUrl={member.image}
                 />
               ))

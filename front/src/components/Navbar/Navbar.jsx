@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useTranslation } from 'react-i18next'; // i18next istifadə etmək üçün
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom"; // Import NavLink
+import { changeLanguage } from "../../services/redux/languages";
 import "../../assets/css/style.css";
 import "../../assets/css/app.min.css";
 import "../../assets/css/bootstrap.min.css";
@@ -7,29 +9,40 @@ import "../../assets/css/fontawesome.min.css";
 import "../../assets/css/magnific-popup.min.css";
 import "../../assets/css/swiper-bundle.min.css";
 import logo from "../../assets/img/logos.jpeg";
-import { useDispatch, useSelector } from "react-redux";
-import { changeLanguage } from "../../redux/slices/languages";
+import { home } from "../../i18n";
+import "./style.css";
+import flag1 from "../../assets/img/flag/flag1.png";
+import flag2 from "../../assets/img/flag/flag2.webp";
+import flag3 from "../../assets/img/flag/flag3.png";
+import { Select } from "antd";
 
+const { Option } = Select;
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t, i18n } = useTranslation(); // i18next hook-u ilə tərcümə alırıq
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  // Get the selected language from the Redux store
+  const selectedLanguage = useSelector(
+    (state) => state.languages.currentLanguage
+  );
+
+  // Translate function based on the selected language
+  const translate = (key) => home[key]?.[selectedLanguage] || key;
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const selectedLanguage = useSelector(state => state.languages.currentLanguage)
-console.log(selectedLanguage);
-
   const handleLanguageChange = (language) => {
-    dispatch(changeLanguage(language))
-    i18n.changeLanguage(language);
+    dispatch(changeLanguage(language)); // Update language in Redux state
   };
 
   return (
     <>
       {/* Mobile Menu Wrapper */}
-      <div className={`th-menu-wrapper onepage-nav ${isMenuOpen ? "open" : ""}`}>
+      <div
+        className={`th-menu-wrapper onepage-nav ${isMenuOpen ? "open" : ""}`}
+      >
         <div className="th-menu-area text-center">
           <button className="th-menu-toggle" onClick={toggleMenu}>
             <i className="fal fa-times"></i>
@@ -42,28 +55,64 @@ console.log(selectedLanguage);
           <div className="th-mobile-menu">
             <ul>
               <li>
-                <a className="active" href="/">
-                  {t('home')}
-                </a>
+                <NavLink exact to="/" activeClassName="active">
+                  {translate("home")}
+                </NavLink>
               </li>
               <li className="menu-item-has-children">
-                <a href="/about">{t('about')}</a>
+                <NavLink to="/about" activeClassName="active">
+                  {translate("about")}
+                </NavLink>
                 <ul className="sub-menu">
-                  <li><a href="/about">{t('our_company')}</a></li>
-                  <li><a href="/ourteam">{t('our_team')}</a></li>
-                  <li><a href="/award">{t('awards_licenses')}</a></li>
+                  <li>
+                    <NavLink to="/about" activeClassName="active">
+                      {translate("our_company")}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/ourteam" activeClassName="active">
+                      {translate("our_team")}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/award" activeClassName="active">
+                      {translate("awards_licenses")}
+                    </NavLink>
+                  </li>
                 </ul>
               </li>
               <li className="menu-item-has-children">
-                <a href="#">{t('tours')}</a>
+                <NavLink to="/incoming" activeClassName="active">
+                  {translate("tours")}
+                </NavLink>
                 <ul className="sub-menu">
-                  <li><a href="/incoming">{t('incoming')}</a></li>
-                  <li><a href="/outgoing">{t('outgoing')}</a></li>
+                  <li>
+                    <NavLink to="/incoming" activeClassName="active">
+                      {translate("incoming")}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/outgoing" activeClassName="active">
+                      {translate("outgoing")}
+                    </NavLink>
+                  </li>
                 </ul>
               </li>
-              <li><a href="/activities">{t('activities')}</a></li>
-              <li><a href="/servicies">{t('services')}</a></li>
-              <li><a href="/contact">{t('contact')}</a></li>
+              <li>
+                <NavLink to="/activities" activeClassName="active">
+                  {translate("activities")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/servicies" activeClassName="active">
+                  {translate("services")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/contact" activeClassName="active">
+                  {translate("contact")}
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>
@@ -79,51 +128,57 @@ console.log(selectedLanguage);
                   <ul>
                     <li className="d-none d-xl-inline-block">
                       <i className="fa-sharp fa-regular fa-location-dot"></i>
-                      <span>
-                        492, I.Gutgashinli str., AZ1073 Baku, Republic of Azerbaijan
-                      </span>
+                      <span>{translate("location")}</span>
                     </li>
                     <li className="d-none d-xl-inline-block">
                       <i className="fa-regular fa-clock"></i>
-                      <span>Monday to Friday: 09:30 am - 18:00 pm</span>
+                      <span>{translate("open")}</span>
                     </li>
                   </ul>
                 </div>
               </div>
 
               {/* Language Selector */}
-              <div className="col-auto">
-                <div className="language-selector">
-                  <select
-                    onChange={(e) => handleLanguageChange(e.target.value)}
+              <div className="col-auto lang">
+                <div className="">
+                  <Select
                     value={selectedLanguage}
-                    className="form-select"
+                    onChange={handleLanguageChange}
+                    className="selectflags"
+                    style={{ width: 120 }}
                   >
-                    <option value="AZ" className={selectedLanguage === "AZ" ? "active" : ""}>
-                      <img
-                        src="https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/azerbaijan-flag-icon.png"
-                        alt="Azerbaijani"
-                        className="flag-icon"
-                      />
-                      AZ
-                    </option>
-                    <option value="EN" className={selectedLanguage === "EN" ? "active" : ""}>
-                      <img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png"
-                        alt="English"
-                        className="flag-icon"
-                      />
-                      EN
-                    </option>
-                    <option value="RU" className={selectedLanguage === "RU" ? "active" : ""}>
-                      <img
-                        src="https://upload.wikimedia.org/wikipedia/en/archive/f/f3/20120812153730%21Flag_of_Russia.svg"
-                        alt="Russian"
-                        className="flag-icon"
-                      />
-                      RU
-                    </option>
-                  </select>
+                    <Option
+                      value="AZ"
+                      className={selectedLanguage === "AZ" ? "active" : ""}
+                    >
+                      <div className="">
+                        <img
+                          src={flag1}
+                          alt="Azerbaijani"
+                          className="flag-icon"
+                        />
+                        AZ
+                      </div>
+                    </Option>
+                    <Option
+                      value="EN"
+                      className={selectedLanguage === "EN" ? "active" : ""}
+                    >
+                      <div className="">
+                        <img src={flag2} alt="English" className="flag-icon" />
+                        EN
+                      </div>
+                    </Option>
+                    <Option
+                      value="RU"
+                      className={selectedLanguage === "RU" ? "active" : ""}
+                    >
+                      <div className="flag-icon-wrapper">
+                        <img src={flag3} alt="Russian" className="flag-icon" />
+                        RU
+                      </div>
+                    </Option>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -135,10 +190,17 @@ console.log(selectedLanguage);
             <div className="th-container">
               <div className="row align-items-center justify-content-between">
                 <div className="col-auto">
-                  <div className="headers-logos" style={{ width: "100%", height: "90px" }}>
+                  <div
+                    className="headers-logos"
+                    style={{ width: "100%", height: "90px" }}
+                  >
                     <a href="/">
                       <img
-                        style={{ width: "100%", height: "100%", borderRadius: "10px" }}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "10px",
+                        }}
                         src={logo}
                         alt="Tourm"
                       />
@@ -154,25 +216,65 @@ console.log(selectedLanguage);
                         width: "100%",
                       }}
                     >
-                      <li><a className="active" href="/">{t('home')}</a></li>
+                      <li>
+                        <NavLink exact to="/" activeClassName="active">
+                          {translate("home")}
+                        </NavLink>
+                      </li>
                       <li className="menu-item-has-children">
-                        <a href="/about">{t('about')}</a>
+                        <NavLink to="/about" activeClassName="active">
+                          {translate("about")}
+                        </NavLink>
                         <ul className="sub-menu">
-                          <li><a href="/about">{t('our_company')}</a></li>
-                          <li><a href="/ourteam">{t('our_team')}</a></li>
-                          <li><a href="/award">{t('awards_licenses')}</a></li>
+                          <li>
+                            <NavLink to="/about" activeClassName="active">
+                              {translate("our_company")}
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink to="/ourteam" activeClassName="active">
+                              {translate("our_team")}
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink to="/award" activeClassName="active">
+                              {translate("awards_licenses")}
+                            </NavLink>
+                          </li>
                         </ul>
                       </li>
                       <li className="menu-item-has-children">
-                        <a href="#">{t('tours')}</a>
+                        <NavLink to="/incoming" activeClassName="active">
+                          {translate("tours")}
+                        </NavLink>
                         <ul className="sub-menu">
-                          <li><a href="/incoming">{t('incoming')}</a></li>
-                          <li><a href="/outgoing">{t('outgoing')}</a></li>
+                          <li>
+                            <NavLink to="/incoming" activeClassName="active">
+                              {translate("incoming")}
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink to="/outgoing" activeClassName="active">
+                              {translate("outgoing")}
+                            </NavLink>
+                          </li>
                         </ul>
                       </li>
-                      <li><a href="/activities">{t('activities')}</a></li>
-                      <li><a href="/servicies">{t('services')}</a></li>
-                      <li><a href="/contact">{t('contact')}</a></li>
+                      <li>
+                        <NavLink to="/activities" activeClassName="active">
+                          {translate("activities")}
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/servicies" activeClassName="active">
+                          {translate("services")}
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/contact" activeClassName="active">
+                          {translate("contact")}
+                        </NavLink>
+                      </li>
                     </ul>
                   </nav>
                   <button
@@ -185,7 +287,10 @@ console.log(selectedLanguage);
                 </div>
               </div>
             </div>
-            <div className="logo-bg" data-mask-src="assets/img/logo_bg_mask.png"></div>
+            <div
+              className="logo-bg"
+              data-mask-src="assets/img/logo_bg_mask.png"
+            ></div>
           </div>
         </div>
       </header>

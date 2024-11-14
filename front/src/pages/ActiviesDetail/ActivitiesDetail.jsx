@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import controller, { getOne } from '../../API'
 import { endpoints } from '../../API/constant'
 import "./style.css"
+import { useSelector } from 'react-redux'
 const ActivitiesDetail = () => {
     const {id} = useParams()
 const[getData,setGetdata] = useState({
@@ -15,8 +16,10 @@ useEffect(()=>{
         setGetdata(res)
     })
 },[id])
-console.log(getData);
 
+const currentlanguage = useSelector(
+  (state) => state.languages.currentLanguage
+);
 
   return (
    <div className="activities_detail">
@@ -27,8 +30,8 @@ console.log(getData);
         <img src={getData.image} alt="" />
       </div>
       <div className='activities_right'>
-      <h1>{getData.name_EN}</h1>
-      <p className='activitis_text'>{getData.text_EN}</p>
+      <h1> {getData[`name_${currentlanguage}`]}</h1>
+      <p className='activitis_text'> {getData[`text_${currentlanguage}`]}</p>
       </div>
     </div>
    </div>

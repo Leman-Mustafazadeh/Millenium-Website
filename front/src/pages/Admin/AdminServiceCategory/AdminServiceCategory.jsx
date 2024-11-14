@@ -18,9 +18,19 @@ const AdminServiceCategory = () => {
       key: 'id',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Name (AZ)',
+      dataIndex: 'name_AZ',
+      key: 'name_AZ',
+    },
+    {
+      title: 'Name (EN)',
+      dataIndex: 'name_EN',
+      key: 'name_EN',
+    },
+    {
+      title: 'Name (RU)',
+      dataIndex: 'name_RU',
+      key: 'name_RU',
     },
     {
       title: 'Actions',
@@ -35,11 +45,8 @@ const AdminServiceCategory = () => {
   ];
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
-      await controller.getOne(endpoints.delservicecategory,id).then((res)=>{
-        console.log(res);
-      })
+      await controller.getOne(endpoints.delservicecategory, id);
       setCategories(categories.filter(category => category.id !== id));
       message.success("Category deleted successfully!");
     } catch (error) {
@@ -52,7 +59,9 @@ const AdminServiceCategory = () => {
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({
-      name: record.name,
+      name_AZ: record.name_AZ,
+      name_EN: record.name_EN,
+      name_RU: record.name_RU,
     });
     setIsModalVisible(true);
   };
@@ -60,21 +69,16 @@ const AdminServiceCategory = () => {
   const onFinish = async (values) => {
     const object = {
       id: currentId || 0, // New items will have an ID of 0
-      name: values.name,
+      name_AZ: values.name_AZ,
+      name_EN: values.name_EN,
+      name_RU: values.name_RU,
       isDeleted: false, // Default to false
     };
 
     try {
-      // const token = JSON.parse(localStorage.getItem("token"));
-      // if (!token || token === "null") {
-      //   console.log("Token not found or is null");
-      //   return;
-      // }
-
       const response = await axios.post(BASE_URL + endpoints.addservicecategory, object, {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
         },
       });
 
@@ -137,9 +141,25 @@ const AdminServiceCategory = () => {
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: 'Please enter the category name!' }]}
+            label="Name (AZ)"
+            name="name_AZ"
+            rules={[{ required: true, message: 'Please enter the category name in Azerbaijani!' }]}
+          >
+            <input />
+          </Form.Item>
+
+          <Form.Item
+            label="Name (EN)"
+            name="name_EN"
+            rules={[{ required: true, message: 'Please enter the category name in English!' }]}
+          >
+            <input />
+          </Form.Item>
+
+          <Form.Item
+            label="Name (RU)"
+            name="name_RU"
+            rules={[{ required: true, message: 'Please enter the category name in Russian!' }]}
           >
             <input />
           </Form.Item>

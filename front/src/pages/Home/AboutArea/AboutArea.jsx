@@ -10,8 +10,13 @@ import shape3 from '../../../assets/img/shape/shape_3.png';
 import aboutSlideImg from '../../../assets/img/normal/about-slide-img.png';
 import emojiIcon from '../../../assets/img/icon/emoji.png';
 import "../../../assets/css/style.css"; // Kendi stilleriniz
+import { useSelector } from 'react-redux';
+import { plan } from '../../../i18n';
 
 const AboutArea = () => {
+
+  const currentlanguage = useSelector((state) => state.languages.currentLanguage);   
+  const plans = (key) => plan[key]?.[currentlanguage] || key;
   return (
     <div className="about-area position-relative overflow-hidden space" id="about-sec">
       <div className="container">
@@ -32,9 +37,9 @@ const AboutArea = () => {
           <div className="col-xl-6">
             <div className="ps-xl-4 ms-xl-2">
               <div className="title-area mb-20 pe-xl-5 me-xl-5">
-                <h2 className=" mb-20 sec-title  heading pe-xl-5 me-xl-5">Plan Your Trip With Us</h2>
+                <h2 className=" mb-20 sec-title  heading pe-xl-5 me-xl-5">{plans('plan')}</h2>
                 <p className="sec-text mb-30">
-                Plan your trip with Millennium Tourism and create unforgettable memories! Our professional team is here to assist you with ideal itineraries and exclusive offers. Wherever you want to go and whenever you wish, we are dedicated to making your travel dreams a reality!"
+                {plans('plantitle')}
                 </p>
               </div>
               <div className="about-item-wrap">
@@ -43,8 +48,8 @@ const AboutArea = () => {
                     <img src={mapIcon} alt="Map Icon" />
                   </div>
                   <div className="about-item_content">
-                    <h5 className="box-title">Comfortable Trip</h5>
-                    <p className="about-item_text">Prioritize your comfort on every journey so you can fully enjoy exploring new places.</p>
+                    <h5 className="box-title"> {plans('comfortrip')}</h5>
+                    <p className="about-item_text"> {plans('comfortitle')}</p>
                   </div>
                 </div>
                 <div className="about-item">
@@ -52,9 +57,9 @@ const AboutArea = () => {
                     <img src={guideIcon} alt="Guide Icon" />
                   </div>
                   <div className="about-item_content">
-                    <h5 className="box-title">Professional Guides</h5>
+                    <h5 className="box-title">{plans('professional')}</h5>
                     <p className="about-item_text">
-                    Make your comfort a prierity on every journey to fully enjoy exploring new places.                  </p>
+                    {plans('professionaltitle')}                 </p>
                   </div>
                 </div>
               </div>

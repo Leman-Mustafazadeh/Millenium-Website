@@ -108,9 +108,19 @@ const Blogs = () => {
   
       console.log(object);
   
-      const token = window !== undefined ? Cookies.get("ftoken") : null;
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
+      // const token = window !== undefined ? Cookies.get("ftoken") : null;
+      // if (!token || token === "null") {
+      //   console.log("Token not found or is null");
+      // } else {
+      //   console.log("Token:", token);
+      // }
+
+      const token = typeof window !== "undefined" ? Cookies.get("ftoken") : null;
+
+      // Check if the token exists and is not empty or null
+      if (!token) {
+        console.log("Token not found or is null/empty");
+        return; // Exit the function if the token is not available
       } else {
         console.log("Token:", token);
       }
