@@ -1,4 +1,4 @@
-export const BASE_URL = "https://hdy.az/swagger/index.html";
+export const BASE_URL = "https://hdy.az";
 export const endpoints = {
   addlogin: "/Account/Login",
   login: "/Account/get-username",
@@ -16,7 +16,7 @@ puthero:"/api/Gallery/update-slide",
   gallery: "/api/Gallery/get-gallery", //2ci section
   addGallery: "/api/Gallery/add-image",
   delgallery:"/api/Gallery/delete-image",
-  putgallery:"/api/Gallery/update-gallery/{id}",
+  putgallery:"/api/Gallery/update-gallery",
 
 
 

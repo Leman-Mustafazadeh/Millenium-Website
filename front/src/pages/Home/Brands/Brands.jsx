@@ -4,7 +4,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import '../../../assets/css/style.css';
 import controller from '../../../API';
-import { endpoints } from '../../../API/constant';
+import { BASE_URL, endpoints } from '../../../API/constant';
 import "./style.css"
 const Brands = () => {
   const [data, setData] = useState([]);
@@ -47,12 +47,12 @@ const Brands = () => {
           }}
           className="mySwiper"
         >
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <SwiperSlide key={index}>
               <div className="brand-box">
                 <a href="#">
-                  <img className="original" src={`${item.image}`} alt="Brand Logo" />
-                  <img className="gray" src={`${item.image}`} alt="Brand Logo" />
+                  <img className="original" src={BASE_URL+item.image} alt="Brand Logo" />
+                  <img className="gray" src={BASE_URL+item.image} alt="Brand Logo" />
                 </a>
               </div>
             </SwiperSlide>

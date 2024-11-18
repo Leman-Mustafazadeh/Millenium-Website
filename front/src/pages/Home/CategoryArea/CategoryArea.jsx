@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import controller from '../../../API';
-import { endpoints } from '../../../API/constant';
+import { BASE_URL, endpoints } from '../../../API/constant';
 import { useSelector } from 'react-redux';
 
 const CategoryArea = () => {
@@ -41,11 +41,11 @@ const CategoryArea = () => {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <SwiperSlide key={index}>
               <div className={`category-card single wave-${index % 5}`}>
                 <div className="box-img global-img">
-                  <img src={`${item.image}`} alt={`Category ${index + 1}`} />
+                <img src={`${BASE_URL}${item.image}`} alt={`Category ${index + 1}`} />
                 </div>
                 <div className="category-info">
                   <h3>{item[`title${currentlanguage}`]} </h3>

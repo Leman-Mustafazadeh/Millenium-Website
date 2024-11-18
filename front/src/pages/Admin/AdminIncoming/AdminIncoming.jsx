@@ -19,7 +19,6 @@ const AdminIncoming = () => {
   const [textAZ, setTextAZ] = useState("");
   const [textEN, setTextEN] = useState("");
   const [textRU, setTextRU] = useState("");
-console.log(incomingItems);
 
   const columns = [
     {
@@ -33,7 +32,7 @@ console.log(incomingItems);
       key: "image",
       render: (image) => (
         <img
-          src={image}
+          src={BASE_URL + image}
           alt="Incoming"
           style={{ width: 100, height: 100, objectFit: "cover" }}
         />
@@ -60,32 +59,36 @@ console.log(incomingItems);
     },
   ];
 
-  const beforeUpload = (file, index) => {
-    const isImage = file.type.startsWith("image/");
-    if (!isImage) {
-      message.error("You can only upload image files!");
-      return Upload.LIST_IGNORE;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      if (index === "main") {
-        setImage(reader.result);
-      } else {
-        const newImages = [...images];
-        newImages[index] = reader.result;
-        setImages(newImages);
+  // Fetch data on component mount
+  useEffect(() => {
+    const fetchIncomingItems = async () => {
+      try {
+        const res = await controller.getAll(endpoints.incoming);
+        setIncomingItems(res);
+      } catch {
+        message.error("Failed to fetch incoming items.");
       }
     };
-    return false;
-  };
+
+    const fetchCategories = async () => {
+      try {
+        const res = await controller.getAll(endpoints.categoryincoming);
+        setIncomingCategories(res);
+      } catch {
+        message.error("Failed to fetch categories.");
+      }
+    };
+
+    fetchCategories();
+    fetchIncomingItems();
+  }, []);
 
   const handleDelete = async (id) => {
     try {
       await controller.getOne(endpoints.delincoming, id);
       setIncomingItems(incomingItems.filter((item) => item.id !== id));
       message.success("Item deleted successfully!");
-    } catch (error) {
+    } catch {
       message.error("Error deleting item.");
     }
   };
@@ -98,6 +101,7 @@ console.log(incomingItems);
       name_EN: record.name_EN,
       name_RU: record.name_RU,
       serialNumber: record.serialNumber,
+      category: record.categoryId,
     });
     setImage(record.image);
     setImages([record.image1, record.image2, record.image3, record.image4]);
@@ -107,17 +111,34 @@ console.log(incomingItems);
     setIsModalVisible(true);
   };
 
+  const beforeUpload = (file, index) => {
+    const isImage = file.type.startsWith("image/");
+    if (!isImage) {
+      message.error("You can only upload image files!");
+      return Upload.LIST_IGNORE;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file); // Convert the image to Base64
+    reader.onload = () => {
+      const base64String = reader.result.split(",")[1];
+      if (index === "main") {
+        setImage(base64String);
+      } else {
+        const newImages = [...images];
+        newImages[index] = base64String;
+        setImages(newImages);
+      }
+    };
+    return false;
+  };
+
   const onFinish = async (values) => {
-    console.log(values,'dgfhfj');
-    
     const inComingImages = images
-      .map((img, index) => ({
-        image: img ? `Image ${index + 1}` : "",
-        base64: img || "",
-      }))
+      .map((img, index) => ({ image: img ? `Image ${index + 1}` : "", base64: img }))
       .filter((img) => img.base64);
 
-    const object = {
+    const payload = {
+      id: currentId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
@@ -125,79 +146,38 @@ console.log(incomingItems);
       text_EN: textEN,
       text_RU: textRU,
       serialNumber: values.serialNumber,
-      image: image,
-      inComingImages: inComingImages,
+      categoryId: values.category,
+      image,
+      inComingImages,
     };
-    console.log(object,"dhdhdhhd");
-    
+
+    console.log("Payload:", payload); // Debugging the payload
 
     try {
-      // const token = JSON.parse(localStorage.getItem("token"));
-      // if (!token || token === "null") {
-      //   return;
-      // }
+      const endpoint = editMode ? endpoints.putincoming : endpoints.addincoming;
+      await axios.post(`${BASE_URL}${endpoint}`, payload, {
+        headers: { "Content-Type": "application/json" },
+      });
 
-      const response = await axios.post(
-        BASE_URL + endpoints.addincoming,
-        object,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            // Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response) {
-        console.log(response,'dhdhdh');
-        
-        if (editMode) {
-          setIncomingItems(
-            incomingItems.map((item) => (item.id === currentId ? object : item))
-          );
-          message.success("Incoming item updated successfully!");
-        } else {
-          setIncomingItems([
-            ...incomingItems,
-            { ...object, id: incomingItems.length + 1 },
-          ]);
-          message.success("Incoming item added successfully!");
-        }
-        setIsModalVisible(false);
-        form.resetFields();
-        setEditMode(false);
-        setCurrentId(null);
-        setImage(null);
-        setImages([null, null, null, null]);
-        setTextAZ("");
-        setTextEN("");
-        setTextRU("");
+      if (editMode) {
+        setIncomingItems(
+          incomingItems.map((item) => (item.id === currentId ? payload : item))
+        );
+        message.success("Incoming item updated successfully!");
       } else {
-        message.error("Failed to add or update incoming item.");
+        setIncomingItems([...incomingItems, { ...payload, id: incomingItems.length + 1 }]);
+        message.success("Incoming item added successfully!");
       }
+      handleCancel();
     } catch (error) {
       message.error("Error occurred while saving data.");
     }
   };
 
-  useEffect(() => {
-    const fetchIncomingItems = async () => {
-      const res = await controller.getAll(endpoints.incoming);
-      setIncomingItems(res);
-    };
-    const fetchCategories = async () => {
-      const res = await controller.getAll(endpoints.categoryincoming);
-      setIncomingCategories(res);
-    };
-
-    fetchCategories();
-    fetchIncomingItems();
-  }, []);
-// console.log(incomingCategories);
-const categoryOptions = incomingCategories.map((category) => ({
-  label: category.name, // Replace with the actual category name key
-  value: category.id, // Replace with the actual category ID key
-}));
+  const categoryOptions = incomingCategories.map((category) => ({
+    label: category.name_EN,
+    value: category.id,
+  }));
 
   const showModal = () => {
     setEditMode(false);
@@ -238,34 +218,28 @@ const categoryOptions = incomingCategories.map((category) => ({
             <Form.Item
               label="Name (AZ)"
               name="name_AZ"
-              rules={[
-                { required: true, message: "Please enter the name in AZ!" },
-              ]}
+              rules={[{ required: true, message: "Please enter the name in AZ!" }]}
             >
               <input />
             </Form.Item>
-
             <Form.Item label="Name (EN)" name="name_EN">
               <input />
             </Form.Item>
-
             <Form.Item label="Name (RU)" name="name_RU">
               <input />
             </Form.Item>
             <Form.Item
               label="Serial Number"
               name="serialNumber"
-              rules={[
-                { required: true, message: "Please select a category!" },
-              ]}
+              rules={[{ required: true, message: "Serial Number is required!" }]}
             >
+              <input type="number" />
+            </Form.Item>
+            <Form.Item label="Category" name="category">
               <Select options={categoryOptions} placeholder="Select a category" />
             </Form.Item>
-
-
-            <Form.Item label="Primary Image" name="main_image">
+            <Form.Item label="Primary Image">
               <Upload
-                name="main_image"
                 listType="picture"
                 maxCount={1}
                 beforeUpload={(file) => beforeUpload(file, "main")}
@@ -274,67 +248,25 @@ const categoryOptions = incomingCategories.map((category) => ({
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
               </Upload>
             </Form.Item>
-
-            <Form.Item label="Image 1" name="image1">
-              <Upload
-                name="image1"
-                listType="picture"
-                maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 0)}
-                showUploadList={false}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </Form.Item>
-
-            <Form.Item label="Image 2" name="image2">
-              <Upload
-                name="image2"
-                listType="picture"
-                maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 1)}
-                showUploadList={false}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </Form.Item>
-
-            <Form.Item label="Image 3" name="image3">
-              <Upload
-                name="image3"
-                listType="picture"
-                maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 2)}
-                showUploadList={false}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </Form.Item>
-
-            <Form.Item label="Image 4" name="image4">
-              <Upload
-                name="image4"
-                listType="picture"
-                maxCount={1}
-                beforeUpload={(file) => beforeUpload(file, 3)}
-                showUploadList={false}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            </Form.Item>
-
-            <Form.Item
-              label="Text (AZ)"
-              name="text_AZ"
-              rules={[{ required: true, message: "Please enter the text!" }]}
-            >
+            {[...Array(4)].map((_, index) => (
+              <Form.Item key={index} label={`Image ${index + 1}`}>
+                <Upload
+                  listType="picture"
+                  maxCount={1}
+                  beforeUpload={(file) => beforeUpload(file, index)}
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                </Upload>
+              </Form.Item>
+            ))}
+            <Form.Item label="Text (AZ)" name="text_AZ">
               <CKEditor
                 editor={ClassicEditor}
                 data={textAZ}
                 onChange={(event, editor) => setTextAZ(editor.getData())}
               />
             </Form.Item>
-
             <Form.Item label="Text (EN)" name="text_EN">
               <CKEditor
                 editor={ClassicEditor}
@@ -342,7 +274,6 @@ const categoryOptions = incomingCategories.map((category) => ({
                 onChange={(event, editor) => setTextEN(editor.getData())}
               />
             </Form.Item>
-
             <Form.Item label="Text (RU)" name="text_RU">
               <CKEditor
                 editor={ClassicEditor}
@@ -350,16 +281,13 @@ const categoryOptions = incomingCategories.map((category) => ({
                 onChange={(event, editor) => setTextRU(editor.getData())}
               />
             </Form.Item>
-
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ marginRight: "10px" }}
-              >
+              <Button type="primary" htmlType="submit">
                 {editMode ? "Update" : "Submit"}
               </Button>
-              <Button onClick={handleCancel}>Cancel</Button>
+              <Button onClick={handleCancel} style={{ marginLeft: 10 }}>
+                Cancel
+              </Button>
             </Form.Item>
           </Form>
         </Modal>

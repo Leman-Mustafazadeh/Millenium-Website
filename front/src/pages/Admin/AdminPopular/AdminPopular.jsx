@@ -40,7 +40,7 @@ const AdminPopular = () => {
       dataIndex: 'image',
       key: 'image',
       render: (image) => (
-        <img src={image} alt="Popular" style={{ width: 100, height: 100, objectFit: 'cover' }} />
+        <img src={BASE_URL+image} alt="Popular" style={{ width: 100, height: 100, objectFit: 'cover' }} />
       ),
     },
     {
@@ -86,9 +86,13 @@ const AdminPopular = () => {
     }
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setImageBase64(reader.result);
-    return false;
+    reader.onload = () => {
+      const base64String = reader.result.split(",")[1]; // Remove the prefix
+      setImageBase64(base64String);
+    };
+    return false; // Prevent auto-upload by the Upload component
   };
+  
 
   const handleDelete = async (id) => {
     try {
@@ -108,6 +112,7 @@ const AdminPopular = () => {
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({
+      id: record.id,
       name_AZ: record.name_AZ,
       name_EN: record.name_EN,
       name_RU: record.name_RU,
@@ -117,16 +122,13 @@ const AdminPopular = () => {
     setIsModalVisible(true);
   };
 
-
-
   const onFinish = async (values) => {
     try {
-      const image = await getBase64(values.image.file);
       const object = {
         name_AZ: values.name_AZ,
         name_EN: values.name_EN,
         name_RU: values.name_RU,
-        image: imageBase64,
+        image: imageBase64, // Base64 without the prefix
         isDeleted: false,
       };
   
@@ -138,21 +140,19 @@ const AdminPopular = () => {
         },
       });
   
-      if (response.config.data) {
+      if (response.status === 200 || response.status === 201) {
         if (editMode) {
           setPopularItems(
-            popularItems.map((item) => (item.id === currentId ? object : item))
+            popularItems.map((item) => (item.id === currentId ? { ...item, ...object } : item))
           );
           message.success("Popular item updated successfully!");
         } else {
-          // Ensure popularItems is an array before adding a new item
           setPopularItems((prevItems) => [
             ...prevItems,
             { ...object, id: prevItems.length + 1 },
           ]);
           message.success("Popular item added successfully!");
         }
-  
         setIsModalVisible(false);
         form.resetFields();
         setEditMode(false);
@@ -171,6 +171,7 @@ const AdminPopular = () => {
       console.error("Error in Axios request:", error);
     }
   };
+  
   
 
 useEffect(()=>{

@@ -57,9 +57,14 @@ const AdminActivities = () => {
     }
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setImageBase64(reader.result);
+    reader.onload = () => {
+      // Get the base64 image data without the "data:image/xxx;base64," prefix
+      const base64Data = reader.result.split(',')[1];
+      setImageBase64(base64Data);
+    };
     return false;
   };
+  
 
   const handleDelete = (id) => {
     controller.getOne(endpoints.delactivity,id).then((res) => {
@@ -90,11 +95,11 @@ const AdminActivities = () => {
 
   const onFinish = async (values) => {
     const object = {
-      id: currentId || 0, // Assuming new items have an ID of 0
+      id: currentId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: imageBase64, // Use existing image or the new one from the Upload
+      image: imageBase64, // Now this will be the clean base64 string
       title_AZ: values.title_AZ,
       title_EN: values.title_EN,
       title_RU: values.title_RU,
@@ -103,22 +108,14 @@ const AdminActivities = () => {
       text_RU: values.text_RU,
       isDeleted: false, // Default to false
     };
-
+  
     try {
-      const token = JSON.parse(localStorage.getItem("token"));
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
-      } else {
-        console.log("Token:", token);
-      }
-
       const response = await axios.post(BASE_URL + endpoints.addactivity, object, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (response.data) {
         if (editMode) {
           setActivities(
@@ -148,6 +145,7 @@ const AdminActivities = () => {
     }
   };
 
+  
   useEffect(() => {
     controller.getAll(endpoints.activity).then((res) => {
       setActivities(res);

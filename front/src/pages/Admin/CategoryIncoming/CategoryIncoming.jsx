@@ -39,7 +39,7 @@ const CategoryIncoming = () => {
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
-      render: (image) => <img src={image} alt="Category" style={{ width: 100, height: 100, objectFit: 'cover' }} />,
+      render: (image) => <img src={BASE_URL+image} alt="Category" style={{ width: 100, height: 100, objectFit: 'cover' }} />,
     },
     {
       title: 'Actions',
@@ -53,17 +53,6 @@ const CategoryIncoming = () => {
     },
   ];
 
-  const beforeUpload = (file) => {
-    const isImage = file.type.startsWith("image/");
-    if (!isImage) {
-      message.error("You can only upload image files!");
-      return Upload.LIST_IGNORE;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => setImage(reader.result);
-    return false;
-  };
 
   const handleDelete = async (id) => {
     try {
@@ -91,18 +80,34 @@ const CategoryIncoming = () => {
     setIsModalVisible(true);
   };
 
+  const beforeUpload = (file) => {
+    const isImage = file.type.startsWith("image/");
+    if (!isImage) {
+      message.error("You can only upload image files!");
+      return Upload.LIST_IGNORE;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      // Store the base64 string (without the header part)
+      setImage(reader.result.split(',')[1]);  // Splitting off the data:image/*;base64, part
+    };
+    return false;
+  };
+  
   const onFinish = async (values) => {
     const categoryData = {
+      id: currentId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: image,
+      image: image,  // This now contains the base64 string without the data:image/*;base64, prefix
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
       isDeleted: false,
     };
-
+  
     try {
       const response = await axios.post(
         BASE_URL + endpoints.addcategoryincoming,
@@ -113,7 +118,7 @@ const CategoryIncoming = () => {
           },
         }
       );
-
+  
       if (response.data) {
         if (editMode) {
           setCategories(categories?.map((item) => (item.id === currentId ? { ...item, ...categoryData } : item)));
@@ -134,6 +139,7 @@ const CategoryIncoming = () => {
       message.error("Error occurred while saving data.");
     }
   };
+  
 
   useEffect(() => {
     const fetchCategories = async () => {

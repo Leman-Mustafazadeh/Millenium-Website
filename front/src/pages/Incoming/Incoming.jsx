@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import controller from "../../API";
-import { endpoints } from "../../API/constant";
+import { BASE_URL, endpoints } from "../../API/constant";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Awards, Awardstitle } from "../../i18n";
@@ -9,11 +9,15 @@ import { Awards, Awardstitle } from "../../i18n";
 const Incoming = () => {
   const [incoming, setIncoming] = useState([]);
   const [incomingbox, setIncomingBox] = useState([]);
-  const [selectedDestination, setSelectedDestination] = useState(6);
+  const [selectedDestination, setSelectedDestination] = useState(incoming[0]);
 
   const handleDestinationClick = (destination) => {
     setSelectedDestination(destination);
   };
+  
+  useEffect(() => {
+   setSelectedDestination(incoming[0]);
+  }, [incoming]);
 
   useEffect(() => {
     controller
@@ -37,7 +41,7 @@ const Incoming = () => {
     (state) => state.languages.currentLanguage
   );
   const selectedDestinationData = incomingbox?.filter(
-    (item) => item.serialNumber === selectedDestination.id
+    (item) => item.serialNumber === selectedDestination?.id
   ); 
   return (
     <section className="incoming_head">
@@ -51,7 +55,7 @@ const Incoming = () => {
                 <button
                   key={index}
                   className={`incoming_tab ${
-                    selectedDestination.id === item.id ? "active" : ""
+                    selectedDestination?.id === item?.id ? "active" : ""
                   }`}
                   onClick={() => handleDestinationClick(item)}
                 >
@@ -64,7 +68,7 @@ const Incoming = () => {
                 <>
                   <div className="col-lg-6 incoming_content">
                     <img
-                      src={selectedDestination.image}
+                      src={BASE_URL + selectedDestination.image}
                       alt={selectedDestination.name}
                       className="img-fluid"
                     />
@@ -83,7 +87,7 @@ const Incoming = () => {
                           <div className="tour-boxs">
                             <div className="tour_img">
                               <img
-                                src={tour.image}
+                                src={BASE_URL+tour.image}
                                 alt="dhdhhd"
                                 className="tour-box-image"
                               />

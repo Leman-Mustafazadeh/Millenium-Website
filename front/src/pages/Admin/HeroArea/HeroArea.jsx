@@ -41,7 +41,7 @@ const HeroArea = () => {
       render: (image) => {
         return (
           <img
-            src={image}
+            src={BASE_URL + image}
             alt="Hero"
             style={{ width: 100, height: 100, objectFit: "cover" }}
           />
@@ -118,9 +118,11 @@ const HeroArea = () => {
   // };
 
   const handleEdit = (record) => {
-    controller.put(endpoints.puthero,record.id).then((res) => {
-      console.log(res);
-    })
+    controller.post(endpoints.puthero,record.id).then((res) => {
+        // setEditMode(res)
+        console.log(res);
+    })  
+
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({
@@ -131,69 +133,64 @@ const HeroArea = () => {
     setIsModalVisible(true);
   };
 
-  const onFinish = async (values) => {
-    const image = await getBase64(values.image.file);
+  console.log(editMode);
+  
+ const onFinish = async (values) => {
+    const base64Image = await getBase64(values.image.file);
+
+    // Prefiksi ("data:image/png;base64,") çıxarırıq
+    const strippedBase64 = base64Image.replace(/^data:image\/[a-z]+;base64,/, "");
+
     const object = {
-      name_EN: values.name_EN,
-      name_AZ: values.name_AZ,
-      name_RU: values.name_RU,
-      image,
+      id: currentId,
+        name_EN: values.name_EN,
+        name_AZ: values.name_AZ,
+        name_RU: values.name_RU,
+        image: strippedBase64, // Yalnız Base64 kodunu göndəririk
     };
 
+    console.log(object);
+
     try {
-      const token = window !== undefined ? Cookies.get("ftoken") : null;
-      console.log(token);
+        // const token = Cookies.get("ftoken");
+        const response = await axios.post(BASE_URL + endpoints.addhero, object, {
+            headers: {
+                "Content-Type": "application/json",
+                // Authorization: `Bearer ${token}`,
+            },
+        });
 
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
-      } else {
-        console.log("Token:", token);
-      }
-      // const token = Cookies.get("ftoken");
-      const response = await axios.post(BASE_URL + endpoints.addhero, object, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: ` Barear ${token}`,
-        },
-      }
-    );
-      console.log(JSON.parse(response.config.data));
-      
+        console.log(response.data);
 
-      // console.log(JSON.stringify(response.data));
-
-      if (response.config.data) {
-        if (editMode) {
-          setHeroItems(
-            heroItems.map((item) => (item.id === currentId ? object : item))
-          );
-          message.success("Hero item updated successfully!");
+        if (response.data) {
+            if (editMode) {
+                setHeroItems(
+                    heroItems.map((item) => (item.id === currentId ? object : item))
+                );
+                message.success("Hero item updated successfully!");
+            } else {
+                message.success("Hero item added successfully!");
+            }
+            setIsModalVisible(false);
+            form.resetFields();
+            setEditMode(false);
+            setCurrentId(null);
         } else {
-          // setHeroItems([...heroItems, { ...object, id: heroItems.length + 1 }]);
-          message.success("Hero item added successfully!");
+            message.error("Failed to add or update hero item.");
         }
-        setIsModalVisible(false);
-        form.resetFields();
-        setEditMode(false);
-        setCurrentId(null);
-      } else {
-        message.error("Failed to add or update hero item.");
-      }
     } catch (error) {
-      if (error.response) {
-        message.error(
-          `Server Error: ${error.response.status} - ${error.response.data}`
-        );
-      } else if (error.request) {
-        message.error(
-          "No response from the server. Please check your network."
-        );
-      } else {
-        message.error(`Error: ${error.message}`);
-      }
-      console.error("Error in Axios request:", error);
+        if (error.response) {
+            message.error(
+                `Server Error: ${error.response.status} - ${error.response.data}`
+            );
+        } else if (error.request) {
+            message.error("No response from the server. Please check your network.");
+        } else {
+            message.error(`Error: ${error.message}`);
+        }
+        console.error("Error in Axios request:", error);
     }
-  };
+};
 
   // useEffect(() => {
   //   controller.getAll(endpoints.hero).then((res) => {

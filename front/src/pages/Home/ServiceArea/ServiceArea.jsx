@@ -11,7 +11,7 @@ import tourImage4 from "../../../assets/img/tour/tour_box_4.jpg";
 import backgroundImg from "../../../assets/img/bg/tour_bg_1.jpg";
 import "../../../assets/css/style.css";
 import controller from "../../../API";
-import { endpoints } from "../../../API/constant";
+import { BASE_URL, endpoints } from "../../../API/constant";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { popularTeam } from "../../../i18n";
@@ -66,14 +66,14 @@ const ServiceArea = () => {
             modules={[Pagination]}
             className="mySwiper"
           >
-            {popular.map((item, index) => (
+            {popular?.map((item, index) => (
               <SwiperSlide key={index}>
                 <Link style={{ width: "100%" }} to={"/outgoing"}>
                   {" "}
                   <div className="tour-box th-ani gsap-cursor">
                     <div className="tour-box_img global-img">
                       <img
-                        src={item.image}
+                        src={BASE_URL+item.image}
                         alt={item[`name_${currentlanguage}`]}
                       />
                     </div>

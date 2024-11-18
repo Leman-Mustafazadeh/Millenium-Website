@@ -3,7 +3,7 @@ import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { Link } from 'react-router-dom';
 import controller from '../../API';
-import { endpoints } from '../../API/constant';
+import { BASE_URL, endpoints } from '../../API/constant';
 import { useSelector } from 'react-redux';
 import { outGoing } from '../../i18n';
 
@@ -32,7 +32,7 @@ const Outgoing = () => {
                <Link to={"/outgoingdetail/" +tour.id}>
                <div className="tour-item text-center">
                   <div className="tour-image">
-                    <img src={tour.image} alt= {tour[`name_${currentlanguage}`]} className="img-fluid" />
+                    <img src={BASE_URL+tour.image} alt= {tour[`name_${currentlanguage}`]} className="img-fluid" />
                   </div>
                   <p> {tour[`name_${currentlanguage}`]}</p>  
                 </div>

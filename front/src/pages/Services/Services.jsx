@@ -22,24 +22,27 @@ const Services = () => {
     controller.getAll(endpoints.servicecategory).then((res) => {
       setServices(res);
     });
-
+    
     controller.getAll(endpoints.service).then((res) => {
       setDescription(res);
     });
   }, []);
+
   const currentlanguage = useSelector((state) => state.languages.currentLanguage);
   const handleCategoryClick = (serviceId) => {
     const selected = description.find(
       (item) => item.serviceCategoryId === serviceId
     );
     setSelectedService(selected);
-    console.log(selected);
 
     if (selected) {
       setServiceImage(selected.image);
     }
   };
 
+
+  
+  
   const translate = (key) => home[key]?.[currentlanguage] || key;
 
   return (

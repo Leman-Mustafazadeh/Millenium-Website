@@ -39,7 +39,7 @@ const AdminLogin = () => {
 
     onSubmit: (values) => {
       axios
-        .post("https://millenniumtour.redmark.az/Account/Login", values)
+        .post("https://hdy.az/Account/Login", values)
         .then((res) => {
           console.log(res.data.token);
           dispatch(login(res.data));

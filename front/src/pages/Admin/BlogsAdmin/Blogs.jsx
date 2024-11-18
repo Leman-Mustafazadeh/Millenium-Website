@@ -45,7 +45,7 @@ const Blogs = () => {
           : `${image}`;
         return (
           <img
-            src={imageSrc}
+            src={BASE_URL + imageSrc}
             alt="Tour"
             style={{ width: 50, height: 50, objectFit: "cover" }}
           />
@@ -102,21 +102,21 @@ const Blogs = () => {
   const onFinish = async (values) => {
     try {
       const imageBase64 = imageFile ? await getBase64(imageFile) : null;
+  
+      // Remove the Base64 prefix if an image is provided
+      const strippedBase64 = imageBase64
+        ? imageBase64.replace(/^data:image\/[a-z]+;base64,/, "")
+        : null;
+  
       const object = {
-        image: imageBase64,  
+        id: currentId,
+        image: strippedBase64, // Use only the stripped Base64 content
       };
   
       console.log(object);
   
-      // const token = window !== undefined ? Cookies.get("ftoken") : null;
-      // if (!token || token === "null") {
-      //   console.log("Token not found or is null");
-      // } else {
-      //   console.log("Token:", token);
-      // }
-
       const token = typeof window !== "undefined" ? Cookies.get("ftoken") : null;
-
+  
       // Check if the token exists and is not empty or null
       if (!token) {
         console.log("Token not found or is null/empty");
@@ -125,7 +125,16 @@ const Blogs = () => {
         console.log("Token:", token);
       }
   
-      const response = await axios.post(BASE_URL + endpoints.addGallery, object, {
+      const url = editMode
+        ? `${BASE_URL}${endpoints.updateGallery}/${currentId}`
+        : BASE_URL + endpoints.addGallery;
+  
+      const method = editMode ? "put" : "post";
+  
+      const response = await axios({
+        method,
+        url,
+        data: object,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -138,7 +147,7 @@ const Blogs = () => {
         if (editMode) {
           setTourImages(
             tourImages.map((img) =>
-              img.id === currentId ? { ...img, image: imageBase64 } : img
+              img.id === currentId ? { ...img, image: object.image } : img
             )
           );
           message.success("Tour image updated successfully!");
@@ -166,7 +175,7 @@ const Blogs = () => {
       console.error("Error in Axios request:", error);
     }
   };
-
+  
   useEffect(() => {
     const fetchTourImages = async () => {
       try {

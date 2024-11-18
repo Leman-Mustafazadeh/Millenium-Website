@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Upload, message, Modal, Table, Space } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Upload,
+  message,
+  Modal,
+  Table,
+  Space,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
@@ -24,7 +33,7 @@ const AdminTeam = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [teamMembers, setTeamMembers] = useState([]);
   const [currentMemberId, setCurrentMemberId] = useState(null);
-  const [imageFile, setImageFile] = useState(null); 
+  const [imageFile, setImageFile] = useState(null);
 
   const columns = [
     {
@@ -71,14 +80,25 @@ const AdminTeam = () => {
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (image) => (
-        <img
-          src={`data:image/jpeg;base64,${image}`} // Ensure the correct MIME type
-          alt="Profile"
-          style={{ width: 50, height: 50, objectFit: "cover" }}
-        />
-      ),
-    },
+      render: (image) => {
+        // Check if the image starts with 'data:image/' (base64 string)
+        const isBase64 = image && !image.startsWith("/uploads");
+
+        // If it's a base64 string, use it directly; if it's a URL, concatenate with BASE_URL
+        const imageUrl = isBase64
+          ? `data:image/jpeg;base64,${image}` + image
+          : `${BASE_URL}${image}`;
+
+        return (
+          <img
+            src={imageUrl}
+            alt="Profile"
+            style={{ width: 50, height: 50, objectFit: "cover" }}
+          />
+        );
+      },
+},
+
     {
       title: "Edit",
       key: "edit",
@@ -110,7 +130,10 @@ const AdminTeam = () => {
   };
 
   const handleEdit = (record) => {
+    // Set current member ID
     setCurrentMemberId(record.id);
+
+    // Pre-fill the form with selected record values
     form.setFieldsValue({
       fullName_AZ: record.fullName_AZ,
       fullName_EN: record.fullName_EN,
@@ -120,12 +143,25 @@ const AdminTeam = () => {
       position_RU: record.position_RU,
       eMail: record.eMail,
     });
+
+    // Handle any additional logic for fetching/updating data as needed
+    // controller
+    //   .post(endpoints.putgallery, record.id)
+    //   .then((response) => {
+    //     console.log("Successfully fetched data for edit:", response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data for edit:", error);
+    //     message.error("Failed to load data for editing.");
+    //   });
+
+    // Open the modal for editing
     setIsModalVisible(true);
   };
 
-  const handleDelete =  (id) => {
+  const handleDelete = (id) => {
     try {
-      controller.getOne(endpoints.delteam,id);
+      controller.getOne(endpoints.delteam, id);
       setTeamMembers(teamMembers.filter((member) => member.id !== id));
       message.success("Team member deleted successfully!");
     } catch (error) {
@@ -133,13 +169,16 @@ const AdminTeam = () => {
     }
   };
 
-
   const onFinish = async (values) => {
     try {
-      // Convert image to base64 if there's an uploaded file
+      // Convert image to base64 if an image file exists
       const imageBase64 = imageFile ? await getBase64(imageFile) : null;
+      const strippedBase64 = imageBase64
+        ? imageBase64.replace(/^data:image\/[a-z]+;base64,/, "")
+        : "";
 
       const object = {
+        id: currentMemberId,
         fullName_AZ: values.fullName_AZ,
         fullName_EN: values.fullName_EN,
         fullName_RU: values.fullName_RU,
@@ -147,22 +186,21 @@ const AdminTeam = () => {
         position_EN: values.position_EN,
         position_RU: values.position_RU,
         eMail: values.eMail,
-        image: imageBase64 || "", 
-        isDeleted:false
+        image: strippedBase64, // Sending only the base64 part
+        isDeleted: false,
       };
-
       if (currentMemberId) {
         // Update existing team member
-        await axios.post(BASE_URL + endpoints.addGallery, object, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        await axios.post(
+          `${BASE_URL}${endpoints.putteam}/${currentMemberId}`,
+          object
+        );
         setTeamMembers((prevMembers) =>
           prevMembers.map((member) =>
             member.id === currentMemberId ? { ...member, ...object } : member
           )
         );
+        setTeamMembers([...teamMembers, { ...object, id: currentMemberId }]);
         message.success("Team member updated successfully!");
       } else {
         // Add new team member
@@ -174,7 +212,7 @@ const AdminTeam = () => {
       setIsModalVisible(false);
       form.resetFields();
       setCurrentMemberId(null);
-      setImageFile(null); // Reset image file after submission
+      setImageFile(null);
     } catch (error) {
       message.error(`Error: ${error.message}`);
     }
@@ -192,7 +230,6 @@ const AdminTeam = () => {
     fetchTeamMembers();
   }, []);
   console.log(teamMembers);
-  
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -226,49 +263,67 @@ const AdminTeam = () => {
           <Form.Item
             name="fullName_AZ"
             label="Full Name (AZ)"
-            rules={[{ required: true, message: "Please enter your full name (AZ)" }]}
+            rules={[
+              { required: true, message: "Please enter your full name (AZ)" },
+            ]}
           >
             <Input placeholder="Enter full name (AZ)" />
           </Form.Item>
           <Form.Item
             name="fullName_EN"
             label="Full Name (EN)"
-            rules={[{ required: true, message: "Please enter your full name (EN)" }]}
+            rules={[
+              { required: true, message: "Please enter your full name (EN)" },
+            ]}
           >
             <Input placeholder="Enter full name (EN)" />
           </Form.Item>
           <Form.Item
             name="fullName_RU"
             label="Full Name (RU)"
-            rules={[{ required: true, message: "Please enter your full name (RU)" }]}
+            rules={[
+              { required: true, message: "Please enter your full name (RU)" },
+            ]}
           >
             <Input placeholder="Enter full name (RU)" />
           </Form.Item>
           <Form.Item
             name="position_AZ"
             label="Position (AZ)"
-            rules={[{ required: true, message: "Please enter your position (AZ)" }]}
+            rules={[
+              { required: true, message: "Please enter your position (AZ)" },
+            ]}
           >
             <Input placeholder="Enter position (AZ)" />
           </Form.Item>
           <Form.Item
             name="position_EN"
             label="Position (EN)"
-            rules={[{ required: true, message: "Please enter your position (EN)" }]}
+            rules={[
+              { required: true, message: "Please enter your position (EN)" },
+            ]}
           >
             <Input placeholder="Enter position (EN)" />
           </Form.Item>
           <Form.Item
             name="position_RU"
             label="Position (RU)"
-            rules={[{ required: true, message: "Please enter your position (RU)" }]}
+            rules={[
+              { required: true, message: "Please enter your position (RU)" },
+            ]}
           >
             <Input placeholder="Enter position (RU)" />
           </Form.Item>
           <Form.Item
             name="eMail"
             label="Email"
-            rules={[{ required: true, type: "email", message: "Please enter a valid email" }]}
+            rules={[
+              {
+                required: true,
+                type: "email",
+                message: "Please enter a valid email",
+              },
+            ]}
           >
             <Input placeholder="Enter email" />
           </Form.Item>

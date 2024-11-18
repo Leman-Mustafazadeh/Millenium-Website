@@ -18704,8 +18704,16 @@ span.select2-selection.select2-selection--single:focus {
   border-radius: 24px;
   margin-bottom: 22px;
 }
-
+.category-card .box-img:hover{
+  border-radius: 24px;
+  margin-bottom: 22px;
+}
 .category-card .box-img img {
+  border-radius: 24px;
+  -webkit-transition: 1.3s all ease;
+  transition: 1.3s all ease;
+}
+.category-card .box-img img:hover{
   border-radius: 24px;
   -webkit-transition: 1.3s all ease;
   transition: 1.3s all ease;

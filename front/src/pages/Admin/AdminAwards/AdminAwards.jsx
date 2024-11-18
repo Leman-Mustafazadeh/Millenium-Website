@@ -39,7 +39,7 @@ const AdminAwards = () => {
       dataIndex: "image",
       key: "image",
       render: (image) => (
-        <img src={image} alt="Award" style={{ width: 50, height: 50, objectFit: "cover" }} />
+        <img src={BASE_URL+image} alt="Award" style={{ width: 50, height: 50, objectFit: "cover" }} />
       ),
     },
     {
@@ -95,35 +95,39 @@ const AdminAwards = () => {
 
   const onFinish = async (values) => {
     let image;
-
+  
     if (values.image && values.image.file) {
       image = await getBase64(values.image.file);
+      image = image.split(",")[1];  // Strip off the base64 prefix (i.e., everything before the comma)
     } else if (currentAwardId) {
-      image = imageBase64;
+      image = imageBase64.split(",")[1];  // If editing, use the previously stored base64 image data
     }
-
+  
     const object = {
-      ...values,
-      image,
+      ...values, 
+      id: currentAwardId,
+      image: image,  // Send only the base64-encoded image (without the prefix)
       isDeleted: false,
     };
-
+  
+    console.log(object);
+    
     try {
-      const token = window !== undefined ? Cookies.get("ftoken") : null;
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
-      } else {
-        console.log("Token:", token);
-      }
-
+      // const token = window !== undefined ? Cookies.get("ftoken") : null;
+      // if (!token || token === "null") {
+      //   console.log("Token not found or is null");
+      // } else {
+      //   console.log("Token:", token);
+      // }
+  
       const response = await axios.post(BASE_URL + endpoints.addaward, object, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       });
-
-      if (response.data) {
+  
+      if (response) {
         if (editMode) {
           setAwards(
             awards.map((item) => (item.id === currentAwardId ? object : item))
@@ -151,6 +155,7 @@ const AdminAwards = () => {
       console.error("Error in Axios request:", error);
     }
   };
+  
 
   useEffect(() => {
     controller.getAll(endpoints.award).then((res) => {

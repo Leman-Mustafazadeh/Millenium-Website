@@ -25,7 +25,7 @@ const AdminOutgoing = () => {
       dataIndex: 'image',
       key: 'image',
       render: (image) => (
-        <img src={image} alt="Outgoing" style={{ width: 100, height: 100, objectFit: 'cover' }} />
+        <img src={BASE_URL+image} alt="Outgoing" style={{ width: 100, height: 100, objectFit: 'cover' }} />
       ),
     },
     {
@@ -45,26 +45,7 @@ const AdminOutgoing = () => {
     },
   ];
 
-  const beforeUpload = (file, index) => {
-    const isImage = file.type.startsWith("image/");
-    if (!isImage) {
-      message.error("You can only upload image files!");
-      return Upload.LIST_IGNORE;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      if (index === "main") {
-        setImage(reader.result);
-      } else {
-        const newImages = [...outGoingImages];
-        newImages[index] = reader.result;
-        setOutGoingImages(newImages);
-      }
-    };
-    return false;
-  };
-
+  
   const handleDelete = async (id) => {
     try {
       await controller.getOne(endpoints.deloutgoing, id); // API call for deletion
@@ -90,38 +71,57 @@ const AdminOutgoing = () => {
     setOutGoingImages(record.outGoingImages?.map(imgObj => imgObj.base64) || [null, null, null, null]);
     setIsModalVisible(true);
   };
-
+  const beforeUpload = (file, index) => {
+    const isImage = file.type.startsWith("image/");
+    if (!isImage) {
+      message.error("You can only upload image files!");
+      return Upload.LIST_IGNORE;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      // Stripping off the "data:image/*;base64," part and storing only the base64 image data
+      const base64Image = reader.result.split(',')[1];  // The part after the comma is the actual base64 string
+      if (index === "main") {
+        setImage(base64Image);
+      } else {
+        const newImages = [...outGoingImages];
+        newImages[index] = base64Image;
+        setOutGoingImages(newImages);
+      }
+    };
+    return false;  // Prevent auto-upload of the image to the server
+  };
+  
   const onFinish = async (values) => {
-    const outgoingImageObjects = outGoingImages.map((img, index) => ({
-      image: `Image ${index + 1}`,
-      base64: img || '',
-    })).filter(img => img.base64);
-
+    const outgoingImageObjects = outGoingImages
+      .map((img, index) => ({
+        image: `Image ${index + 1}`,
+        base64: img || '',  // Only include the base64 string if it exists
+      }))
+      .filter(img => img.base64);  // Filter out empty base64 values (i.e., images that weren't uploaded)
+  
     const object = {
+      id: currentId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: image,
+      image: image,  // This now contains the base64 image data for the primary image
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
-      outGoingImages: outgoingImageObjects,
+      outGoingImages: outgoingImageObjects,  // List of additional images with base64 data
     };
-
+  
     try {
-      // const token = JSON.parse(localStorage.getItem("token"));
-      // if (!token || token === "null") {
-      //   console.log("Token not found or is null");
-      //   return;
-      // }
-
       const response = await axios.post(BASE_URL + endpoints.addoutgoing, object, {
         headers: {
           "Content-Type": "application/json",
+          // Uncomment and use authorization header if needed
           // Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (response.data) {
         if (editMode) {
           setOutgoingItems(
@@ -145,6 +145,7 @@ const AdminOutgoing = () => {
       message.error("Error occurred while saving data.");
     }
   };
+  
 
   useEffect(() => {
     const fetchOutgoingItems = async () => {

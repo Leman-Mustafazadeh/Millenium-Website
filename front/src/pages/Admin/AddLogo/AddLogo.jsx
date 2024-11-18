@@ -20,13 +20,19 @@ const getBase64 = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const base64 = reader.result; 
-      resolve(base64); 
-      console.error("Error reading file: ", error);
+      let base64 = reader.result;
+      // Extract only the part after the comma
+      if (base64) {
+        base64 = base64.split(',')[1];  // Split and return only the base64 data part
+      }
+      resolve(base64);
+    };
+    reader.onerror = (error) => {
       reject(error);
     };
   });
 };
+
 
 const AddLogo = () => {
   const [form] = Form.useForm();
@@ -62,7 +68,7 @@ const AddLogo = () => {
       key: "image",
       render: (image) => (
         <img
-          src={image}
+          src={BASE_URL+image}
           alt="Blog"
           style={{ width: 50, height: 50, objectFit: "cover" }}
         />
@@ -124,17 +130,20 @@ const AddLogo = () => {
       message.error("Please upload an image.");
       return;
     }
-
+  
+    // Get the base64 image data (after the comma)
     const image = await getBase64(imageFile);
+  
     const object = {
+      id: currentBlogId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
       link: values.link,
       isDeleted: false, // Set isDeleted to false by default
-      image,
+      image, // This is the base64 data without the metadata part
     };
-
+  
     try {
       const token = window !== undefined ? Cookies.get("ftoken") : null;
       if (!token || token === "null") {
@@ -142,14 +151,14 @@ const AddLogo = () => {
       } else {
         console.log("Token:", token);
       }
-
+  
       const response = await axios.post(BASE_URL + endpoints.addlogo, object, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (response.status === 200 || response.status === 201) {
         if (currentBlogId) {
           setBlogs((prevBlogs) =>
@@ -182,6 +191,8 @@ const AddLogo = () => {
       console.error("Error in Axios request:", error);
     }
   };
+  
+  
 
   useEffect(() => {
     controller.getAll(endpoints.logo).then((res) => {
@@ -193,7 +204,7 @@ const AddLogo = () => {
           ...blog,
           image: blog.image.startsWith("data:")
             ? blog.image
-            : `data:image/png;base64,${blog.image}`,
+            : `${blog.image}`,
         }));
       setBlogs(formattedBlogs);
     });

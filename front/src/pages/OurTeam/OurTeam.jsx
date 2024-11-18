@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import img1 from "../../assets/img/bg/breadcumb-bg.jpg";
 import controller from "../../API";
-import { endpoints } from "../../API/constant";
+import { BASE_URL, endpoints } from "../../API/constant";
 import "./style.css";
 import { useSelector } from "react-redux";
 import { ourCompanyteam } from "../../i18n";
@@ -11,7 +11,7 @@ const TeamMember = ({ name, position, eMail, imageUrl }) => {
     <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-4">
       <div className="team-member-box">
         <div className="team-member-image">
-          <img src={`data:image/jpeg;base64,${imageUrl}`} alt={name} />
+          <img src={BASE_URL+imageUrl} alt={name} />
         </div>
         <div className="team-member-content">
           <h4>{name}</h4>
@@ -68,13 +68,13 @@ const OurTeam = () => {
                 <div className="loader"></div>
               </div>
             ) : (
-              data.map((member, index) => (
+              data?.map((member, index) => (
                 <TeamMember
                   key={index}
                   name={member[`fullName_${currentlanguage}`]} 
                   position={member[`position_${currentlanguage}`]} 
                   eMail={member.eMail} 
-                  imageUrl={member.image}
+                  imageUrl={ member.image}
                 />
               ))
             )}

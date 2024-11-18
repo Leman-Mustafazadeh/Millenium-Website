@@ -15,23 +15,21 @@ import './style.css';
 
 import { Pagination, Autoplay } from 'swiper/modules'; 
 import controller from '../../../API';
-import { endpoints } from '../../../API/constant';
+import { BASE_URL, endpoints } from '../../../API/constant';
 import {useSelector} from "react-redux"
 const Hero = () => {
   const [data, setData] = useState([]);
-
   useEffect(() => {
     controller.getAll(endpoints.hero).then((res) => {
       setData(res);
     });
   }, []);
   const currentlanguage = useSelector((state) => state.languages.currentLanguage);
-  
   return (
     <div className="th-hero-wrapper hero-1" id="hero">
       <Swiper
         pagination={{
-          dynamicBullets: true,
+          dynamicBullets: true
         }}
         autoplay={{
           delay: 2000, 
@@ -40,12 +38,16 @@ const Hero = () => {
         modules={[Pagination, Autoplay]} 
         className="mySwiper">
           
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="hero-inner">
               <div
                 className="th-hero-bg"
-                style={{ backgroundImage: `url(${item.image})`, backgroundPosition: "center", backgroundSize: "cover" }}
+                style={{
+                  backgroundImage: `url(${BASE_URL + item.image})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                }}
               ></div>
               <div className="container">
                 <div className="hero-style1">
@@ -62,6 +64,8 @@ const Hero = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+
     </div>
   );
 };
