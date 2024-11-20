@@ -30,9 +30,9 @@ const Navbar = () => {
   const translate = (key) => home[key]?.[selectedLanguage] || key;
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prevState) => !prevState);
   };
-
+  
   const handleLanguageChange = (language) => {
     dispatch(changeLanguage(language)); // Update language in Redux state
   };

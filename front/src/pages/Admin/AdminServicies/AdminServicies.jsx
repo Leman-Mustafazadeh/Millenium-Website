@@ -31,7 +31,7 @@ const AdminServices = () => {
       key: "image",
       render: (image) => (
         <img
-          src={image}
+          src={BASE_URL+image}
           alt="Service"
           style={{ width: 100, height: 100, objectFit: "cover" }}
         />
@@ -98,61 +98,109 @@ const AdminServices = () => {
   };
 
   const onFinish = async (values) => {
-    const object = {
+    // Remove the "data:image/*;base64," prefix from the base64 string, if it exists
+    let cleanImageBase64 = imageBase64;
+    if (cleanImageBase64 && cleanImageBase64.startsWith("data:image")) {
+      cleanImageBase64 = cleanImageBase64.split(',')[1];
+    }
+  
+    const serviceData = {
+      id: currentId, // Include ID for updating service
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: imageBase64,
+      image: cleanImageBase64, // Use the cleaned base64 string
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
-      servicesCategoryId: values.servicesCategoryId || 0,
-     
+      servicesCategoryId: values.servicesCategoryId || 0, // Default to 0 if not selected
     };
-
-    try {
-      // const token = JSON.parse(localStorage.getItem("token"));
-      // if (!token || token === "null") {
-      //   console.log("Token not found or is null");
-      //   return;
-      // }
-
-      const response = await axios.post(
-        BASE_URL + endpoints.addservice,
-        object,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            // Authorization: `Bearer ${token}`,
-          },
+  
+    // Function to add a new service
+    const addService = async () => {
+      try {
+        const response = await axios.post(
+          BASE_URL + endpoints.addservice,
+          serviceData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        
+        if (response.data) {
+          setServices([...services, { ...serviceData, id: services.length + 1 }]);
+          message.success("Service added successfully!");
+          closeModal();
+        } else {
+          message.error("Failed to add service.");
         }
-      );
-
-      if (response.data) {
-        if (editMode) {
+      } catch (error) {
+        handleError(error);
+      }
+    };
+  
+    // Function to edit an existing service
+    const editService = async () => {
+      try {
+        const response = await axios.post(
+          BASE_URL + endpoints.putservice+"/"+currentId,
+          serviceData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+  
+        if (response.data) {
           setServices(
             services.map((service) =>
-              service.id === currentId ? object : service
+              service.id === currentId ? { ...serviceData, id: currentId } : service
             )
           );
           message.success("Service updated successfully!");
+          closeModal();
         } else {
-          setServices([...services, { ...object, id: services.length + 1 }]);
-          message.success("Service added successfully!");
+          message.error("Failed to update service.");
         }
-        setIsModalVisible(false);
-        form.resetFields();
-        setEditMode(false);
-        setCurrentId(null);
-        setImageBase64(null);
-      } else {
-        message.error("Failed to add or update service.");
+      } catch (error) {
+        handleError(error);
       }
-    } catch (error) {
-      message.error("Error occurred while saving data.");
-      console.error("Error in Axios request:", error);
+    };
+  
+    // Handle the add or edit action based on `editMode`
+    if (editMode) {
+      editService(); // Edit an existing service
+    } else {
+      addService(); // Add a new service
     }
   };
+  
+  // Close modal and reset form
+  const closeModal = () => {
+    setIsModalVisible(false);
+    form.resetFields();
+    setEditMode(false);
+    setCurrentId(null);
+    setImageBase64(null);
+  };
+  
+  // Error handler to display appropriate error message
+  const handleError = (error) => {
+    if (error.response) {
+      message.error(`Server error: ${error.response.status} - ${error.response.data}`);
+    } else if (error.request) {
+      message.error("No response from the server. Please check your network.");
+    } else {
+      message.error(`Error: ${error.message}`);
+    }
+    console.error("Error in Axios request:", error);
+  };
+  
+  
+  
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -162,7 +210,6 @@ const AdminServices = () => {
 
     fetchServices();
   }, []);
-  console.log();
 
   const showModal = () => {
     setEditMode(false);
@@ -186,7 +233,6 @@ const AdminServices = () => {
 
     fetchCategories();
   }, []);
-  console.log(serviceCategory);
 
   return (
     <section>

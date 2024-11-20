@@ -24,7 +24,7 @@ const AdminActivities = () => {
       dataIndex: 'image',
       key: 'image',
       render: (image) => (
-        <img src={image} alt="Activity" style={{ width: 100, height: 100, objectFit: 'cover' }} />
+        <img src={BASE_URL+image} alt="Activity" style={{ width: 100, height: 100, objectFit: 'cover' }} />
       ),
     },
     {
@@ -60,14 +60,14 @@ const AdminActivities = () => {
     reader.onload = () => {
       // Get the base64 image data without the "data:image/xxx;base64," prefix
       const base64Data = reader.result.split(',')[1];
+      console.log("Base64 image data:", base64Data); // Log to confirm extraction
       setImageBase64(base64Data);
     };
     return false;
   };
-  
 
   const handleDelete = (id) => {
-    controller.getOne(endpoints.delactivity,id).then((res) => {
+    controller.getOne(endpoints.delactivity, id).then((res) => {
       console.log("Deleted activity:", res);
       setActivities(activities.filter(activity => activity.id !== id));
       message.success("Activity deleted successfully!");
@@ -75,13 +75,13 @@ const AdminActivities = () => {
   };
 
   const handleEdit = (record) => {
-    controller.put(endpoints.putactivity,record.id).then((res) => {
-      console.log(res);
-    })
     setEditMode(true);
     setCurrentId(record.id);
     form.setFieldsValue({
-      image: record.image,
+      id: record.id,
+      name_AZ: record.name_AZ,
+      name_EN: record.name_EN,
+      name_RU: record.name_RU,
       title_AZ: record.title_AZ,
       title_EN: record.title_EN,
       title_RU: record.title_RU,
@@ -95,44 +95,61 @@ const AdminActivities = () => {
 
   const onFinish = async (values) => {
     const object = {
-      id: currentId,
+      id: currentId, // Include the id if it's edit mode
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: imageBase64, // Now this will be the clean base64 string
+      image: imageBase64, // Only send the base64 data
       title_AZ: values.title_AZ,
       title_EN: values.title_EN,
       title_RU: values.title_RU,
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
-      isDeleted: false, // Default to false
+      isDeleted: false, // Ensure you handle the deletion flag correctly
     };
   
     try {
-      const response = await axios.post(BASE_URL + endpoints.addactivity, object, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let response;
+      if (editMode) {
+        // If editing, send a PUT request to update the activity
+        response = await axios.post(
+          `${BASE_URL}${endpoints.putactivity}/${currentId}`, // Updated API endpoint
+          object,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
   
-      if (response.data) {
-        if (editMode) {
+        if (response.data) {
+          // Update activities locally after a successful edit
           setActivities(
             activities.map((item) => (item.id === currentId ? object : item))
           );
           message.success("Activity updated successfully!");
-        } else {
+        }
+      } else {
+        // If not editing, send a POST request to create a new activity
+        response = await axios.post(BASE_URL + endpoints.addactivity, object, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (response.data) {
+          // Add the new activity to the list
           setActivities([...activities, { ...object, id: activities.length + 1 }]);
           message.success("Activity added successfully!");
         }
-        setIsModalVisible(false);
-        form.resetFields();
-        setEditMode(false);
-        setCurrentId(null);
-      } else {
-        message.error("Failed to add or update activity.");
       }
+  
+      // Close modal and reset form
+      setIsModalVisible(false);
+      form.resetFields();
+      setEditMode(false);
+      setCurrentId(null);
     } catch (error) {
       if (error.response) {
         message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
@@ -144,15 +161,13 @@ const AdminActivities = () => {
       console.error("Error in Axios request:", error);
     }
   };
-
   
+
   useEffect(() => {
     controller.getAll(endpoints.activity).then((res) => {
       setActivities(res);
     });
   }, []);
-  console.log(activities);
-  
 
   const showModal = () => {
     setEditMode(false);

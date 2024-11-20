@@ -72,8 +72,13 @@
 .incoming_slider{
   margin-top: 50px !important;
 }
+.incoming_content{
+  height: 430px;
+  width: 50%;
+}
 .incoming_content img{
   height: 100%;
+  width: 100%;
 }
 .tour-boxs-image {
   width: 100%;

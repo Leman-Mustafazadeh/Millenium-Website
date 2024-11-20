@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import img1 from "../../assets/img/bg/breadcumb-bg.jpg";
 import controller from "../../API";
-import { endpoints } from "../../API/constant";
+import { BASE_URL, endpoints } from "../../API/constant";
 import "./style.css";
 import { home } from "../../i18n";
 import { useSelector } from "react-redux";
@@ -38,7 +38,7 @@ const AwarLicenses = () => {
               >
                 <div className="awards-img">
                   <img
-                    src={imageUrl.image}
+                    src={BASE_URL+imageUrl.image}
                     alt={`Award ${index + 1}`}
                     className="img-fluid"
                   />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import controller, { getOne } from '../../API'
-import { endpoints } from '../../API/constant'
+import { BASE_URL, endpoints } from '../../API/constant'
 import "./style.css"
 import { useSelector } from 'react-redux'
 const ActivitiesDetail = () => {
@@ -27,7 +27,7 @@ const currentlanguage = useSelector(
         
      <div className='activities_title'>
       <div className='activities_img'>
-        <img src={getData.image} alt="" />
+        <img src={BASE_URL+getData.image} alt="" />
       </div>
       <div className='activities_right'>
       <h1> {getData[`name_${currentlanguage}`]}</h1>

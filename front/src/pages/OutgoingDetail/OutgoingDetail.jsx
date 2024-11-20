@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import controller from '../../API';
-import { endpoints } from '../../API/constant';
+import { BASE_URL, endpoints } from '../../API/constant';
 import { Carousel } from 'antd';
 import { useSelector } from 'react-redux';
 import "./style.css"
@@ -20,6 +20,8 @@ const OutgoingDetail = () => {
             .catch((err) => console.error("Error fetching outgoing details:", err));
     }, [id]);
 
+    console.log(getData);
+    
     const currentlanguage = useSelector(
         (state) => state.languages.currentLanguage
       );
@@ -43,7 +45,7 @@ const OutgoingDetail = () => {
                     {getData.outGoingImages.map((image, index) => (
                         <div key={index} style={{ height: '500px !important', position: 'relative' }}>
                             <img
-                                src={image.base64}
+                                src={BASE_URL+image.image}
                                 alt={`${getData.name_EN} image ${index + 1}`}
                                 style={{ width: '100%', height: '600px !important', objectFit: 'cover' }}
                             />

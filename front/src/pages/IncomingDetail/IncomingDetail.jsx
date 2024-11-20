@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useParams } from 'react-router-dom';
-import { endpoints } from '../../API/constant';
+import { BASE_URL, endpoints } from '../../API/constant';
 import controller from '../../API';
 import { useSelector } from 'react-redux';
 
@@ -43,7 +43,7 @@ const IncomingDetail = () => {
           <div className="slider_image">
             {getData.inComingImages.length > 0 && (
               <img
-                src={getData.inComingImages[currentImageIndex]?.base64}
+                src={BASE_URL+getData.inComingImages[currentImageIndex]?.base64}
                 alt={`Slide ${currentImageIndex + 1}`}
                 className="slider_images"
               />

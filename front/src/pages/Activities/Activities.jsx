@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import bgImage from '../../assets/img/bg/serviceheadd.jpg';
 import controller from '../../API';
-import { endpoints } from '../../API/constant';
+import { BASE_URL, endpoints } from '../../API/constant';
 import "./style.css";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -35,7 +35,7 @@ const Activities = () => {
               <div className="col-lg-4 col-md-6" key={index}>
                 <Link to={`/activities-details/${item.id}`}>
                   <ActivityBox
-                    image={item.image}
+                    image={BASE_URL+item.image}
                     name_EN= {item[`name_${currentlanguage}`]} 
             
                     title_EN= {item[`title_${currentlanguage}`]} 

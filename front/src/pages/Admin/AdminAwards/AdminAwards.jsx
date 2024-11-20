@@ -95,54 +95,54 @@ const AdminAwards = () => {
 
   const onFinish = async (values) => {
     let image;
-  
     if (values.image && values.image.file) {
       image = await getBase64(values.image.file);
-      image = image.split(",")[1];  // Strip off the base64 prefix (i.e., everything before the comma)
-    } else if (currentAwardId) {
-      image = imageBase64.split(",")[1];  // If editing, use the previously stored base64 image data
+      image = image.split(",")[1]; // Remove the base64 prefix
+    } else if (currentAwardId && imageBase64) {
+      image = imageBase64.split(",")[1]; // Use existing Base64 data for edits
     }
   
     const object = {
       ...values, 
       id: currentAwardId,
-      image: image,  // Send only the base64-encoded image (without the prefix)
+      image, // Base64-encoded image without the prefix
       isDeleted: false,
     };
   
-    console.log(object);
-    
     try {
-      // const token = window !== undefined ? Cookies.get("ftoken") : null;
-      // if (!token || token === "null") {
-      //   console.log("Token not found or is null");
-      // } else {
-      //   console.log("Token:", token);
-      // }
+      // Determine the appropriate endpoint based on edit mode
+      const url = editMode
+        ? `${BASE_URL + endpoints.putaward}/${currentAwardId}` // Update endpoint
+        : BASE_URL + endpoints.addaward; // Add endpoint
   
-      const response = await axios.post(BASE_URL + endpoints.addaward, object, {
+      // Send the POST request
+      const response = await axios.post(url, object, {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
         },
       });
   
       if (response) {
         if (editMode) {
+          // Update the awards list with the edited item
           setAwards(
-            awards.map((item) => (item.id === currentAwardId ? object : item))
+            awards.map((item) => (item.id === currentAwardId ? { ...item, ...object } : item))
           );
           message.success("Award updated successfully!");
         } else {
+          // Add the new award to the awards list
           setAwards([...awards, { ...object, id: awards.length + 1 }]);
           message.success("Award added successfully!");
         }
+  
+        // Reset the modal and form states
         setIsModalVisible(false);
         form.resetFields();
         setEditMode(false);
         setCurrentAwardId(null);
+        setImageBase64(null);
       } else {
-        message.error("Failed to add or update award.");
+        message.error("Failed to add or update the award.");
       }
     } catch (error) {
       if (error.response) {
@@ -155,7 +155,7 @@ const AdminAwards = () => {
       console.error("Error in Axios request:", error);
     }
   };
-  
+    
 
   useEffect(() => {
     controller.getAll(endpoints.award).then((res) => {

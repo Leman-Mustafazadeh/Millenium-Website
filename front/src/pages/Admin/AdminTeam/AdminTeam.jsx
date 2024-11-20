@@ -176,7 +176,6 @@ const AdminTeam = () => {
       const strippedBase64 = imageBase64
         ? imageBase64.replace(/^data:image\/[a-z]+;base64,/, "")
         : "";
-
       const object = {
         id: currentMemberId,
         fullName_AZ: values.fullName_AZ,

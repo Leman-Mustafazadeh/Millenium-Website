@@ -122,6 +122,19 @@ const Footer = () => {
                           +994 12 497 54 00
                         </a>
                       </p>
+                      <p>
+                        <a
+                          href="tel:++994122219119"
+                          className="info-box_link"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          +994 12 221 91 19
+                        </a>
+                      </p>
                     </div>
                   </div>
                   <div className="info-box_text">

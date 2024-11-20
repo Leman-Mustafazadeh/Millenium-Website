@@ -59,36 +59,12 @@ const AdminIncoming = () => {
     },
   ];
 
-  // Fetch data on component mount
-  useEffect(() => {
-    const fetchIncomingItems = async () => {
-      try {
-        const res = await controller.getAll(endpoints.incoming);
-        setIncomingItems(res);
-      } catch {
-        message.error("Failed to fetch incoming items.");
-      }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const res = await controller.getAll(endpoints.categoryincoming);
-        setIncomingCategories(res);
-      } catch {
-        message.error("Failed to fetch categories.");
-      }
-    };
-
-    fetchCategories();
-    fetchIncomingItems();
-  }, []);
-
   const handleDelete = async (id) => {
     try {
       await controller.getOne(endpoints.delincoming, id);
       setIncomingItems(incomingItems.filter((item) => item.id !== id));
       message.success("Item deleted successfully!");
-    } catch {
+    } catch (error) {
       message.error("Error deleting item.");
     }
   };
@@ -120,24 +96,31 @@ const AdminIncoming = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file); // Convert the image to Base64
     reader.onload = () => {
-      const base64String = reader.result.split(",")[1];
+      let base64String = reader.result;
+      base64String = base64String.split(",")[1]; // Remove 'data:image/jpeg;base64,' part
+  
       if (index === "main") {
-        setImage(base64String);
+        setImage(base64String); // Store the cleaned Base64 string for the main image
       } else {
         const newImages = [...images];
-        newImages[index] = base64String;
+        newImages[index] = base64String; // Store the cleaned Base64 string for other images
         setImages(newImages);
       }
     };
+  
     return false;
   };
 
   const onFinish = async (values) => {
+    // Prepare the images with their full Base64 data
     const inComingImages = images
-      .map((img, index) => ({ image: img ? `Image ${index + 1}` : "", base64: img }))
-      .filter((img) => img.base64);
-
-    const payload = {
+      .map((img, index) => ({
+        image: img ? `image${index + 1}` : "",
+        base64: img || "", // Only include non-empty base64 images
+      }))
+      .filter((img) => img.base64); // Only include non-empty images
+  
+    const object = {
       id: currentId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
@@ -146,33 +129,62 @@ const AdminIncoming = () => {
       text_EN: textEN,
       text_RU: textRU,
       serialNumber: values.serialNumber,
-      categoryId: values.category,
-      image,
-      inComingImages,
+      image, // Main image in Base64 (after removing the header part)
+      inComingImages, // Additional images in Base64 (after removing the header part)
     };
-
-    console.log("Payload:", payload); // Debugging the payload
-
+  
     try {
-      const endpoint = editMode ? endpoints.putincoming : endpoints.addincoming;
-      await axios.post(`${BASE_URL}${endpoint}`, payload, {
-        headers: { "Content-Type": "application/json" },
+      // If we are in edit mode, the request should be sent to the edit endpoint
+      const url = editMode 
+        ? `${BASE_URL + endpoints.putincoming}/${currentId}` // Edit mode: include the ID in the endpoint
+        : BASE_URL + endpoints.addincoming; // Add mode: no ID in the endpoint
+  
+      // Send the POST request
+      const response = await axios.post(url, object, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-
-      if (editMode) {
-        setIncomingItems(
-          incomingItems.map((item) => (item.id === currentId ? payload : item))
-        );
-        message.success("Incoming item updated successfully!");
+  
+      if (response) {
+        if (editMode) {
+          // Update the existing item in the list
+          setIncomingItems(
+            incomingItems.map((item) => (item.id === currentId ? object : item))
+          );
+          message.success("Incoming item updated successfully!");
+        } else {
+          // Add the new item to the list
+          setIncomingItems([
+            ...incomingItems,
+            { ...object, id: incomingItems.length + 1 },
+          ]);
+          message.success("Incoming item added successfully!");
+        }
+        handleCancel(); // Close the modal
       } else {
-        setIncomingItems([...incomingItems, { ...payload, id: incomingItems.length + 1 }]);
-        message.success("Incoming item added successfully!");
+        message.error("Failed to add or update incoming item.");
       }
-      handleCancel();
     } catch (error) {
       message.error("Error occurred while saving data.");
     }
   };
+  
+
+  useEffect(() => {
+    const fetchIncomingItems = async () => {
+      const res = await controller.getAll(endpoints.incoming);
+      setIncomingItems(res);
+    };
+
+    const fetchCategories = async () => {
+      const res = await controller.getAll(endpoints.categoryincoming);
+      setIncomingCategories(res);
+    };
+
+    fetchCategories();
+    fetchIncomingItems();
+  }, []);
 
   const categoryOptions = incomingCategories.map((category) => ({
     label: category.name_EN,
@@ -222,24 +234,22 @@ const AdminIncoming = () => {
             >
               <input />
             </Form.Item>
+
             <Form.Item label="Name (EN)" name="name_EN">
               <input />
             </Form.Item>
+
             <Form.Item label="Name (RU)" name="name_RU">
               <input />
             </Form.Item>
-            <Form.Item
-              label="Serial Number"
-              name="serialNumber"
-              rules={[{ required: true, message: "Serial Number is required!" }]}
-            >
-              <input type="number" />
-            </Form.Item>
-            <Form.Item label="Category" name="category">
+
+            <Form.Item label="Category" name="serialNumber">
               <Select options={categoryOptions} placeholder="Select a category" />
             </Form.Item>
+
             <Form.Item label="Primary Image">
               <Upload
+                name="main_image"
                 listType="picture"
                 maxCount={1}
                 beforeUpload={(file) => beforeUpload(file, "main")}
@@ -248,9 +258,12 @@ const AdminIncoming = () => {
                 <Button icon={<UploadOutlined />}>Click to Upload</Button>
               </Upload>
             </Form.Item>
+
+            {/* Image 1, 2, 3, and 4 Upload */}
             {[...Array(4)].map((_, index) => (
               <Form.Item key={index} label={`Image ${index + 1}`}>
                 <Upload
+                  name={`image${index}`}
                   listType="picture"
                   maxCount={1}
                   beforeUpload={(file) => beforeUpload(file, index)}
@@ -260,6 +273,8 @@ const AdminIncoming = () => {
                 </Upload>
               </Form.Item>
             ))}
+
+            {/* CKEditor Fields */}
             <Form.Item label="Text (AZ)" name="text_AZ">
               <CKEditor
                 editor={ClassicEditor}
@@ -267,6 +282,7 @@ const AdminIncoming = () => {
                 onChange={(event, editor) => setTextAZ(editor.getData())}
               />
             </Form.Item>
+
             <Form.Item label="Text (EN)" name="text_EN">
               <CKEditor
                 editor={ClassicEditor}
@@ -274,6 +290,7 @@ const AdminIncoming = () => {
                 onChange={(event, editor) => setTextEN(editor.getData())}
               />
             </Form.Item>
+
             <Form.Item label="Text (RU)" name="text_RU">
               <CKEditor
                 editor={ClassicEditor}
@@ -281,6 +298,7 @@ const AdminIncoming = () => {
                 onChange={(event, editor) => setTextRU(editor.getData())}
               />
             </Form.Item>
+
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 {editMode ? "Update" : "Submit"}

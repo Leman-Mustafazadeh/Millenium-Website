@@ -8,7 +8,7 @@ import shape2 from "../../assets/img/shape/shape_2.png";
 import shape3 from "../../assets/img/shape/shape_3.png";
 import "./style.css";
 import controller from "../../API";
-import { endpoints } from "../../API/constant";
+import { BASE_URL, endpoints } from "../../API/constant";
 import { useSelector } from "react-redux";
 import { categories, home, needhelp, onlineSupport, readmore, servicestitle } from "../../i18n";
 
@@ -69,7 +69,7 @@ const Services = () => {
                       <h2 className="box-title">{selectedService.name_EN}</h2>
                       <div className="service-inner-img mb-40">
                         <img
-                          src={selectedService.image || serviceImage}
+                          src={BASE_URL+selectedService.image || serviceImage}
                           alt= {selectedService[`name_${currentlanguage}`]} 
                         />
                       </div>

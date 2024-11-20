@@ -78,7 +78,7 @@ puthero:"/api/Gallery/update-slide",
   service:"/api/Service/get-services",//service page
   addservice:"/api/Service/add-services",
   delservice:"/api/Service/delete-services",
-  putservice:"/api/Service/update-services/{id}",
+  putservice:"/api/Service/update-services",
 
 
 
