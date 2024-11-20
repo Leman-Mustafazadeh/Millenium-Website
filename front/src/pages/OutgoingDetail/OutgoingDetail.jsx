@@ -43,11 +43,11 @@ const OutgoingDetail = () => {
             }}>
                  <Carousel autoplay autoplaySpeed={3000} arrows infinite touchMove={false} slidesToScroll={1}>
                     {getData.outGoingImages.map((image, index) => (
-                        <div key={index} style={{ height: '500px !important', position: 'relative' }}>
+                        <div className='carousel_item' key={index} style={{ height: '200px !important', position: 'relative' }}>
                             <img
                                 src={BASE_URL+image.image}
                                 alt={`${getData.name_EN} image ${index + 1}`}
-                                style={{ width: '100%', height: '600px !important', objectFit: 'cover' }}
+                                style={{ width: '100%', height: '100% !important', objectFit: 'cover' }}
                             />
                         </div>
                     ))}

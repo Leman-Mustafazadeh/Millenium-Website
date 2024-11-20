@@ -79,9 +79,10 @@ const Incoming = () => {
                   </div>
                   <div className="row incoming_slider">
                     {selectedDestinationData?.map((tour, index) => (
-                      <Link to={"/incomingdetail/" + tour.id}>
+                    <div  className="col-lg-3 col-md-6 col-sm-12">
+                        <Link to={"/incomingdetail/" + tour.id}>
                         <div
-                          className="col-lg-3 col-md-6 col-sm-12"
+                         
                           key={index}
                         >
                           <div className="tour-boxs">
@@ -94,23 +95,20 @@ const Incoming = () => {
                             </div>
                             <div className="tour-box-content">
                               <div className="tour-box-time">
-                                <div>
-                                  <img
-                                    src="https://www.alisontravelgroup.com/front_assets/static/assets/svg/iconoir_clock-outline.svg"
-                                    alt=""
-                                  />
-                                </div>
-                                <div
+                               
+                                {/* <div
                                   dangerouslySetInnerHTML={{
                                     __html: tour[`text_${currentlanguage}`],
                                   }}
-                                />
+                                /> */}
                               </div>
                               <h4>{tour[`name_${currentlanguage}`]} </h4>
                             </div>
                           </div>
                         </div>
                       </Link>
+                    </div>
+
                     ))}
                   </div>
                 </>

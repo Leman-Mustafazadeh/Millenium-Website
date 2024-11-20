@@ -43,4 +43,9 @@
     color: #555;
     text-align: left;
   }
-  
+  .carousel_item{
+    height: 300px;
+  }
+  .carousel_item img{
+    height: 100%;
+  }
