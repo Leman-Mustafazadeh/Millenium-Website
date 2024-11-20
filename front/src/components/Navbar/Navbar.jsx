@@ -32,7 +32,7 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
-  
+
   const handleLanguageChange = (language) => {
     dispatch(changeLanguage(language)); // Update language in Redux state
   };
@@ -40,82 +40,32 @@ const Navbar = () => {
   return (
     <>
       {/* Mobile Menu Wrapper */}
-      <div
-        className={`th-menu-wrapper onepage-nav ${isMenuOpen ? "open" : ""}`}
-      >
-        <div className="th-menu-area text-center">
-          <button className="th-menu-toggle" onClick={toggleMenu}>
-            <i className="fal fa-times"></i>
-          </button>
-          <div className="mobile-logo">
-            <a href="/">
-              <img src={logo} alt="Tourm" />
-            </a>
-          </div>
-          <div className="th-mobile-menu">
-            <ul>
-              <li>
-                <NavLink exact to="/" activeClassName="active">
-                  {translate("home")}
-                </NavLink>
-              </li>
-              <li className="menu-item-has-children">
-                <NavLink to="/about" activeClassName="active">
-                  {translate("about")}
-                </NavLink>
-                <ul className="sub-menu">
-                  <li>
-                    <NavLink to="/about" activeClassName="active">
-                      {translate("our_company")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/ourteam" activeClassName="active">
-                      {translate("our_team")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/award" activeClassName="active">
-                      {translate("awards_licenses")}
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
-              <li className="menu-item-has-children">
-                <NavLink to="/incoming" activeClassName="active">
-                  {translate("tours")}
-                </NavLink>
-                <ul className="sub-menu">
-                  <li>
-                    <NavLink to="/incoming" activeClassName="active">
-                      {translate("incoming")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/outgoing" activeClassName="active">
-                      {translate("outgoing")}
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <NavLink to="/activities" activeClassName="active">
-                  {translate("activities")}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/servicies" activeClassName="active">
-                  {translate("services")}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" activeClassName="active">
-                  {translate("contact")}
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div className={`th-menu ${isMenuOpen ? "open" : ""}`}>
+        <span className="th-menu-close" onClick={toggleMenu}>
+          &times; {/* Menü kapatma butonu */}
+        </span>
+        <ul>
+          <li>
+            <NavLink to="/" onClick={toggleMenu}>
+              {translate("home")}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/about" onClick={toggleMenu}>
+              {translate("about")}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/services" onClick={toggleMenu}>
+              {translate("services")}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact" onClick={toggleMenu}>
+              {translate("contact")}
+            </NavLink>
+          </li>
+        </ul>
       </div>
 
       {/* Desktop Navbar */}
@@ -282,8 +232,9 @@ const Navbar = () => {
                     className="th-menu-toggle d-block d-xl-none"
                     onClick={toggleMenu}
                   >
-                    <i className="far fa-bars"></i>
+                    <i className={isMenuOpen ? "far fa-times" : "far fa-bars"}></i>
                   </button>
+
                 </div>
               </div>
             </div>
