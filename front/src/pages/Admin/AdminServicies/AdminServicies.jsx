@@ -119,12 +119,19 @@ const AdminServices = () => {
     // Function to add a new service
     const addService = async () => {
       try {
+        const token = Cookies.get("ftoken");
+        if (!token) {
+          message.error("Authentication token is missing. Please log in again.");
+          return;
+        }
+    
         const response = await axios.post(
           BASE_URL + endpoints.addservice,
           serviceData,
           {
             headers: {
               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
             },
           }
         );
@@ -144,12 +151,19 @@ const AdminServices = () => {
     // Function to edit an existing service
     const editService = async () => {
       try {
+        const token = Cookies.get("ftoken");
+        if (!token) {
+          message.error("Authentication token is missing. Please log in again.");
+          return;
+        }
+    
         const response = await axios.post(
           BASE_URL + endpoints.putservice+"/"+currentId,
           serviceData,
           {
             headers: {
               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
             },
           }
         );

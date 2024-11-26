@@ -133,14 +133,14 @@ const AdminPopular = () => {
         isDeleted: false,
       };
   
-      // const token = Cookies.get("ftoken");
+      const token = Cookies.get("ftoken");
   
       if (editMode) {
         // Send PUT request to update the item
         const response = await axios.post(BASE_URL +endpoints.puttour+`/${currentId}`, object, {
           headers: {
             "Content-Type": "application/json",
-            // Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
   

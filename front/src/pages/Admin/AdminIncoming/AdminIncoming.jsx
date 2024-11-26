@@ -136,12 +136,19 @@ const AdminIncoming = () => {
     };
 
     try {
+      const token = Cookies.get("ftoken");
+      if (!token) {
+        message.error("Authentication token is missing. Please log in again.");
+        return;
+      }
+  
       const url = editMode
         ? `${BASE_URL + endpoints.putincoming}/${currentId}`
         : BASE_URL + endpoints.addincoming;
 
       const response = await axios.post(url, object, {
         headers: { "Content-Type": "application/json" },
+         Authorization: `Bearer ${token}`
       });
 
       if (response) {

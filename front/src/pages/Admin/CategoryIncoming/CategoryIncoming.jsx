@@ -109,12 +109,19 @@ const CategoryIncoming = () => {
     };
   
     try {
+      const token = Cookies.get("ftoken");
+      if (!token) {
+        message.error("Authentication token is missing. Please log in again.");
+        return;
+      }
+  
       const response = await axios.post(
         BASE_URL + endpoints.addcategoryincoming,
         categoryData,
         {
           headers: {
             "Content-Type": "application/json",
+             Authorization: `Bearer ${token}`
           },
         }
       );

@@ -169,7 +169,9 @@ const AdminTeam = () => {
     }
   };
 
-  const onFinish = async (values) => {
+
+
+ onFinish = async (values) => {
     try {
       // Convert image to base64 if an image file exists
       const imageBase64 = imageFile ? await getBase64(imageFile) : null;
@@ -188,26 +190,43 @@ const AdminTeam = () => {
         image: strippedBase64, // Sending only the base64 part
         isDeleted: false,
       };
+  
+      const token = Cookies.get("ftoken");
+      if (!token) {
+        message.error("Authentication token is missing. Please log in again.");
+        return;
+      }
+  
       if (currentMemberId) {
         // Update existing team member
         await axios.post(
           `${BASE_URL}${endpoints.putteam}/${currentMemberId}`,
-          object
+          object,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setTeamMembers((prevMembers) =>
           prevMembers.map((member) =>
             member.id === currentMemberId ? { ...member, ...object } : member
           )
         );
-        setTeamMembers([...teamMembers, { ...object, id: currentMemberId }]);
         message.success("Team member updated successfully!");
       } else {
         // Add new team member
-        const response = await axios.post(BASE_URL + endpoints.addteam, object);
+        const response = await axios.post(BASE_URL + endpoints.addteam, object, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setTeamMembers([...teamMembers, { ...object, id: response.data.id }]);
         message.success("Team member added successfully!");
       }
-
+  
       setIsModalVisible(false);
       form.resetFields();
       setCurrentMemberId(null);
@@ -216,8 +235,7 @@ const AdminTeam = () => {
       message.error(`Error: ${error.message}`);
     }
   };
-
-  useEffect(() => {
+  Effect(() => {
     const fetchTeamMembers = async () => {
       try {
         const response = await axios.get(BASE_URL + endpoints.team);

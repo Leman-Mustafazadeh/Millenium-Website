@@ -46,7 +46,7 @@ puthero:"/api/Gallery/update-slide",
   addlogo: "/api/Gallery/add-logo",//home hissesindeki logo olan section
   logo: "/api/Gallery/get-logos",
   dellogo:"/api/Gallery/delete-logo",
-  putlogo:"/api/Gallery/update-logo{id}",
+  putlogo:"/api/Gallery/update-logo",
 
 
 

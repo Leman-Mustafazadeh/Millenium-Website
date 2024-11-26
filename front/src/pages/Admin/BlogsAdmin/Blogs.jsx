@@ -126,10 +126,10 @@ const Blogs = () => {
       }
   
       const url = editMode
-        ? `${BASE_URL}${endpoints.updateGallery}/${currentId}`
+        ? `${BASE_URL}${endpoints.putgallery}/${currentId}`
         : BASE_URL + endpoints.addGallery;
   
-      const method = editMode ? "put" : "post";
+      const method = editMode ? "post" : "post";
   
       const response = await axios({
         method,

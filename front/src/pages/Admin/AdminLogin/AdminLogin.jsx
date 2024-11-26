@@ -10,19 +10,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { login } from "../../../services/redux/auth";
+import Cookies from "js-cookie"; // Cookies modulunu əlavə edirik
 import "./style.css";
 import { message } from "antd";
+
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const getUsername = async () => {
-  //   try {
-  //     const response = await axios.getAll("/Account/get-username");
-  //     console.log("Username:", response.data.username);
-  //   } catch (error) {
-  //     console.error("Error fetching username:", error);
-  //   }
-  // };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -42,15 +37,19 @@ const AdminLogin = () => {
         .post("https://hdy.az/Account/Login", values)
         .then((res) => {
           console.log(res.data.token);
+
+          // Tokeni Cookies-ə yazırıq
+          Cookies.set("ftoken", res.data.token);
+
+          // Redux-a login məlumatlarını göndəririk
           dispatch(login(res.data));
-          // window.location.href = "/admin/hero";
+
+          // Redirect
           navigate("/admin/hero");
-        }).catch((err)=>{
-          message.error(err.response.data.message|| "loggedin failed")
-          // console.log(err.response.data.message);
-          
+        })
+        .catch((err) => {
+          message.error(err.response?.data?.message || "Login failed");
         });
-        
     },
   });
 

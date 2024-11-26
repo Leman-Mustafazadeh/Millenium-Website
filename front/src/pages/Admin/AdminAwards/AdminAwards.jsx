@@ -94,6 +94,7 @@ const AdminAwards = () => {
   };
 
   const onFinish = async (values) => {
+    
     let image;
     if (values.image && values.image.file) {
       image = await getBase64(values.image.file);
@@ -108,8 +109,16 @@ const AdminAwards = () => {
       image, // Base64-encoded image without the prefix
       isDeleted: false,
     };
+    
   
     try {
+
+      const token = Cookies.get("ftoken");
+      if (!token) {
+        message.error("Authentication token is missing. Please log in again.");
+        return;
+      }
+  
       // Determine the appropriate endpoint based on edit mode
       const url = editMode
         ? `${BASE_URL + endpoints.putaward}/${currentAwardId}` // Update endpoint
@@ -119,6 +128,7 @@ const AdminAwards = () => {
       const response = await axios.post(url, object, {
         headers: {
           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`
         },
       });
   

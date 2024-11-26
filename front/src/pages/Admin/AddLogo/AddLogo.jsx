@@ -124,49 +124,64 @@ const AddLogo = () => {
     setBlogs(blogs.filter((blog) => blog.id !== id));
     message.success("Blog deleted successfully!");
   };
-
   const onFinish = async (values) => {
-    if (!imageFile) {
-      message.error("Please upload an image.");
-      return;
-    }
-  
-    // Get the base64 image data (after the comma)
-    const image = await getBase64(imageFile);
-  
-    const object = {
-      id: currentBlogId,
-      name_AZ: values.name_AZ,
-      name_EN: values.name_EN,
-      name_RU: values.name_RU,
-      link: values.link,
-      isDeleted: false, // Set isDeleted to false by default
-      image, // This is the base64 data without the metadata part
-    };
-  
     try {
-      const token = window !== undefined ? Cookies.get("ftoken") : null;
-      if (!token || token === "null") {
-        console.log("Token not found or is null");
-      } else {
-        console.log("Token:", token);
+      const token = Cookies.get("ftoken");
+      if (!token) {
+        message.error("Token not found. Please log in again.");
+        return;
       }
   
-      const response = await axios.post(BASE_URL + endpoints.addlogo, object, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (!imageFile && !currentBlogId) {
+        message.error("Please upload an image.");
+        return;
+      }
+  
+      const image = imageFile ? await getBase64(imageFile) : null;
+  
+      const object = {
+        name_AZ: values.name_AZ,
+        name_EN: values.name_EN,
+        name_RU: values.name_RU,
+        link: values.link,
+        isDeleted: false,
+        ...(image && { image }), // Include image only if it's updated
+      };
+  
+      let response;
+  
+      if (currentBlogId) {
+        // Edit Blog
+        response = await axios.post(
+          `${BASE_URL}${endpoints.putlogo.replace("{id}", currentBlogId)}`,
+          object,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } else {
+        // Add Blog
+        response = await axios.post(BASE_URL + endpoints.addlogo, object, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
   
       if (response.status === 200 || response.status === 201) {
         if (currentBlogId) {
           setBlogs((prevBlogs) =>
-            prevBlogs.map((blog) => (blog.id === currentBlogId ? object : blog))
+            prevBlogs.map((blog) =>
+              blog.id === currentBlogId ? { ...blog, ...object } : blog
+            )
           );
           message.success("Blog updated successfully!");
         } else {
-          setBlogs([...blogs, object]);
+          setBlogs([...blogs, { id: response.data.id, ...object }]);
           message.success("Blog added successfully!");
         }
         setIsModalVisible(false);
@@ -177,18 +192,14 @@ const AddLogo = () => {
         message.error(`Error: ${response.statusText}`);
       }
     } catch (error) {
+      console.error(error);
       if (error.response) {
         message.error(
           `Server Error: ${error.response.status} - ${error.response.data}`
         );
-      } else if (error.request) {
-        message.error(
-          "No response from the server. Please check your network."
-        );
       } else {
-        message.error(`Error: ${error.message}`);
+        message.error("Something went wrong!");
       }
-      console.error("Error in Axios request:", error);
     }
   };
   

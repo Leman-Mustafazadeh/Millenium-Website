@@ -94,6 +94,12 @@ const AdminActivities = () => {
   };
 
   const onFinish = async (values) => {
+    const token = Cookies.get("ftoken"); // Retrieve token from cookies
+    if (!token) {
+      message.error("Authentication token is missing. Please log in again.");
+      return;
+    }
+  
     const object = {
       id: currentId, // Include the id if it's edit mode
       name_AZ: values.name_AZ,
@@ -111,6 +117,7 @@ const AdminActivities = () => {
   
     try {
       let response;
+  
       if (editMode) {
         // If editing, send a PUT request to update the activity
         response = await axios.post(
@@ -119,6 +126,7 @@ const AdminActivities = () => {
           {
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // Include token in headers
             },
           }
         );
@@ -135,6 +143,7 @@ const AdminActivities = () => {
         response = await axios.post(BASE_URL + endpoints.addactivity, object, {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include token in headers
           },
         });
   
