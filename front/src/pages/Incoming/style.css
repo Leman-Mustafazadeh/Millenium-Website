@@ -73,9 +73,10 @@
   display: flex;
   flex-wrap: nowrap;
   margin-top: 50px !important;
+    justify-content: start;
 }
 .incoming_content{
-  height: 430px;
+  height: 450px;
   width: 50%;
 }
 .incoming_content img{
@@ -128,3 +129,14 @@
 .stars {
   color: #f39c12;
 }
+.seesight{
+  text-align: center;
+  font-weight: 500;
+    line-height: 1.2;
+    font-size: 1.5rem;
+    padding-top: 70px !important;
+}
+.incoming_hero{
+  margin-bottom: 20px;
+}
+

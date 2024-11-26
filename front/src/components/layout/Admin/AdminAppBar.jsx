@@ -79,10 +79,6 @@ const AdminAppBar = () => {
               icon: <Link style={{padding:0}} to="addlogo">Add Logo</Link> ,
             },
             {
-              key: '6',
-              icon: <Link style={{padding:0}} to="admintourm">AdminTourm</Link> ,
-            },
-            {
               key: '7',
               icon: <Link style={{padding:0}} to="teamadmin">Admin Team</Link> ,
             },

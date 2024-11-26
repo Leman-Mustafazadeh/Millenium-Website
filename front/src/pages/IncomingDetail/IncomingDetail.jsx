@@ -40,7 +40,10 @@ const IncomingDetail = () => {
       <div className="containerdetails">
         <div className="image-slider">
           <button onClick={prevImage} className="slider-button">‹</button>
-          <div className="slider_image">
+          <div className="slider_image" autoplay={{
+          delay: 2000, 
+          disableOnInteraction: false, 
+        }}>
             {getData.inComingImages.length > 0 && (
               <img
                 src={BASE_URL+getData.inComingImages[currentImageIndex]?.base64}

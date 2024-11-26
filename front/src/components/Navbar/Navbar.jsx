@@ -50,11 +50,55 @@ const Navbar = () => {
               {translate("home")}
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/about" onClick={toggleMenu}>
-              {translate("about")}
-            </NavLink>
-          </li>
+          <li className="menu-item-has-children">
+                        <NavLink to="/about" activeClassName="active">
+                          {translate("about")}
+                        </NavLink>
+                        <ul className="sub-menu">
+                          <li>
+                            <NavLink to="/about" activeClassName="active">
+                              {translate("our_company")}
+                            </NavLink>
+                          </li>
+
+                          
+                          <li>
+                            <NavLink to="/ourteam" activeClassName="active">
+                              {translate("our_team")}
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink to="/award" activeClassName="active">
+                              {translate("awards_licenses")}
+                            </NavLink>
+                          </li>
+                        </ul>
+                        
+                      </li>
+
+
+                      <li className="menu-item-has-children">
+                        <NavLink to="/incoming" activeClassName="active">
+                          {translate("tours")}
+                        </NavLink>
+                        <ul className="sub-menu">
+                          <li>
+                            <NavLink to="/incoming" activeClassName="active">
+                              {translate("incoming")}
+                            </NavLink>
+                          </li>
+                          <li>
+                            <NavLink to="/outgoing" activeClassName="active">
+                              {translate("outgoing")}
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <NavLink to="/activities" activeClassName="active">
+                          {translate("activities")}
+                        </NavLink>
+                      </li>
           <li>
             <NavLink to="/services" onClick={toggleMenu}>
               {translate("services")}
@@ -65,6 +109,24 @@ const Navbar = () => {
               {translate("contact")}
             </NavLink>
           </li>
+
+                     
+                      <li>
+                        <NavLink to="/servicies" activeClassName="active">
+                          {translate("services")}
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/contact" activeClassName="active">
+                          {translate("contact")}
+                        </NavLink>
+                      </li>
+
+                      <li>
+                        <NavLink to="/activities" activeClassName="active">
+                          {translate("activities")}
+                        </NavLink>
+                      </li>
         </ul>
       </div>
 

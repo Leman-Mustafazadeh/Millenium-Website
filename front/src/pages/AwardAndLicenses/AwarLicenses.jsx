@@ -31,7 +31,7 @@ const AwarLicenses = () => {
 
       <section className="awards_head">
         <div className="container">
-          <div className="row gy-24 gx-24">
+          <div className="row gy-24 gx-24 awards_hero">
             {data?.map((imageUrl, index) => (
               <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"
                 key={index}

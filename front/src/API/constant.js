@@ -23,7 +23,7 @@ puthero:"/api/Gallery/update-slide",
   tour:"/api/Tour/get-tours",//most popular tour
   addtour:"/api/Tour/add-tour",
   deltour:"/api/Tour/delete-tour",
-  puttour:"/api/Tour/update-tour{id}",
+  puttour:"/api/Tour/update-tour",
 
 
 

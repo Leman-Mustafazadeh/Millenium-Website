@@ -76,8 +76,14 @@ const AdminIncoming = () => {
       name_AZ: record.name_AZ,
       name_EN: record.name_EN,
       name_RU: record.name_RU,
+      title_AZ: record.title_AZ,
+      title_EN: record.title_EN,
+      title_RU: record.title_RU,
       serialNumber: record.serialNumber,
       category: record.categoryId,
+      text_AZ: record.text_AZ || "",
+      text_EN: record.text_EN || "",
+      text_RU: record.text_RU || "",
     });
     setImage(record.image);
     setImages([record.image1, record.image2, record.image3, record.image4]);
@@ -94,74 +100,64 @@ const AdminIncoming = () => {
       return Upload.LIST_IGNORE;
     }
     const reader = new FileReader();
-    reader.readAsDataURL(file); // Convert the image to Base64
+    reader.readAsDataURL(file);
     reader.onload = () => {
-      let base64String = reader.result;
-      base64String = base64String.split(",")[1]; // Remove 'data:image/jpeg;base64,' part
-  
+      const base64String = reader.result.split(",")[1];
       if (index === "main") {
-        setImage(base64String); // Store the cleaned Base64 string for the main image
+        setImage(base64String);
       } else {
         const newImages = [...images];
-        newImages[index] = base64String; // Store the cleaned Base64 string for other images
+        newImages[index] = base64String;
         setImages(newImages);
       }
     };
-  
     return false;
   };
 
   const onFinish = async (values) => {
-    // Prepare the images with their full Base64 data
     const inComingImages = images
-      .map((img, index) => ({
-        image: img ? `image${index + 1}` : "",
-        base64: img || "", // Only include non-empty base64 images
-      }))
-      .filter((img) => img.base64); // Only include non-empty images
-  
+      .map((img, index) => (img ? { image: `image${index + 1}`, base64: img } : null))
+      .filter((img) => img);
+
     const object = {
       id: currentId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      text_AZ: textAZ,
-      text_EN: textEN,
-      text_RU: textRU,
+      title_AZ: values.title_AZ,
+      title_EN: values.title_EN,
+      title_RU: values.title_RU,
+      text_AZ: values.text_AZ,
+      text_EN: values.text_EN,
+      text_RU: values.text_RU,
       serialNumber: values.serialNumber,
-      image, // Main image in Base64 (after removing the header part)
-      inComingImages, // Additional images in Base64 (after removing the header part)
+      image,
+      inComingImages,
     };
-  
+
     try {
-      // If we are in edit mode, the request should be sent to the edit endpoint
-      const url = editMode 
-        ? `${BASE_URL + endpoints.putincoming}/${currentId}` // Edit mode: include the ID in the endpoint
-        : BASE_URL + endpoints.addincoming; // Add mode: no ID in the endpoint
-  
-      // Send the POST request
+      const url = editMode
+        ? `${BASE_URL + endpoints.putincoming}/${currentId}`
+        : BASE_URL + endpoints.addincoming;
+
       const response = await axios.post(url, object, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       });
-  
+
       if (response) {
         if (editMode) {
-          // Update the existing item in the list
           setIncomingItems(
             incomingItems.map((item) => (item.id === currentId ? object : item))
           );
           message.success("Incoming item updated successfully!");
         } else {
-          // Add the new item to the list
           setIncomingItems([
             ...incomingItems,
             { ...object, id: incomingItems.length + 1 },
           ]);
           message.success("Incoming item added successfully!");
         }
-        handleCancel(); // Close the modal
+        handleCancel();
       } else {
         message.error("Failed to add or update incoming item.");
       }
@@ -169,7 +165,6 @@ const AdminIncoming = () => {
       message.error("Error occurred while saving data.");
     }
   };
-  
 
   useEffect(() => {
     const fetchIncomingItems = async () => {
@@ -243,6 +238,22 @@ const AdminIncoming = () => {
               <input />
             </Form.Item>
 
+            <Form.Item
+              label="Title (AZ)"
+              name="title_AZ"
+              rules={[{ required: true, message: "Please enter the title in AZ!" }]}
+            >
+              <input />
+            </Form.Item>
+
+            <Form.Item label="Title (EN)" name="title_EN">
+              <input />
+            </Form.Item>
+
+            <Form.Item label="Title (RU)" name="title_RU">
+              <input />
+            </Form.Item>
+
             <Form.Item label="Category" name="serialNumber">
               <Select options={categoryOptions} placeholder="Select a category" />
             </Form.Item>
@@ -259,7 +270,6 @@ const AdminIncoming = () => {
               </Upload>
             </Form.Item>
 
-            {/* Image 1, 2, 3, and 4 Upload */}
             {[...Array(4)].map((_, index) => (
               <Form.Item key={index} label={`Image ${index + 1}`}>
                 <Upload
@@ -274,12 +284,15 @@ const AdminIncoming = () => {
               </Form.Item>
             ))}
 
-            {/* CKEditor Fields */}
             <Form.Item label="Text (AZ)" name="text_AZ">
               <CKEditor
                 editor={ClassicEditor}
                 data={textAZ}
-                onChange={(event, editor) => setTextAZ(editor.getData())}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setTextAZ(data);
+                  form.setFieldsValue({ text_AZ: data });
+                }}
               />
             </Form.Item>
 
@@ -287,7 +300,11 @@ const AdminIncoming = () => {
               <CKEditor
                 editor={ClassicEditor}
                 data={textEN}
-                onChange={(event, editor) => setTextEN(editor.getData())}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setTextEN(data);
+                  form.setFieldsValue({ text_EN: data });
+                }}
               />
             </Form.Item>
 
@@ -295,16 +312,17 @@ const AdminIncoming = () => {
               <CKEditor
                 editor={ClassicEditor}
                 data={textRU}
-                onChange={(event, editor) => setTextRU(editor.getData())}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setTextRU(data);
+                  form.setFieldsValue({ text_RU: data });
+                }}
               />
             </Form.Item>
 
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                {editMode ? "Update" : "Submit"}
-              </Button>
-              <Button onClick={handleCancel} style={{ marginLeft: 10 }}>
-                Cancel
+                {editMode ? "Update Item" : "Add Item"}
               </Button>
             </Form.Item>
           </Form>

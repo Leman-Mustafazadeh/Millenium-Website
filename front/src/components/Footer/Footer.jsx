@@ -132,7 +132,7 @@ const Footer = () => {
                             justifyContent: "center",
                           }}
                         >
-                          +994 12 221 91 19
+                          +994 70 221 91 19
                         </a>
                       </p>
                     </div>

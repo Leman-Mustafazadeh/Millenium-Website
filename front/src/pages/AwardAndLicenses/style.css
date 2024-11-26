@@ -21,3 +21,6 @@
     margin-top: 50px;
   }
   
+  .awards_hero{
+    justify-content: start  !important;
+  }

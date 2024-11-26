@@ -97,50 +97,65 @@ const AdminOutgoing = () => {
     const outgoingImageObjects = outGoingImages
       .map((img, index) => ({
         image: `Image ${index + 1}`,
-        base64: img || '',  // Only include the base64 string if it exists
+        base64: img || '', // Only include the base64 string if it exists
       }))
-      .filter(img => img.base64);  // Filter out empty base64 values (i.e., images that weren't uploaded)
+      .filter(img => img.base64); // Filter out empty base64 values (i.e., images that weren't uploaded)
   
     const object = {
       id: currentId,
       name_AZ: values.name_AZ,
       name_EN: values.name_EN,
       name_RU: values.name_RU,
-      image: image,  // This now contains the base64 image data for the primary image
+      image: image, // This now contains the base64 image data for the primary image
       text_AZ: values.text_AZ,
       text_EN: values.text_EN,
       text_RU: values.text_RU,
-      outGoingImages: outgoingImageObjects,  // List of additional images with base64 data
+      outGoingImages: outgoingImageObjects, // List of additional images with base64 data
     };
   
     try {
-      const response = await axios.post(BASE_URL + endpoints.addoutgoing, object, {
-        headers: {
-          "Content-Type": "application/json",
-          // Uncomment and use authorization header if needed
-          // Authorization: `Bearer ${token}`,
-        },
-      });
+      if (editMode) {
+        // PUT request to update-outgoing endpoint
+        const response = await axios.post(
+          `${BASE_URL}${endpoints.putoutgoing}/${currentId}`, // Append the ID to the endpoint
+          object,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
   
-      if (response.data) {
-        if (editMode) {
+        if (response.data) {
           setOutgoingItems(
-            outgoingItems.map((item) => (item.id === currentId ? object : item))
+            outgoingItems.map((item) => (item.id === currentId ? { ...object, id: currentId } : item))
           );
           message.success("Outgoing item updated successfully!");
         } else {
+          message.error("Failed to update outgoing item.");
+        }
+      } else {
+        // POST request to addoutgoing endpoint (create mode)
+        const response = await axios.post(BASE_URL + endpoints.addoutgoing, object, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (response.data) {
           setOutgoingItems([...outgoingItems, { ...object, id: outgoingItems.length + 1 }]);
           message.success("Outgoing item added successfully!");
+        } else {
+          message.error("Failed to add outgoing item.");
         }
-        setIsModalVisible(false);
-        form.resetFields();
-        setEditMode(false);
-        setCurrentId(null);
-        setImage(null);
-        setOutGoingImages([null, null, null, null]);
-      } else {
-        message.error("Failed to add or update outgoing item.");
       }
+  
+      setIsModalVisible(false);
+      form.resetFields();
+      setEditMode(false);
+      setCurrentId(null);
+      setImage(null);
+      setOutGoingImages([null, null, null, null]);
     } catch (error) {
       message.error("Error occurred while saving data.");
     }

@@ -62,7 +62,7 @@ const OurTeam = () => {
 
       <section className="space">
         <div className="container">
-          <div className="row gy-4 gx-4">
+          <div className="row gy-4 gx-4 team_hero ">
             {loading ? (
               <div className="loader-container">
                 <div className="loader"></div>

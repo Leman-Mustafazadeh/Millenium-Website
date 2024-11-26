@@ -30,7 +30,7 @@ const Activities = () => {
 
       <div className="space">
         <div className="container">
-          <div className="row">
+          <div className="row acitivit_hero">
             {data?.map((item, index) => (
               <div className="col-lg-4 col-md-6" key={index}>
                 <Link to={`/activities-details/${item.id}`}>

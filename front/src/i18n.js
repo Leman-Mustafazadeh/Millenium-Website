@@ -15,8 +15,8 @@ export const home = {
     RU: "Награды и Лицензии",
   },
   tours: { AZ: "Turlar", EN: "Tours", RU: "Туры" },
-  incoming: { AZ: "Gələn", EN: "Incoming", RU: "Входящий" },
-  outgoing: { AZ: "Gedən", EN: "Outgoing", RU: "Исходящий" },
+  incoming: { AZ: "Daxili Tur", EN: "Incoming", RU: "Входящий" },
+  outgoing: { AZ: "Xarici Tur", EN: "Outgoing", RU: "Исходящий" },
   activities: { AZ: "Fəaliyyətlər", EN: "Activities", RU: "Деятельность" },
   services: { AZ: "Xidmətlər", EN: "Services", RU: "Услуги" },
   contact: { AZ: "Əlaqə", EN: "Contact", RU: "Контакт" },
@@ -61,9 +61,9 @@ export const plan={
     RU:"Профессиональные гиды",
   },
   professionaltitle:{
-    AZ:"Yeni yerləri kəşf etməkdən tam həzz almaq üçün hər səfərdə rahatlığınızı prioritet edin.",
-    EN:"Make your comfort a prierity on every journey to fully enjoy exploring new places.",
-    RU:"Сделайте комфорт приоритетом в каждой поездке, чтобы в полной мере насладиться исследованием новых мест.",
+    AZ:"Peşəkar bələdçilərimiz, unudulmaz səyahət təcrübələri təqdim edərək, yerli mədəniyyəti və tarixi ən incə detalları ilə tanıtmaq üçün sizə bələdçilik edəcək.",
+    EN:"Our professional guides provide unforgettable travel experiences, introducing you to local culture and history in every detail.",
+    RU:"«Наши профессиональные гиды обеспечат вам незабываемые впечатления от путешествий, подробно познакомив вас с местной культурой и историей»",
   }
 
 
@@ -83,6 +83,8 @@ export const popularTeam = {
     RU: "Познакомьтесь с нашими «Самыми популярными турами», включающими лучшие предложения наших клиентов, которые подарят вам незабываемые впечатления и культурные приключения.",
   },
 };
+
+
 
 
 export const recent = {
@@ -171,9 +173,17 @@ export const Awardstitle = {
 };
 
 export const outGoing = {
-  AZ: "Gedən Turlar",
+  AZ: "Xarici Turlar",
   EN: "Outgoing Tours",
   RU: "Выездные туры",
+};
+
+
+
+export const incomingword = {
+  AZ: "Görməli yerlər", 
+  EN: "Places to Visit", 
+  RU: "Достопримечательности", 
 };
 
 export const ourCompanyteam = {

@@ -38,17 +38,17 @@ const OutgoingDetail = () => {
                 flex: '1',
                 borderRadius: '8px',
                 overflow: 'hidden',
-                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-                height:'100% !important'
+        
             }}>
-                 <Carousel autoplay autoplaySpeed={3000} arrows infinite touchMove={false} slidesToScroll={1}>
+                 <Carousel autoplay autoplaySpeed={2000} arrows infinite touchMove={false} slidesToScroll={1}>
                     {getData.outGoingImages.map((image, index) => (
                         <div className='carousel_item' key={index} style={{ height: '200px !important', position: 'relative' }}>
                             <img
-                                src={BASE_URL+image.image}
+                                src={BASE_URL+image.image   }
                                 alt={`${getData.name_EN} image ${index + 1}`}
                                 style={{ width: '100%', height: '100% !important', objectFit: 'cover' }}
                             />
+                            
                         </div>
                     ))}
                 </Carousel>

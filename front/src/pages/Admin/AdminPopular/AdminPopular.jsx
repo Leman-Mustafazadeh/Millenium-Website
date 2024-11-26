@@ -120,46 +120,62 @@ const AdminPopular = () => {
     });
     setImageBase64(record.image);
     setIsModalVisible(true);
-  };
-
+  };  
+  
   const onFinish = async (values) => {
     try {
       const object = {
+        id:currentId,
         name_AZ: values.name_AZ,
         name_EN: values.name_EN,
         name_RU: values.name_RU,
-        image: imageBase64, // Base64 without the prefix
+        image: imageBase64, // Base64 image string
         isDeleted: false,
       };
   
-      const token = Cookies.get("ftoken");
-      const response = await axios.post(BASE_URL + endpoints.addtour, object, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // const token = Cookies.get("ftoken");
   
-      if (response.status === 200 || response.status === 201) {
-        if (editMode) {
+      if (editMode) {
+        // Send PUT request to update the item
+        const response = await axios.post(BASE_URL +endpoints.puttour+`/${currentId}`, object, {
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (response.status === 200 || response.status === 201) {
           setPopularItems(
             popularItems.map((item) => (item.id === currentId ? { ...item, ...object } : item))
           );
           message.success("Popular item updated successfully!");
         } else {
+          message.error("Failed to update popular item.");
+        }
+      } else {
+        // Send POST request to add a new item
+        const response = await axios.post(BASE_URL + endpoints.addtour, object, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (response.status === 200 || response.status === 201) {
           setPopularItems((prevItems) => [
             ...prevItems,
-            { ...object, id: prevItems.length + 1 },
+            { ...object, id: response.data.id }, // Use the ID returned by the server
           ]);
           message.success("Popular item added successfully!");
+        } else {
+          message.error("Failed to add popular item.");
         }
-        setIsModalVisible(false);
-        form.resetFields();
-        setEditMode(false);
-        setCurrentId(null);
-      } else {
-        message.error("Failed to add or update popular item.");
       }
+  
+      setIsModalVisible(false);
+      form.resetFields();
+      setEditMode(false);
+      setCurrentId(null);
     } catch (error) {
       if (error.response) {
         message.error(`Server Error: ${error.response.status} - ${error.response.data}`);
@@ -171,7 +187,6 @@ const AdminPopular = () => {
       console.error("Error in Axios request:", error);
     }
   };
-  
   
 
 useEffect(()=>{

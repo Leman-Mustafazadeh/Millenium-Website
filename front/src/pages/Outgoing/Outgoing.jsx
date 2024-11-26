@@ -26,7 +26,7 @@ const Outgoing = () => {
       <div className="container">
         <div className="outgoing_head text-center">
           <h1> {outGoing[currentlanguage]}</h1>
-          <div className="row">
+          <div className="row outgoing_hero">
             {outgoing.map((tour, index) => (
               <div key={index} className="col-lg-3 col-md-6 col-sm-12 mb-4">
                <Link to={"/outgoingdetail/" +tour.id}>

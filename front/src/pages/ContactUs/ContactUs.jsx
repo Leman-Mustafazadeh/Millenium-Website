@@ -47,7 +47,11 @@ const ContactUs = () => {
                 <div className="about-contact-details">
                   <h6 className="box-title">{contacts('phonenumber')}</h6>
                   <p className="about-contact-details-text">
-                    <a href="tel:+994124975400">+99412 4975400</a>
+                    <a href="tel:+994124975400">+994 12 497 54 00</a>
+                  </p>
+
+                  <p className="about-contact-details-text">
+                    <a href="tel:+994124975400">+994 70 221 91 19 </a>
                   </p>
                 </div>
               </div>

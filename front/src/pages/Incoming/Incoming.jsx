@@ -4,7 +4,7 @@ import controller from "../../API";
 import { BASE_URL, endpoints } from "../../API/constant";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Awards, Awardstitle } from "../../i18n";
+import { Awards, Awardstitle, incomingword } from "../../i18n";
 
 const Incoming = () => {
   const [incoming, setIncoming] = useState([]);
@@ -14,7 +14,7 @@ const Incoming = () => {
   const handleDestinationClick = (destination) => {
     setSelectedDestination(destination);
   };
-  
+
   useEffect(() => {
    setSelectedDestination(incoming[0]);
   }, [incoming]);
@@ -63,6 +63,8 @@ const Incoming = () => {
                 </button>
               ))}
             </div>
+
+           
             <div className="row mt-4">
               {selectedDestination ? (
                 <>
@@ -77,12 +79,13 @@ const Incoming = () => {
                     <h2>{selectedDestination[`name_${currentlanguage}`]} </h2>
                     <p>{selectedDestination[`text_${currentlanguage}`]} </p>
                   </div>
+
+                  <h1 className="seesight">{incomingword[currentlanguage]}</h1>
                   <div className="row incoming_slider">
                     {selectedDestinationData?.map((tour, index) => (
-                    <div  className="col-lg-3 col-md-6 col-sm-12">
+                    <div  className="incoming_hero col-lg-3 col-md-6 col-sm-12">
                         <Link to={"/incomingdetail/" + tour.id}>
                         <div
-                         
                           key={index}
                         >
                           <div className="tour-boxs">
