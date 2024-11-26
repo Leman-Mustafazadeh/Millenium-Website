@@ -144,7 +144,7 @@ const Footer = () => {
                     <div className="details">
                       <p>
                         <a
-                          href="mailto:mailinfo00@tourm.com"
+                          href="mailto:manager@milleniumtour.az"
                           className="info-box_link"
                         >
                           manager@milleniumtour.az
@@ -152,7 +152,7 @@ const Footer = () => {
                       </p>
                       <p>
                         <a
-                          href="mailto:support24@tourm.com"
+                          href="mailto:team@milleniumtour.az"
                           className="info-box_link"
                         >
                           team@milleniumtour.az

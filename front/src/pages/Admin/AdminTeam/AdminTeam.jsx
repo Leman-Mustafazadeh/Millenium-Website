@@ -162,7 +162,11 @@ const AdminTeam = () => {
 
   const handleDelete = (id) => {
     try {
-      controller.getOne(endpoints.delteam, id);
+      axios.get(BASE_URL+ endpoints.delteam + "/"+ id,{
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      });
       setTeamMembers(teamMembers.filter((member) => member.id !== id));
       message.success("Team member deleted successfully!");
     } catch (error) {

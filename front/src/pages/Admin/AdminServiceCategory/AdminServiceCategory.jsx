@@ -47,7 +47,11 @@ const AdminServiceCategory = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(endpoints.delservicecategory, id);
+      await axios.get(BASE_URL + endpoints.delservicecategory + "/" + id,{
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      });
       setCategories(categories.filter(category => category.id !== id));
       message.success("Category deleted successfully!");
     } catch (error) {

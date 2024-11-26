@@ -84,7 +84,11 @@ const Blogs = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(endpoints.delgallery,id);
+      await axios.get(BASE_URL+ endpoints.delgallery +"/" +  id, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      });
       setTourImages(tourImages.filter((image) => image.id !== id));
       message.success("Image deleted successfully!");
     } catch (error) {

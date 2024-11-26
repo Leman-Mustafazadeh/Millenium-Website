@@ -4,6 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { BASE_URL, endpoints } from '../../../API/constant';
 import controller from '../../../API';
+import Cookies from 'js-cookie'
 
 const AdminActivities = () => {
   const [form] = Form.useForm();
@@ -67,7 +68,11 @@ const AdminActivities = () => {
   };
 
   const handleDelete = (id) => {
-    controller.getOne(endpoints.delactivity, id).then((res) => {
+    axios.get(BASE_URL+ endpoints.delactivity +"/"+ id, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("ftoken")}`,
+      },
+    }).then((res) => {
       console.log("Deleted activity:", res);
       setActivities(activities.filter(activity => activity.id !== id));
       message.success("Activity deleted successfully!");

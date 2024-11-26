@@ -68,7 +68,7 @@ const AddLogo = () => {
       key: "image",
       render: (image) => (
         <img
-          src={BASE_URL+image}
+          src={BASE_URL + image}
           alt="Blog"
           style={{ width: 50, height: 50, objectFit: "cover" }}
         />
@@ -112,15 +112,16 @@ const AddLogo = () => {
       name_RU: record.name_RU,
       link: record.link,
     });
-    setImageFile(null); 
+    setImageFile(null);
     setIsModalVisible(true);
   };
 
   const handleDelete = (id) => {
-    controller.getOne(endpoints.dellogo,id).then((res)=>{
-      console.log(res);
-      
-    })
+    axios.get(BASE_URL + endpoints.dellogo + "/" + id,
+      { headers: { Authorization: `Bearer ${Cookies.get("ftoken")}` } }).then((res) => {
+        console.log(res);
+
+      })
     setBlogs(blogs.filter((blog) => blog.id !== id));
     message.success("Blog deleted successfully!");
   };
@@ -131,14 +132,14 @@ const AddLogo = () => {
         message.error("Token not found. Please log in again.");
         return;
       }
-  
+
       if (!imageFile && !currentBlogId) {
         message.error("Please upload an image.");
         return;
       }
-  
+
       const image = imageFile ? await getBase64(imageFile) : null;
-  
+
       const object = {
         name_AZ: values.name_AZ,
         name_EN: values.name_EN,
@@ -147,9 +148,9 @@ const AddLogo = () => {
         isDeleted: false,
         ...(image && { image }), // Include image only if it's updated
       };
-  
+
       let response;
-  
+
       if (currentBlogId) {
         // Edit Blog
         response = await axios.post(
@@ -171,7 +172,7 @@ const AddLogo = () => {
           },
         });
       }
-  
+
       if (response.status === 200 || response.status === 201) {
         if (currentBlogId) {
           setBlogs((prevBlogs) =>
@@ -202,8 +203,8 @@ const AddLogo = () => {
       }
     }
   };
-  
-  
+
+
 
   useEffect(() => {
     controller.getAll(endpoints.logo).then((res) => {

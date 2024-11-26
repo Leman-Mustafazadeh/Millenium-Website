@@ -86,7 +86,11 @@ const AdminAwards = () => {
   };
 
   const handleDelete = (id) => {
-    controller.getOne(endpoints.delaward, id).then((res) => {
+    axios.get(BASE_URL + endpoints.delaward + "/" + id, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("ftoken")}`,
+      },
+    }).then((res) => {
       console.log("deleted", res);
     });
     setAwards(awards.filter((award) => award.id !== id));

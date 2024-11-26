@@ -72,7 +72,11 @@ const AdminServices = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(endpoints.delservice, id).then((res)=>{
+      await axios.get( BASE_URL + endpoints.delservice + "/" + id,{
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      }).then((res)=>{
         console.log(res);
       }) 
       setServices(services.filter((service) => service.id !== id));

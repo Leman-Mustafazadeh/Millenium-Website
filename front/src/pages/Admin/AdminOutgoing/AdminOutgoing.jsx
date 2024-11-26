@@ -49,7 +49,11 @@ const AdminOutgoing = () => {
   
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(endpoints.deloutgoing, id); // API call for deletion
+      await axios.get(BASE_URL + endpoints.deloutgoing + "/" + id, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      }); // API call for deletion
       setOutgoingItems(outgoingItems.filter(item => item.id !== id));
       message.success("Item deleted successfully!");
     } catch (error) {
@@ -116,6 +120,7 @@ const AdminOutgoing = () => {
   
     try {
       const token = Cookies.get("ftoken");
+      console.log(token,"tokenleman");
       if (!token) {
         message.error("Authentication token is missing. Please log in again.");
         return;
@@ -147,6 +152,7 @@ const AdminOutgoing = () => {
         const response = await axios.post(BASE_URL + endpoints.addoutgoing, object, {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           },
         });
   

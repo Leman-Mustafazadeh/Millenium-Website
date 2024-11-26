@@ -57,7 +57,11 @@ const CategoryIncoming = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(endpoints.delcategoryincoming, id);
+      await axios.get(BASE_URL + endpoints.delcategoryincoming + "/" + id,{
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      });
       setCategories(categories?.filter(item => item.id !== id));
       message.success("Category deleted successfully!");
     } catch (error) {

@@ -6,6 +6,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { BASE_URL, endpoints } from "../../../API/constant";
 import controller from "../../../API";
+import Cookies from "js-cookie";
 
 const AdminIncoming = () => {
   const [form] = Form.useForm();
@@ -61,7 +62,11 @@ const AdminIncoming = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(endpoints.delincoming, id);
+      await axios.get(BASE_URL + endpoints.delincoming + "/" + id,{
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      });
       setIncomingItems(incomingItems.filter((item) => item.id !== id));
       message.success("Item deleted successfully!");
     } catch (error) {
@@ -141,14 +146,17 @@ const AdminIncoming = () => {
         message.error("Authentication token is missing. Please log in again.");
         return;
       }
-  
+
       const url = editMode
         ? `${BASE_URL + endpoints.putincoming}/${currentId}`
         : BASE_URL + endpoints.addincoming;
 
       const response = await axios.post(url, object, {
-        headers: { "Content-Type": "application/json" },
-         Authorization: `Bearer ${token}`
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+
       });
 
       if (response) {

@@ -96,7 +96,11 @@ const AdminPopular = () => {
 
   const handleDelete = async (id) => {
     try {
-      await controller.getOne(endpoints.deltour,id).then((res)=>{
+      await axios.get(BASE_URL + endpoints.deltour + "/" + id, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("ftoken")}`,
+        },
+      } ).then((res)=>{
         console.log(res);
       })
       message.success("Popular item deleted successfully!");
