@@ -34,7 +34,7 @@ const AdminLogin = () => {
 
     onSubmit: (values) => {
       axios
-        .post("https://hdy.az/Account/Login", values)
+        .post("https://hdy.az/api/Account/Login", values)
         .then((res) => {
           console.log(res.data.token);
 

@@ -3,6 +3,7 @@ import { Table, Button, Modal, Form, message } from 'antd';
 import axios from 'axios';
 import { BASE_URL, endpoints } from '../../../API/constant';
 import controller from '../../../API';
+import Cookies from 'js-cookie';
 
 const AdminServiceCategory = () => {
   const [form] = Form.useForm();

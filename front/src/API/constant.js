@@ -1,8 +1,8 @@
 export const BASE_URL = "https://hdy.az";
 export const endpoints = {
-  addlogin: "/Account/Login",
-  login: "/Account/get-username",
-  register:"/Account/Register",
+  addlogin: "/api/Account/Login",
+  login: "/api/Account/get-username",
+  register:"/api/Account/Register",
   // users: "/Account/Login",
 
   hero: "/api/Gallery/get-slides",//hero area

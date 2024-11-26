@@ -4,6 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { BASE_URL, endpoints } from '../../../API/constant';
 import controller from '../../../API';
+import Cookies from 'js-cookie'
 
 const AdminOutgoing = () => {
   const [form] = Form.useForm();

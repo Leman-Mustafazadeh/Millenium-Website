@@ -13,6 +13,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
 import controller from "../../../API";
+import Cookies from "js-cookie";
 
 const getBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -171,7 +172,7 @@ const AdminTeam = () => {
 
 
 
- onFinish = async (values) => {
+ const onFinish = async (values) => {
     try {
       // Convert image to base64 if an image file exists
       const imageBase64 = imageFile ? await getBase64(imageFile) : null;
@@ -235,7 +236,7 @@ const AdminTeam = () => {
       message.error(`Error: ${error.message}`);
     }
   };
-  Effect(() => {
+  useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
         const response = await axios.get(BASE_URL + endpoints.team);

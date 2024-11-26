@@ -5,6 +5,7 @@ import axios from "axios";
 import { BASE_URL, endpoints } from "../../../API/constant";
 import controller from "../../../API";
 import { Select, Space } from "antd";
+import Cookies from "js-cookie";
 
 const AdminServices = () => {
   const [form] = Form.useForm();
