@@ -67,7 +67,7 @@ const ContactUs = () => {
                     <a href="mailto:manager@milleniumtour.az">manager@milleniumtour.az</a>
                   </p>
                   <p className="about-contact-details-text">
-                    <a href="mailto:support24@tourm.com">team@milleniumtour.az</a>
+                    <a href="mailto:team@milleniumtour.az">team@milleniumtour.az</a>
                   </p>
                 </div>
               </div>

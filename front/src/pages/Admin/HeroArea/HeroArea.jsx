@@ -84,7 +84,11 @@ const HeroArea = () => {
   ];
 
   const handleDelete = (id) => {
-    controller.getOne(endpoints.delhero,id).then((res)=>{
+    axios.get( BASE_URL + endpoints.delhero  + "/" + id,{
+      headers: {
+        Authorization: `Bearer ${Cookies.get("ftoken")}`,
+      },
+    }).then((res)=>{
       console.log(res);
       
     })
