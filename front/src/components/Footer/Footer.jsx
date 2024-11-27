@@ -124,7 +124,7 @@ const Footer = () => {
                       </p>
                       <p>
                         <a
-                          href="tel:++994122219119"
+                          href="tel:+994702219119"
                           className="info-box_link"
                           style={{
                             display: "flex",
