@@ -1,0 +1,19 @@
+/* Swiper bileşeninin görünümünü özelleştirmek için CSS kuralları */
+
+.th-slider .swiper-slide {
+    border: none !important; /* Çerçeveleri kaldırmak için */
+    border-radius: 0 !important; /* Yuvarlatılmış kenarları kaldırmak için */
+    box-shadow: none !important; /* Gölgeyi kaldırmak için */
+}
+
+.th-slider {
+    overflow: visible; /* Swiper dışındaki alanı görünür yap */
+}
+
+.blog-box {
+    border: none; /* Blog kutusundaki çerçeveyi kaldır */
+}
+
+.global-img {
+    border-radius: 0 !important; /* Resim kenar yuvarlamasını kaldır */
+}

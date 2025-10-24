@@ -1,0 +1,30 @@
+{
+  "name": "Millennium Tour - Turizm və Səyahət Agentliyi",
+  "short_name": "Millennium Tour",
+  "description": "Azərbaycanın ən yaxşı turizm agentliyi. Incoming və outgoing turlar, aktivitilər, xidmətlər və daha çoxu.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "tourism", "business"],
+  "lang": "az",
+  "dir": "ltr",
+  "scope": "/",
+  "screenshots": []
+}
+

@@ -1,0 +1,28 @@
+# Millennium Tour - Robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /admin/*
+
+# Disallow API endpoints
+Disallow: /api/
+
+# Allow specific files
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+
+# Sitemap
+Sitemap: https://millenniumtour.az/sitemap.xml
+
+# Crawl-delay for bots (optional, helps prevent server overload)
+Crawl-delay: 1
+

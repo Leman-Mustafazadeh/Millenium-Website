@@ -1,0 +1,83 @@
+.category-area {
+  position: relative;
+  padding: 60px 0;
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../../assets//img/back.png");
+  width: 100%;
+}
+
+.category_container {
+  padding-top: 130px !important
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 20px;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.box-img {
+  width: 100%;
+  height: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.box-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.category-info {
+  text-align: center;
+  padding: 15px 0;
+}
+
+.category-info h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.category-info p {
+  font-size: 0.9rem;
+  color: #7d7d7d;
+  margin: 0;
+}
+
+/* Wave effect for the cards */
+.wave-0 {
+  transform: translateY(20px); /* Down */
+}
+
+.wave-1 {
+  transform: translateY(0px); /* Middle */
+}
+
+
+
+.wave-3 {
+  transform: translateY(0px); /* Middle */
+}
+
+.wave-4 {
+  transform: translateY(20px); /* Down */
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .wave-0, .wave-1, .wave-2, .wave-3, .wave-4 {
+      transform: none; /* Reset wave on smaller screens */
+  }
+}

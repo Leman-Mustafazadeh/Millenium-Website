@@ -1,0 +1,14 @@
+# Millennium Tour - Netlify/Vercel Redirects Configuration
+
+# Redirect all 404s to index.html for React Router
+/*    /index.html   200
+
+# Force HTTPS (if not already forced by platform)
+http://:splat  https://:splat  301!
+
+# Redirect old URLs (if any)
+# /old-page    /new-page    301
+
+# API Proxy (if needed to avoid CORS)
+/api/*  https://api.millenniumtour.az/:splat  200
+

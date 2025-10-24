@@ -1,0 +1,26 @@
+
+.globals-img {
+    overflow: hidden;
+  }
+ 
+  .awards-img {
+    height: 300px; 
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .awards-img img {
+    width: 100%;
+    height: 100% !important;
+
+  }
+  
+  .awards_head {
+    margin-top: 50px;
+  }
+  
+  .awards_hero{
+    justify-content: start  !important;
+  }

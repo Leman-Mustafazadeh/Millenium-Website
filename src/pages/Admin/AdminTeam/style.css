@@ -1,0 +1,263 @@
+/* Admin Team Container */
+.admin-team-container {
+    padding: 0;
+}
+
+/* Custom Modal Styles */
+.custom-team-modal .ant-modal-header {
+    border-bottom: 2px solid #f0f0f0;
+    padding: 24px 24px 20px;
+    border-radius: 12px 12px 0 0;
+}
+
+.custom-team-modal .ant-modal-body {
+    padding: 32px 24px 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.custom-team-modal .ant-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-team-modal .ant-modal-body::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 3px;
+}
+
+.custom-team-modal .ant-modal-body::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 3px;
+}
+
+.upload-placeholder:hover {
+    border-color: #764ba2 !important;
+    background: #fafafa !important;
+    transform: scale(1.05);
+}
+
+/* Custom Form Tabs */
+.custom-form-tabs .ant-tabs-nav {
+    margin-bottom: 24px;
+}
+
+.custom-form-tabs .ant-tabs-tab {
+    padding: 12px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.custom-form-tabs .ant-tabs-tab:hover {
+    color: #667eea;
+}
+
+.custom-form-tabs .ant-tabs-tab-active {
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-radius: 8px 8px 0 0;
+}
+
+.custom-form-tabs .ant-tabs-ink-bar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    height: 3px;
+}
+
+/* Form Items */
+.custom-team-modal .ant-form-item-label > label {
+    font-weight: 600;
+    color: #1f1f1f;
+    font-size: 14px;
+}
+
+.custom-team-modal .ant-input,
+.custom-team-modal .ant-input-affix-wrapper {
+    border-radius: 8px;
+    border: 2px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.custom-team-modal .ant-input:focus,
+.custom-team-modal .ant-input-affix-wrapper:focus,
+.custom-team-modal .ant-input-affix-wrapper-focused {
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+/* Submit Button Hover */
+.modal-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+}
+
+/* Image Upload Area Animation */
+.image-upload-area {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding: 20px 24px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Add Team Button Hover */
+.add-team-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+    transition: all 0.3s ease;
+}
+
+/* Team Image Wrapper */
+.team-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+
+.team-image-wrapper .ant-image {
+    transition: transform 0.3s ease;
+}
+
+.team-image-wrapper .ant-image:hover {
+    transform: scale(1.08);
+}
+
+/* Custom Table Styling */
+.custom-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.custom-table .ant-table {
+    font-size: 14px;
+}
+
+.custom-table .ant-table-thead > tr > th {
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    color: #1f1f1f;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.custom-table .ant-table-tbody > tr {
+    transition: all 0.3s ease;
+}
+
+.custom-table .ant-table-tbody > tr:hover {
+    background-color: #fafafa;
+    transform: scale(1.001);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.custom-table .ant-table-tbody > tr > td {
+    padding: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+/* Action Buttons */
+.custom-table .ant-btn-primary {
+    transition: all 0.3s ease;
+}
+
+.custom-table .ant-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.custom-table .ant-btn-dangerous {
+    transition: all 0.3s ease;
+}
+
+.custom-table .ant-btn-dangerous:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+}
+
+/* Pagination */
+.custom-table .ant-pagination {
+    padding: 16px 24px;
+}
+
+.custom-table .ant-pagination-item-active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+}
+
+.custom-table .ant-pagination-item-active a {
+    color: white;
+}
+
+/* Modal Improvements */
+.ant-modal-header {
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-bottom: 2px solid #f0f0f0;
+    border-radius: 12px 12px 0 0;
+    padding: 20px 24px;
+}
+
+.ant-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f1f1f;
+}
+
+.ant-modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.ant-modal-body {
+    padding: 24px;
+}
+
+.ant-form-item-label > label {
+    font-weight: 500;
+    color: #1f1f1f;
+}
+
+/* Tag Styling */
+.ant-tag {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+    
+    .add-team-btn {
+        width: 100%;
+    }
+    
+    .custom-table .ant-table-tbody > tr > td {
+        padding: 12px 8px;
+    }
+}
+

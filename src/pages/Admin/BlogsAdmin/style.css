@@ -1,0 +1,12 @@
+.blogs-admin-container { padding: 0; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; padding: 20px 24px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.add-image-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important; transition: all 0.3s ease; }
+.gallery-image-wrapper { display: flex; justify-content: center; padding: 8px; }
+.gallery-image-wrapper .ant-image:hover { transform: scale(1.05); }
+.custom-table { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.custom-table .ant-table-thead > tr > th { background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); color: #1f1f1f; font-weight: 600; padding: 16px; }
+.custom-table .ant-table-tbody > tr:hover { background-color: #fafafa; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
+.custom-table .ant-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
+.custom-table .ant-pagination-item-active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-color: transparent; }
+.custom-table .ant-pagination-item-active a { color: white; }
+

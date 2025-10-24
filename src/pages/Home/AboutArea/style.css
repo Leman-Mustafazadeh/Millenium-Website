@@ -1,0 +1,7 @@
+.plan_area{
+    font-family: var(--body-font);
+    margin: 0 0 18px 0;
+    color: var(--body-color);
+    line-height: 1.75;
+    font-size: 22px;
+}

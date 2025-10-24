@@ -1,0 +1,201 @@
+/* counter-card start -----------------------*/
+.counter-card {
+    position: relative;
+    background-color: #E9F6F9;
+    padding: 93px 28px;
+    width: 264px;
+    height: 264px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    border-radius: 50%;
+    z-index: 2;
+    margin-top: 158px;
+
+    @include lg {
+        margin-top: 100px;
+    }
+
+    @include sm {
+        width: 250px;
+        height: 250px;
+        padding: 81px 28px;
+        margin-top: 150px;
+    }
+
+    @include xs {
+        margin-top: 20px;
+    }
+
+    .counter-shape {
+        position: absolute;
+        inset: -24px;
+        width: 312px;
+        height: 312px;
+        border-radius: 50%;
+        border: 1px solid $theme-color;
+        transition: all 0.4s ease-in-out;
+
+        @include sm {
+            width: 290px;
+            height: 290px;
+            inset: -20px;
+        }
+
+        span {
+            position: absolute;
+            top: unset;
+            bottom: 55px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+            display: block;
+            border-radius: 50%;
+            background-color: rgba(28, 168, 203, 0.2);
+            z-index: 2;
+
+            @include sm {
+                bottom: 51px;
+                right: 13px;
+            }
+
+        }
+
+        &:after,
+        &:before {
+            content: "";
+            position: absolute;
+            bottom: 20%;
+            right: 7%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-sizing: content-box;
+            background-color: $theme-color;
+
+        }
+
+        &:after {
+            background-color: $theme-color;
+            @extend .ripple-animation3;
+        }
+
+    }
+
+    &-wrap {
+        margin: 50px 0 25px 0;
+
+        @include lg {
+            margin: 0;
+        }
+
+        &:nth-child(even) {
+            @include xs {
+                margin: 70px 0 50px 0;
+            }
+
+            .counter-card {
+                margin-top: 0px;
+
+                .counter-shape {
+                    span {
+                        top: 24px;
+                        right: 43px;
+
+                        @include sm {
+                            top: 22px;
+                            right: 39px;
+                        }
+                    }
+
+                    &:before,
+                    &:after {
+                        bottom: unset;
+                        top: 10%;
+                        right: 16%;
+                    }
+                }
+            }
+        }
+    }
+
+    .box-number {
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 48px;
+        text-transform: capitalize;
+        color: $black-color2;
+        margin-bottom: 7px;
+    }
+
+    .counter-title {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 36px;
+        color: $black-color2;
+    }
+
+    &:hover {
+        .counter-shape {
+            animation: spin 10s linear infinite;
+        }
+    }
+}
+
+.counter-sec2 {
+    position: relative;
+    z-index: 1;
+}
+
+/* counter-card end -----------------------*/
+
+/* counter-box start -----------------------*/
+.counter-box {
+    border: 1px solid #E1E4E6;
+    border-radius: 8px;
+    text-align: center;
+    padding: 60px 20px;
+
+    &-wrap {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        max-width: 782px;
+
+        @include xl {
+            max-width: 100%;
+            gap: 20px;
+        }
+
+        @include sm {
+            grid-template-columns: repeat(2, 1fr); 
+        }
+        @media(max-width: 320px) {
+            grid-template-columns: repeat(1, 1fr); 
+        }
+    }
+
+    &_number {
+        font-family: $body-font;
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 30px;
+        letter-spacing: 0.02em;
+        color: $black-color2;
+        margin-bottom: 0;
+    }
+
+    &_title {
+        font-size: 18px;
+        font-weight: 400;
+        color: $black-color2;
+        margin-bottom: -0.4rem;
+
+        @include xl {
+            font-size: 16px;
+        }
+
+    }
+}
+
+/* counter-box end -----------------------*/
